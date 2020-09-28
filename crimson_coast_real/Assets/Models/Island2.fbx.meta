@@ -3,7 +3,12 @@ guid: 3f92a703ee6fe0f4ea4fdaa42c8ec648
 ModelImporter:
   serializedVersion: 20101
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Island2Mat
+    second: {fileID: 2100000, guid: 2876df35c7b073f4597c8746fe3993c4, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
