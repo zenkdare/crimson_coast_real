@@ -3,7 +3,42 @@ guid: 033ed87f6d84fbf4482215a1615551d0
 ModelImporter:
   serializedVersion: 20101
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BackMastMat
+    second: {fileID: 2100000, guid: 41002e86447c6e340a229815e2bfa6f0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BoatMat
+    second: {fileID: 2100000, guid: 1832d6f8012a05b45b465849b0ffc965, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: FlagMat
+    second: {fileID: 2100000, guid: 864b03b34a92639438066777a15790b0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: FrontMastMat
+    second: {fileID: 2100000, guid: 56f156de268b6aa4cbda0a4dbcb4feb3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: PoleMat
+    second: {fileID: 2100000, guid: a17bdf7bff4bda34ba3a465ec00e9a22, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: RopeMat
+    second: {fileID: 2100000, guid: 9d32e2f1fe82e5e45862aa65662fc5db, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: SailMat
+    second: {fileID: 2100000, guid: aec79b397cdc74e49b0016c935625d2f, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
