@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 1349051116358173660}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.08, y: 0.63, z: -1.26}
-  m_LocalScale: {x: 0.30702, y: 0.30702, z: 0.30702}
+  m_LocalScale: {x: 5.907972, y: 5.907972, z: 5.907972}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -173,7 +173,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0.8396226, g: 0.75371164, b: 0, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}

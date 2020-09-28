@@ -11,7 +11,7 @@ public class CameraScript : MonoBehaviour
     void Start()
     {
         speed = 1f;
-        camspot = new Vector3(0, 0, 0);
+        //camspot = new Vector3(0, 0, 0);
     }
 
     // Update is called once per frame
