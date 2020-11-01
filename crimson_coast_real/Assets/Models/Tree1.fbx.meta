@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 59337a01e23a7a1429932852ecbedb60
+guid: 5fb8d8d67cdab014697e77a8707247fe
 ModelImporter:
   serializedVersion: 20101
   internalIDToNameTable: []
@@ -7,13 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: FrameMat
-    second: {fileID: 2100000, guid: 2ea4d4008f224374c8c1f1f9f2dc7608, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: HouseMat
-    second: {fileID: 2100000, guid: 7b1c535d7a58bf140992cadc81236f2c, type: 2}
+      name: lambert1
+    second: {fileID: 2100000, guid: f88cc262922b3be428aaf9369f02b068, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
