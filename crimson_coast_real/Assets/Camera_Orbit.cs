@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.UIElements;
 
 public class Camera_Orbit : MonoBehaviour
 {
@@ -12,6 +14,7 @@ public class Camera_Orbit : MonoBehaviour
     bool inPosition;
     Vector3 relPos;
     Quaternion newRot;
+    public NavMeshAgent b_agent;
     // Start is called before the first frame update
     void Start()
     {
@@ -34,6 +37,7 @@ public class Camera_Orbit : MonoBehaviour
                 inPosition = true;
                 Ship_Movement shipscript = ship.GetComponent<Ship_Movement>();
                 shipscript.enabled = true;
+                b_agent.isStopped = false;
             }
         }
         if (inPosition)
@@ -44,7 +48,8 @@ public class Camera_Orbit : MonoBehaviour
         //relPos = ship.transform.position - transform.position;
         //newRot = Quaternion.LookRotation(relPos);
         //transform.rotation = Quaternion.RotateTowards(transform.rotation, newRot, Time.time * lookSpeed);
-        transform.LookAt(ship.transform.position);
+        Vector3 pos = ship.transform.GetChild(1).transform.position;
+        transform.LookAt(pos);
     }
 
     private void OnEnable()

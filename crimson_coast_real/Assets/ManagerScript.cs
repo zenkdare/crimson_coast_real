@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 
 public class ManagerScript : MonoBehaviour
@@ -11,15 +12,28 @@ public class ManagerScript : MonoBehaviour
     public GameObject confirm_course_button;
     public GameObject reset_course_button;
     public GameObject set_sail_button;
+    public GameObject enter_market_button;
     public GameObject map;
     public GameObject courseCharter;
     public GameObject current_location;
     public GameObject ship;
+    public NavMeshAgent b_agent;
+    public int gold;
+    public Text gold_text;
+    public GameObject shop_screen;
+    public Text rum_diff;
+    public int rum_dif_int;
+    public Text rum_cost;
+    public int rum_cargo_count;
+    public Text rum_cargo_amount_text;
+    public int temp_diff;
     // Start is called before the first frame update
     void Start()
     {
-        //SetUpTown(start_town);
-        //current_location = start_town;
+        SetUpTown(start_town);
+        current_location = start_town;
+        rum_dif_int = 0;
+        change_gold(0);
     }
 
     // Update is called once per frame
@@ -32,8 +46,12 @@ public class ManagerScript : MonoBehaviour
     {
         CameraScript camscript = cam.GetComponent<CameraScript>();
         camscript.Look_at_Location(town);
+        Town townscript = town.GetComponent<Town>();
+        townscript.set_shop_stock();
+        rum_cargo_amount_text.text = rum_cargo_count.ToString();
         chart_course_button.SetActive(true);
         set_sail_button.SetActive(true);
+        enter_market_button.SetActive(true);
     }
 
     public void Chart_a_Course()
@@ -44,9 +62,15 @@ public class ManagerScript : MonoBehaviour
         set_sail_button.SetActive(false);
         confirm_course_button.SetActive(true);
         reset_course_button.SetActive(true);
-        courseCharter.SetActive(true);
+        courseCharter.GetComponent<Charting_a_Course>().enabled = true;
     }
-
+    public void enter_market()
+    {
+        chart_course_button.SetActive(false);
+        set_sail_button.SetActive(false);
+        enter_market_button.SetActive(false);
+        shop_screen.SetActive(true);
+    }
     public void Confirm_course()
     {
         CameraScript camscript = cam.GetComponent<CameraScript>();
@@ -55,27 +79,37 @@ public class ManagerScript : MonoBehaviour
         set_sail_button.SetActive(true);
         confirm_course_button.SetActive(false);
         reset_course_button.SetActive(false);
-        courseCharter.SetActive(false);
+        courseCharter.GetComponent<Charting_a_Course>().enabled = false;
     }
 
     public void Clear_course()
     {
-        Charting_a_Course charter = courseCharter.GetComponent<Charting_a_Course>();
-        charter.Clear_course();
+        //Charting_a_Course charter = courseCharter.GetComponent<Charting_a_Course>();
+        
     }
 
     public void Set_Sail()
     {
-        CameraScript camscript = cam.GetComponent<CameraScript>();
-        Camera_Orbit camorbit = cam.GetComponent<Camera_Orbit>();
-        camscript.enabled = false;
-        camorbit.enabled = true;
+        if (b_agent.hasPath)
+        {
+            CameraScript camscript = cam.GetComponent<CameraScript>();
+            Camera_Orbit camorbit = cam.GetComponent<Camera_Orbit>();
+            camscript.enabled = false;
+            camorbit.enabled = true;
+            Ship_Movement shipscript = ship.GetComponent<Ship_Movement>();
+            shipscript.inport = false;
+        }
+        else
+        {
+            print("you must choose a destination before setting sail");
+        }
+        
     }
 
     public void In_To_Port(GameObject location)
     {
         Ship_Movement shipscript = ship.GetComponent<Ship_Movement>();
-        shipscript.enabled = false;
+        shipscript.inport = true;
         current_location = location;
         if (location.tag == "town")
         {
@@ -85,5 +119,67 @@ public class ManagerScript : MonoBehaviour
         Camera_Orbit camorbit = cam.GetComponent<Camera_Orbit>();
         camscript.enabled = true;
         camorbit.enabled = false;
+    }
+    public void add_item(string item)
+    {
+        if (item.Equals("rum"))
+        {
+            rum_dif_int += 1;
+            rum_diff.text = rum_dif_int.ToString();
+            if (rum_dif_int > 0)
+            {
+                Town townscript = current_location.GetComponent<Town>();
+                temp_diff -= townscript.get_rum_amount();
+            }
+            else if (rum_dif_int <= 0)
+            {
+                Town townscript = current_location.GetComponent<Town>();
+                temp_diff -= townscript.get_sell_amount_rum();
+            }
+            rum_cost.text = temp_diff.ToString();
+        }
+    }
+    public void sub_item(string item)
+    {
+        if (item.Equals("rum"))
+        {
+            rum_dif_int -= 1;
+            rum_diff.text = rum_dif_int.ToString();
+            if (rum_dif_int >= 0)
+            {
+                Town townscript = current_location.GetComponent<Town>();
+                temp_diff += townscript.get_rum_amount();
+            }
+            else if (rum_dif_int < 0)
+            {
+                Town townscript = current_location.GetComponent<Town>();
+                temp_diff += townscript.get_sell_amount_rum();
+            }
+            rum_cost.text = temp_diff.ToString();
+        }
+    }
+    public void confirm_purchase()
+    {
+        Town townscript = current_location.GetComponent<Town>();
+        townscript.alter_shop_stock(-rum_dif_int);
+        rum_diff.text = ("0");
+        rum_cost.text = ("0");
+        rum_cargo_count += rum_dif_int;
+        rum_cargo_amount_text.text = rum_cargo_count.ToString();
+        rum_dif_int = 0;
+        change_gold(temp_diff);
+        temp_diff = 0;
+    }
+    public void exit_market()
+    {
+        chart_course_button.SetActive(true);
+        set_sail_button.SetActive(true);
+        enter_market_button.SetActive(true);
+        shop_screen.SetActive(false);
+    }
+    public void change_gold(int change)
+    {
+        gold += change;
+        gold_text.text = ("Gold: " + gold);
     }
 }

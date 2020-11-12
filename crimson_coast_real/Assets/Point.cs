@@ -42,7 +42,7 @@ public class Point : MonoBehaviour
 
     public void Clear_point()
     {
-        chart.RemoveanItem(this);
+        //chart.RemoveanItem(this);
         Destroy(gameObject);
     }
 

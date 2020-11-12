@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.EventSystems;
 
 public class Charting_a_Course : MonoBehaviour
 {
-    public GameObject pointPrefab;
-    public GameObject linePrefab;
-    public List<Point> points = new List<Point>();
+
+    public GameObject boat;
+    public NavMeshAgent b_agent;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +21,9 @@ public class Charting_a_Course : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Create_point_and_line();
+            //StartCoroutine("Create_point_and_line");
         }
+        Draw_Chart_path.path = b_agent.path.corners;
     }
 
     void Create_point_and_line()
@@ -29,28 +32,25 @@ public class Charting_a_Course : MonoBehaviour
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         RaycastHit hit = new RaycastHit();
-        print(EventSystem.current.IsPointerOverGameObject());
         if (EventSystem.current.IsPointerOverGameObject()==false)    // is the touch on the GUI
         {
+           
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
-                if (hit.transform.tag == "map")
+                
+                if (hit.transform.tag == "town" || hit.transform.tag == "island")
                 {
-                    GameObject instance = Instantiate(pointPrefab, hit.point, Quaternion.identity);
-                    print(instance.transform);
-                    Point marker = instance.GetComponent<Point>();
-                    marker.Setchart(this);
-                    points.Add(marker);
-                    marker.Creation_setup();
-                    if (points.Count > 1)
-                    {
-                        points[points.Count - 2].Added_point(points[points.Count - 1]);
-                    }
+                    
+                    b_agent.SetDestination(hit.transform.position);
+                    Ship_Movement shipscript = boat.GetComponent<Ship_Movement>();
+                    shipscript.set_Port(hit.transform.gameObject);
+                    Draw_Chart_path.path = b_agent.path.corners;
+                    b_agent.isStopped=true;
                 }
             }
         }
     }
-
+    /*
     public void RemoveanItem(Point point)
     {
         int index = points.IndexOf(point);
@@ -74,4 +74,5 @@ public class Charting_a_Course : MonoBehaviour
             points[0].Clear_point();
         }
     }
+    */
 }
