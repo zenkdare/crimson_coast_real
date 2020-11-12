@@ -10,7 +10,7 @@ public class ManagerScript : MonoBehaviour
     public GameObject start_town;
     public GameObject chart_course_button;
     public GameObject confirm_course_button;
-    public GameObject reset_course_button;
+    //public GameObject reset_course_button;
     public GameObject set_sail_button;
     public GameObject enter_market_button;
     public GameObject map;
@@ -20,6 +20,7 @@ public class ManagerScript : MonoBehaviour
     public NavMeshAgent b_agent;
     public int gold;
     public Text gold_text;
+    public Text crew_count_text;
     public GameObject shop_screen;
     public Text rum_diff;
     public int rum_dif_int;
@@ -27,6 +28,8 @@ public class ManagerScript : MonoBehaviour
     public int rum_cargo_count;
     public Text rum_cargo_amount_text;
     public int temp_diff;
+    public GameObject tavern;
+    public GameObject enter_tavern_button;
     // Start is called before the first frame update
     void Start()
     {
@@ -48,10 +51,12 @@ public class ManagerScript : MonoBehaviour
         camscript.Look_at_Location(town);
         Town townscript = town.GetComponent<Town>();
         townscript.set_shop_stock();
+        townscript.set_up_tavern();
         rum_cargo_amount_text.text = rum_cargo_count.ToString();
         chart_course_button.SetActive(true);
         set_sail_button.SetActive(true);
         enter_market_button.SetActive(true);
+        enter_tavern_button.SetActive(true);
     }
 
     public void Chart_a_Course()
@@ -60,8 +65,10 @@ public class ManagerScript : MonoBehaviour
         camscript.Look_at_Location(map);
         chart_course_button.SetActive(false);
         set_sail_button.SetActive(false);
+        enter_market_button.SetActive(false);
+        enter_tavern_button.SetActive(false);
         confirm_course_button.SetActive(true);
-        reset_course_button.SetActive(true);
+        //reset_course_button.SetActive(true);
         courseCharter.GetComponent<Charting_a_Course>().enabled = true;
     }
     public void enter_market()
@@ -69,7 +76,16 @@ public class ManagerScript : MonoBehaviour
         chart_course_button.SetActive(false);
         set_sail_button.SetActive(false);
         enter_market_button.SetActive(false);
+        enter_tavern_button.SetActive(false);
         shop_screen.SetActive(true);
+    }
+    public void enter_tavern()
+    {
+        chart_course_button.SetActive(false);
+        set_sail_button.SetActive(false);
+        enter_market_button.SetActive(false);
+        enter_tavern_button.SetActive(false);
+        tavern.SetActive(true);
     }
     public void Confirm_course()
     {
@@ -77,8 +93,10 @@ public class ManagerScript : MonoBehaviour
         camscript.Look_at_Location(current_location);
         chart_course_button.SetActive(true);
         set_sail_button.SetActive(true);
+        enter_market_button.SetActive(true);
+        enter_tavern_button.SetActive(true);
         confirm_course_button.SetActive(false);
-        reset_course_button.SetActive(false);
+        //reset_course_button.SetActive(false);
         courseCharter.GetComponent<Charting_a_Course>().enabled = false;
     }
 
@@ -98,6 +116,9 @@ public class ManagerScript : MonoBehaviour
             camorbit.enabled = true;
             Ship_Movement shipscript = ship.GetComponent<Ship_Movement>();
             shipscript.inport = false;
+            set_sail_button.SetActive(false);
+            enter_market_button.SetActive(false);
+            enter_tavern_button.SetActive(false);
         }
         else
         {
@@ -175,11 +196,46 @@ public class ManagerScript : MonoBehaviour
         chart_course_button.SetActive(true);
         set_sail_button.SetActive(true);
         enter_market_button.SetActive(true);
+        enter_tavern_button.SetActive(true);
         shop_screen.SetActive(false);
+    }
+    public void exit_tavern()
+    {
+        chart_course_button.SetActive(true);
+        set_sail_button.SetActive(true);
+        enter_market_button.SetActive(true);
+        enter_tavern_button.SetActive(true);
+        tavern.SetActive(false);
     }
     public void change_gold(int change)
     {
         gold += change;
         gold_text.text = ("Gold: " + gold);
+    }
+    public void hire_crew(int num)
+    {
+        Town townscript = current_location.GetComponent<Town>();
+        townscript.hire_crew(num);
+        Ship_Movement ship_script = ship.GetComponent<Ship_Movement>();
+        crew_count_text.text = ("Crew Count: "+ship_script.get_crew_count().ToString());
+    }
+    public void handle_event(string n, int option)
+    {
+        if (n.Equals("storm"))
+        {
+            if (option == 0)
+            {
+
+            }
+        }
+        if (n.Equals("Theft"))
+        {
+            if (option == 1)
+            {
+                rum_cargo_count -= 2;
+                Ship_Movement ship_script = ship.GetComponent<Ship_Movement>();
+                ship_script.dock();
+            }
+        }
     }
 }

@@ -41,7 +41,7 @@ public class Charting_a_Course : MonoBehaviour
                 if (hit.transform.tag == "town" || hit.transform.tag == "island")
                 {
                     
-                    b_agent.SetDestination(hit.transform.position);
+                    b_agent.SetDestination(hit.transform.GetChild(0).transform.position);
                     Ship_Movement shipscript = boat.GetComponent<Ship_Movement>();
                     shipscript.set_Port(hit.transform.gameObject);
                     Draw_Chart_path.path = b_agent.path.corners;

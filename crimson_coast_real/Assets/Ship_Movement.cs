@@ -30,7 +30,7 @@ public class Ship_Movement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         agent = GetComponent<NavMeshAgent>();
         events.Add(new Event("Storm", "", "", "", ""));
-        events.Add(new Event("Theft", "", "", "", ""));
+        events.Add(new Event("Theft", "Stop the theft, for a watch dog is in your service", "accept the loss, whoever the theif is, they were too sneaky to catch", "Rumors abound of cargo going missing. You head into the lower decks to see if your crew tell the truth", ""));
     }
 
     // Update is called once per frame
