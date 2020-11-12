@@ -11,13 +11,16 @@ public class Town : MonoBehaviour
     public int rum_amount;
     public int temp_amount;
     public List<Crew> local_crew = new List<Crew>();
+    public Text n;
+    public Text t1;
+    public Text t2;
+    public Text cost;
+    public GameObject ship;
+    public GameObject crew1;
     // Start is called before the first frame update
     void Start()
     {
-        if (name == "Island4")
-        {
-            local_crew.Add(new Crew("Skippy", 2, "sharp eyes", "theif"));
-        }
+        
         temp_amount = rum_amount;
     }
 
@@ -48,5 +51,26 @@ public class Town : MonoBehaviour
         temp_amount+=diff;
         rum_stock_market.text = (temp_amount.ToString());
     }
-
+    public void set_up_tavern()
+    {
+        if (name == "Town3")
+        {
+            local_crew.Add(new Crew("Skippy", 2, "sharp eyes", "theif"));
+        }
+        temp_amount = rum_amount;
+        if (name == "Town1")
+        {
+            local_crew.Add(new Crew("Fred", 2, "Drunk", "superstitious"));
+        }
+        n.text = local_crew[0].get_name();
+        t1.text = local_crew[0].get_t1();
+        t2.text = local_crew[0].get_t2();
+        cost.text = local_crew[0].get_cost().ToString();
+    }
+    public void hire_crew(int num)
+    {
+        Ship_Movement ship_code = ship.GetComponent<Ship_Movement>();
+        ship_code.add_crew(local_crew[num]);
+        crew1.SetActive(false);
+    }
 }
