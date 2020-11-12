@@ -140,6 +140,7 @@ public class ManagerScript : MonoBehaviour
         Camera_Orbit camorbit = cam.GetComponent<Camera_Orbit>();
         camscript.enabled = true;
         camorbit.enabled = false;
+        change_gold(-2);
     }
     public void add_item(string item)
     {
