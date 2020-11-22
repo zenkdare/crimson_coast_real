@@ -5943,7 +5943,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 033ed87f6d84fbf4482215a1615551d0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.1065116
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 033ed87f6d84fbf4482215a1615551d0, type: 3}
       propertyPath: m_LocalPosition.y
@@ -5951,7 +5951,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 033ed87f6d84fbf4482215a1615551d0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.21063066
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 033ed87f6d84fbf4482215a1615551d0, type: 3}
       propertyPath: m_LocalRotation.x
@@ -17892,7 +17892,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1031851749}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 1338.9, y: -0.15, z: -1006.7}
+  m_LocalPosition: {x: 1291, y: -0.15, z: -1006.7}
   m_LocalScale: {x: 2.7059014, y: 2.7059, z: 2.7059014}
   m_Children:
   - {fileID: 1295091143}
@@ -17944,6 +17944,8 @@ MonoBehaviour:
   decision1: {fileID: 370265246}
   decision2: {fileID: 1181767591}
   current_event: 
+  weekdis: 2000
+  lastpos: {fileID: 0}
 --- !u!4 &1037311658 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 087d1c5ad16ce2344bf4b955e9014f52, type: 3}

@@ -9,6 +9,7 @@ public class Charting_a_Course : MonoBehaviour
 
     public GameObject boat;
     public NavMeshAgent b_agent;
+    public int weekdis;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +25,10 @@ public class Charting_a_Course : MonoBehaviour
             //StartCoroutine("Create_point_and_line");
         }
         Draw_Chart_path.path = b_agent.path.corners;
+        if (!(b_agent.pathPending))
+        {
+            //print(RemainingDistance(b_agent.path.corners));
+        }
     }
 
     void Create_point_and_line()
@@ -49,6 +54,14 @@ public class Charting_a_Course : MonoBehaviour
                 }
             }
         }
+    }
+    public float RemainingDistance(Vector3[] points)
+    {
+        if (points.Length < 2) return 0;
+        float distance = 0;
+        for (int i = 0; i < points.Length - 1; i++)
+            distance += Vector3.Distance(points[i], points[i + 1]);
+        return distance;
     }
     /*
     public void RemoveanItem(Point point)

@@ -24,6 +24,8 @@ public class Ship_Movement : MonoBehaviour
     public Text decision1;
     public Text decision2;
     public string current_event;
+    public int weekdis;
+    public Vector3 lastpos;
     void Start()
     {
         inport = true;
@@ -40,17 +42,18 @@ public class Ship_Movement : MonoBehaviour
         {
             if (!(agent.pathPending))
             {
+                //print(Vector3.Distance(gameObject.transform.position, lastpos));
                 if (agent.pathStatus == NavMeshPathStatus.PathComplete && agent.remainingDistance == 0)
                 {
-                    trigger_event(1);
-                    //dock();
+                    dock();
                 }
-                else if(Vector3.Distance(gameObject.transform.position, agent.destination) == halfway)
+                else if(Vector3.Distance(gameObject.transform.position, lastpos) >= weekdis)
                 {
-                    
-                    print(agent.remainingDistance);
+                    //print(Vector3.Distance(gameObject.transform.position, lastpos));
                     trigger_event(0);
+                    events.RemoveAt(0);
                     agent.isStopped = true;
+                    lastpos = gameObject.transform.position;
                 }
             }
         }
@@ -58,7 +61,7 @@ public class Ship_Movement : MonoBehaviour
         {
             if (!(agent.pathPending))
             {
-                halfway = Vector3.Distance(gameObject.transform.position, agent.destination)/2;
+                lastpos = gameObject.transform.position;
             }
         }
 
