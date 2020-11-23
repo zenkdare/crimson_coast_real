@@ -12,6 +12,7 @@ public class Ship_Movement : MonoBehaviour
     //public GameObject port_Text;
     public bool inport;
     private GameObject targetPort;
+    public GameObject current_port;
     private NavMeshAgent agent;
     // Start is called before the first frame update
     Rigidbody rb;
@@ -81,6 +82,7 @@ public class Ship_Movement : MonoBehaviour
     {
         ManagerScript mScript = manager.GetComponent<ManagerScript>();
         mScript.In_To_Port(targetPort);
+        current_port = targetPort;
     }
     public int get_crew_count()
     {
@@ -89,6 +91,11 @@ public class Ship_Movement : MonoBehaviour
     public void add_crew(Crew new_hire)
     {
         ship_crew.Add(new_hire);
+        if(String.Equals(new_hire.get_t1(), "Silver Tongue"))
+        {
+            townscript = current_port.GetComponent<Town>();
+            
+        }
     }
     public void trigger_event(int num)
     {
