@@ -19,6 +19,7 @@ public class UIManager : MonoBehaviour
 	public GameObject marketUI;
 	public GameObject tavernUI;
 	public GameObject eventUI;
+	public GameObject Crew1;
 
 	// public float widthSmooth = 4.6f;
 	// public float heightSmooth = 4.6f;
@@ -80,7 +81,20 @@ public class UIManager : MonoBehaviour
     }
 
     public void updateTavern(List<Crew> local_crew){
-
+    	if (local_crew.Count == 0){
+    		Crew1.SetActive(false);
+    	}
+    	else {
+	    	Crew crew = local_crew[0];
+			Text textbox = tavernUI.transform.Find("Crew1/Name").GetComponent<Text>();
+			textbox.text = crew.get_name();
+			textbox = tavernUI.transform.Find("Crew1/trait1").GetComponent<Text>();
+			textbox.text = crew.get_t1();
+			textbox = tavernUI.transform.Find("Crew1/trait2").GetComponent<Text>();
+			textbox.text = crew.get_t2();
+			textbox = tavernUI.transform.Find("Crew1/cost").GetComponent<Text>();
+			textbox.text = crew.get_cost().ToString();
+		}
     }
 
     public void updateEvent(string title, string info, string option1, string option2, string option1Desc, string option2Desc){
@@ -90,10 +104,6 @@ public class UIManager : MonoBehaviour
     	eventOption2.text = option2;
     	eventDesc1.text = option1Desc;
     	eventDesc2.text = option2Desc;
-    }
-
-    public void popup(){
-    	this.transform.Find("Description");//.SetActive(true);
     }
 
     // public void resetPopup(){

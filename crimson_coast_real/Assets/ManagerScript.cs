@@ -56,6 +56,7 @@ public class ManagerScript : MonoBehaviour
         townscript.set_shop_stock();
         townscript.set_up_tavern();
         //rum_cargo_amount_text.text = rum_cargo_count.ToString();
+        uiScript.updateMarket("Rum", "Cargo", rum_cargo_count);
         //chart_course_button.SetActive(true);
         //set_sail_button.SetActive(true);
         //enter_market_button.SetActive(true);
