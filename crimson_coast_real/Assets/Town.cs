@@ -16,7 +16,7 @@ public class Town : MonoBehaviour
     //public Text t2;
     //public Text cost;
     public GameObject ship;
-    public GameObject crew1;
+    //public GameObject crew1;
     public GameObject canvas;
     public UIManager uiScript;
     // Start is called before the first frame update
@@ -77,6 +77,7 @@ public class Town : MonoBehaviour
         Ship_Movement ship_code = ship.GetComponent<Ship_Movement>();
         ship_code.add_crew(local_crew[num]);
         //crew1.SetActive(false);
+        uiScript.destroyCrewTav(num);
         uiScript.updateTavern(local_crew);
     }
 }

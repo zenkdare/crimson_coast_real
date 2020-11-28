@@ -19,7 +19,9 @@ public class UIManager : MonoBehaviour
 	public GameObject marketUI;
 	public GameObject tavernUI;
 	public GameObject eventUI;
-	public GameObject Crew1;
+	public GameObject CrewUI;
+    public GameObject Manager;
+    public ManagerScript managerScript;
 
 	// public float widthSmooth = 4.6f;
 	// public float heightSmooth = 4.6f;
@@ -81,20 +83,33 @@ public class UIManager : MonoBehaviour
     }
 
     public void updateTavern(List<Crew> local_crew){
-    	if (local_crew.Count == 0){
-    		Crew1.SetActive(false);
-    	}
-    	else {
-	    	Crew crew = local_crew[0];
-			Text textbox = tavernUI.transform.Find("Crew1/Name").GetComponent<Text>();
-			textbox.text = crew.get_name();
-			textbox = tavernUI.transform.Find("Crew1/trait1").GetComponent<Text>();
-			textbox.text = crew.get_t1();
-			textbox = tavernUI.transform.Find("Crew1/trait2").GetComponent<Text>();
-			textbox.text = crew.get_t2();
-			textbox = tavernUI.transform.Find("Crew1/cost").GetComponent<Text>();
-			textbox.text = crew.get_cost().ToString();
+    	//make a loop here for each crew member in the list
+    	GameObject exitButton = tavernUI.transform.Find("ExitButton").gameObject;
+    	for (int i = 0; i < local_crew.Count; i++){
+    		Crew crewmate = local_crew[i];
+    		GameObject crewUI = GameObject.Instantiate(CrewUI, tavernUI.transform) as GameObject;
+    		exitButton.transform.SetSiblingIndex(i+2);
+    		Button hireButton = crewUI.transform.Find("HireButton").GetComponent<Button>();
+
+    		hireButton.onClick.AddListener(() => managerScript.hire_crew(i));
+
+			Text textbox = crewUI.transform.Find("Name").GetComponent<Text>();
+			textbox.text = crewmate.get_name();
+			textbox = crewUI.transform.Find("trait1").GetComponent<Text>();
+			textbox.text = crewmate.get_t1();
+			textbox = textbox.transform.Find("description/Text").GetComponent<Text>();
+			textbox.text = crewmate.get_t1Desc();
+			textbox = crewUI.transform.Find("trait2").GetComponent<Text>();
+			textbox.text = crewmate.get_t2();
+			textbox = textbox.transform.Find("description/Text").GetComponent<Text>();
+			textbox.text = crewmate.get_t2Desc();
+			textbox = crewUI.transform.Find("cost").GetComponent<Text>();
+			textbox.text = crewmate.get_cost().ToString();
 		}
+    }
+
+    public void destroyCrewTav(int index){
+    	Destroy(tavernUI.transform.GetChild(index+1).gameObject);
     }
 
     public void updateEvent(string title, string info, string option1, string option2, string option1Desc, string option2Desc){

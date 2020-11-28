@@ -9,6 +9,8 @@ public class Crew : MonoBehaviour
     public int pay;
     public string trait1;
     public string trait2;
+    public string trait1Desc = "trait 1 description";
+    public string trait2Desc = "trait 2 description";
     // Start is called before the first frame update\
     public Crew(string n, int c, string t1, string t2)
     {
@@ -42,5 +44,13 @@ public class Crew : MonoBehaviour
     public string get_t2()
     {
         return trait2;
+    }
+    public string get_t1Desc()
+    {
+        return trait1Desc;
+    }
+    public string get_t2Desc()
+    {
+        return trait2Desc;
     }
 }
