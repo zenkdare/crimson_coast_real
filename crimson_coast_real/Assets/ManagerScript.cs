@@ -74,6 +74,7 @@ public class ManagerScript : MonoBehaviour
         //enter_tavern_button.SetActive(false);
         //confirm_course_button.SetActive(true);
         //reset_course_button.SetActive(true);
+        uiScript.TownUI(false);
         uiScript.ChartUI(true);
         courseCharter.GetComponent<Charting_a_Course>().enabled = true;
     }
@@ -84,6 +85,7 @@ public class ManagerScript : MonoBehaviour
         //enter_market_button.SetActive(false);
         //enter_tavern_button.SetActive(false);
         //shop_screen.SetActive(true);
+        uiScript.TownUI(false);
         uiScript.MarketUI(true);
     }
     public void enter_tavern()
@@ -93,6 +95,7 @@ public class ManagerScript : MonoBehaviour
         //enter_market_button.SetActive(false);
         //enter_tavern_button.SetActive(false);
         //tavern.SetActive(true);
+        uiScript.TownUI(false);
         uiScript.TavernUI(true);
     }
     public void Confirm_course()
@@ -159,6 +162,7 @@ public class ManagerScript : MonoBehaviour
         {
             rum_dif_int += 1;
             //rum_diff.text = rum_dif_int.ToString();
+            uiScript.updateMarket("Rum", "Amount", rum_dif_int);
             if (rum_dif_int > 0)
             {
                 Town townscript = current_location.GetComponent<Town>();
@@ -170,6 +174,7 @@ public class ManagerScript : MonoBehaviour
                 temp_diff -= townscript.get_sell_amount_rum();
             }
             //rum_cost.text = temp_diff.ToString();
+            uiScript.updateMarket("Rum", "Cost", temp_diff);
         }
     }
     public void sub_item(string item)
@@ -178,6 +183,7 @@ public class ManagerScript : MonoBehaviour
         {
             rum_dif_int -= 1;
             //rum_diff.text = rum_dif_int.ToString();
+            uiScript.updateMarket("Rum", "Amount", rum_dif_int);
             if (rum_dif_int >= 0)
             {
                 Town townscript = current_location.GetComponent<Town>();
@@ -189,6 +195,7 @@ public class ManagerScript : MonoBehaviour
                 temp_diff += townscript.get_sell_amount_rum();
             }
             //rum_cost.text = temp_diff.ToString();
+            uiScript.updateMarket("Rum", "Cost", temp_diff);
         }
     }
     public void confirm_purchase()
@@ -196,9 +203,12 @@ public class ManagerScript : MonoBehaviour
         Town townscript = current_location.GetComponent<Town>();
         townscript.alter_shop_stock(-rum_dif_int);
         //rum_diff.text = ("0");
+        uiScript.updateMarket("Rum", "Amount", 0);
         //rum_cost.text = ("0");
+        uiScript.updateMarket("Rum", "Cost", 0);
         rum_cargo_count += rum_dif_int;
         //rum_cargo_amount_text.text = rum_cargo_count.ToString();
+        uiScript.updateMarket("Rum", "Cargo", rum_cargo_count);
         rum_dif_int = 0;
         change_gold(temp_diff);
         temp_diff = 0;

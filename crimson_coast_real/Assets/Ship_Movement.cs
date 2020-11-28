@@ -18,14 +18,16 @@ public class Ship_Movement : MonoBehaviour
     public List<Crew> ship_crew = new List<Crew>();
     public List<Event> events = new List<Event>();
     private float halfway=0;
-    public GameObject local_event;
-    public Text event_name;
-    public Text evnet_flavor;
-    public Text decision1;
-    public Text decision2;
+    //public GameObject local_event;
+    //public Text event_name;
+    //public Text evnet_flavor;
+    //public Text decision1;
+    //public Text decision2;
     public string current_event;
     public int weekdis;
     public Vector3 lastpos;
+    public GameObject canvas;
+    public UIManager uiScript;
     void Start()
     {
         inport = true;
@@ -92,18 +94,22 @@ public class Ship_Movement : MonoBehaviour
     }
     public void trigger_event(int num)
     {
-        local_event.SetActive(true);
-        event_name.text = events[num].get_name();
-        evnet_flavor.text = events[num].get_flavor();
-        decision1.text = events[num].get_o1();
-        decision2.text = events[num].get_o2();
-        current_event = events[num].get_name();
+        // local_event.SetActive(true);
+        // event_name.text = events[num].get_name();
+        // evnet_flavor.text = events[num].get_flavor();
+        // decision1.text = events[num].get_o1();
+        // decision2.text = events[num].get_o2();
+        // current_event = events[num].get_name();
+        uiScript.EventUI(true);
+        uiScript.updateEvent(events[num].get_name(), events[num].get_flavor(), events[num].get_o1(), events[num].get_o2(), "option1 description", "option 2 description");
+
     }
     public void makedecision(int num)
     {
         ManagerScript manage = manager.GetComponent<ManagerScript>();
         manage.handle_event(current_event, num);
-        local_event.SetActive(false);
+        //local_event.SetActive(false);
+        uiScript.EventUI(false);
         agent.isStopped = false;
     }
 }
