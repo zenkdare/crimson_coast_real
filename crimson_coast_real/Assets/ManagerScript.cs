@@ -134,6 +134,7 @@ public class ManagerScript : MonoBehaviour
             //enter_market_button.SetActive(false);
             //enter_tavern_button.SetActive(false);
             uiScript.TownUI(false);
+            uiScript.DestroyCrewTav();
         }
         else
         {

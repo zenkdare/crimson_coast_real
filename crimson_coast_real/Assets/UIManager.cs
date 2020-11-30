@@ -22,6 +22,7 @@ public class UIManager : MonoBehaviour
 	public GameObject CrewUI;
     public GameObject Manager;
     public ManagerScript managerScript;
+    public List<GameObject> townCrew = new List<GameObject>();
 
 	// public float widthSmooth = 4.6f;
 	// public float heightSmooth = 4.6f;
@@ -88,6 +89,7 @@ public class UIManager : MonoBehaviour
     	for (int i = 0; i < local_crew.Count; i++){
     		Crew crewmate = local_crew[i];
     		GameObject crewUI = GameObject.Instantiate(CrewUI, tavernUI.transform) as GameObject;
+    		townCrew.Add(crewUI);
     		exitButton.transform.SetSiblingIndex(i+2);
     		//set index for hire button
     		crewUI.GetComponent<crewUIScript>().setIndex(i);
@@ -107,9 +109,14 @@ public class UIManager : MonoBehaviour
 		}
     }
 
-    //public void destroyCrewTav(int index){
-    //	Destroy(tavernUI.transform.GetChild(index+1).gameObject);
-    //}
+    public void DestroyCrewTav()
+ 	{
+	    for(int i = 0; i < townCrew.Count; i++)
+	    {
+	    	Debug.Log("townCrew: "+i);
+	        Destroy(townCrew[i]);
+	    }
+ 	}
 
     public void updateEvent(string title, string info, string option1, string option2, string option1Desc, string option2Desc){
     	eventTitle.text = title;
