@@ -8,6 +8,7 @@ TagManager:
   - land
   - island
   - town
+  - manager
   layers:
   - Default
   - TransparentFX

@@ -325,6 +325,7 @@ GameObject:
   - component: {fileID: 593659318372892352}
   - component: {fileID: 593659318372892353}
   - component: {fileID: 593659318372892354}
+  - component: {fileID: 6621611299532356378}
   m_Layer: 5
   m_Name: CrewUI
   m_TagString: Untagged
@@ -421,6 +422,19 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &6621611299532356378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 593659318372892364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3e6f5300be520443a4bfe04c40ace83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crewIndex: 0
 --- !u!1 &593659318512563212
 GameObject:
   m_ObjectHideFlags: 0
@@ -764,6 +778,7 @@ GameObject:
   - component: {fileID: 593659318698430787}
   - component: {fileID: 593659318698430796}
   - component: {fileID: 593659318698430797}
+  - component: {fileID: 7791611894081756503}
   m_Layer: 5
   m_Name: HireButton
   m_TagString: Untagged
@@ -872,10 +887,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ManagerScript, Assembly-CSharp
-        m_MethodName: hire_crew
-        m_Mode: 3
+      - m_Target: {fileID: 7791611894081756503}
+        m_TargetAssemblyTypeName: hireButtonScript, Assembly-CSharp
+        m_MethodName: hireCrew
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -884,6 +899,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &7791611894081756503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 593659318698430799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 276c0d8a19ca13e48a07be871a25e688, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mangScript: {fileID: 0}
+  crewUI: {fileID: 6621611299532356378}
 --- !u!1 &593659318863166791
 GameObject:
   m_ObjectHideFlags: 0

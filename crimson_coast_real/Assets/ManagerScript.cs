@@ -242,6 +242,7 @@ public class ManagerScript : MonoBehaviour
     }
     public void hire_crew(int num)
     {
+        //Debug.Log("hire_crew manager:"+num);
         Town townscript = current_location.GetComponent<Town>();
         townscript.hire_crew(num);
         Ship_Movement ship_script = ship.GetComponent<Ship_Movement>();

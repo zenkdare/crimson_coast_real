@@ -60,6 +60,13 @@ public class Town : MonoBehaviour
         if (name == "Town3")
         {
             local_crew.Add(new Crew("Skippy", 2, "sharp eyes", "theif"));
+            local_crew.Add(new Crew("Adam", 5, "a", "1"));
+            local_crew.Add(new Crew("Jerry", 23, "b", "2"));
+            local_crew.Add(new Crew("Tom", 6, "c", "3"));
+            local_crew.Add(new Crew("Tim", 7, "d", "4"));
+            local_crew.Add(new Crew("Jones", 8, "e", "5"));
+            local_crew.Add(new Crew("Jim", 3, "f", "6"));
+            local_crew.Add(new Crew("Morgen", 4, "g", "7"));
         }
         temp_amount = rum_amount;
         if (name == "Town1")
@@ -74,10 +81,11 @@ public class Town : MonoBehaviour
     }
     public void hire_crew(int num)
     {
+        //Debug.Log("hire_crew Town:"+num);
         Ship_Movement ship_code = ship.GetComponent<Ship_Movement>();
         ship_code.add_crew(local_crew[num]);
         //crew1.SetActive(false);
-        uiScript.destroyCrewTav(num);
-        uiScript.updateTavern(local_crew);
+        //uiScript.destroyCrewTav(num);
+        //uiScript.updateTavern(local_crew);
     }
 }
