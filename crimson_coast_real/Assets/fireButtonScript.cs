@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class hireButtonScript : MonoBehaviour
+public class fireButtonScript : MonoBehaviour
 {
 	public ManagerScript mangScript;
     public UIManager uiScript;
@@ -20,9 +20,9 @@ public class hireButtonScript : MonoBehaviour
         
     }
 
-    public void hireCrew(){
+    public void fireCrew(){
     	//Debug.Log("hireIndex:"+crewUI.getIndex());
-    	mangScript.hire_crew(crewUI.getIndex());
-    	uiScript.DestroyCrewTav(crewUI.gameObject);
+    	mangScript.fire_crew(crewUI.getIndex());
+    	uiScript.DestroyCrewShip(crewUI.gameObject);
     }
 }

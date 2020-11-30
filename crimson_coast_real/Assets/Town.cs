@@ -84,6 +84,7 @@ public class Town : MonoBehaviour
         //Debug.Log("hire_crew Town:"+num);
         Ship_Movement ship_code = ship.GetComponent<Ship_Movement>();
         ship_code.add_crew(local_crew[num]);
+        uiScript.addCrew(local_crew[num]);
         //crew1.SetActive(false);
         //uiScript.destroyCrewTav(num);
         //uiScript.updateTavern(local_crew);

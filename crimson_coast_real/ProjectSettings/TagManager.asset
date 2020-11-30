@@ -10,6 +10,7 @@ TagManager:
   - town
   - manager
   - crewTav
+  - canvas
   layers:
   - Default
   - TransparentFX

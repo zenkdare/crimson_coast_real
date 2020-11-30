@@ -250,6 +250,14 @@ public class ManagerScript : MonoBehaviour
         //crew_count_text.text = ("Crew Count: "+ship_script.get_crew_count().ToString());
         uiScript.updateCrewCount(ship_script.get_crew_count());
     }
+    public void fire_crew(int num)
+    {//Removes a crewmate from crew listing
+        //Debug.Log("fire_crew manager:"+num);
+        Ship_Movement ship_script = ship.GetComponent<Ship_Movement>();
+
+        //crew_count_text.text = ("Crew Count: "+ship_script.get_crew_count().ToString());
+        uiScript.updateCrewCount(ship_script.get_crew_count());
+    }
     public void handle_event(string n, int option)
     {
         if (n.Equals("storm"))
@@ -269,4 +277,10 @@ public class ManagerScript : MonoBehaviour
             }
         }
     }
+    public void weekReport(){
+        string report = "generate a string\n this should have info about everything that happened in the week\n Like you spent 5 gold on crew\n you lost 7 rum to theft\n you used 20 rations on crew\n etc";
+        uiScript.weekInfoDisp(report);
+        uiScript.WeekInfoUI(true);
+    }
+
 }

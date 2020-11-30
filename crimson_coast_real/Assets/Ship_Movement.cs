@@ -110,6 +110,12 @@ public class Ship_Movement : MonoBehaviour
         manage.handle_event(current_event, num);
         //local_event.SetActive(false);
         uiScript.EventUI(false);
+        uiScript.eventResult("Description of what happened");
+        uiScript.EventResultUI(true);
+
+        //agent.isStopped = false;
+    }
+    public void continueJourney(){
         agent.isStopped = false;
     }
 }
