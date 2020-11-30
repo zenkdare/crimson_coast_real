@@ -25,15 +25,18 @@ public class UIManager : MonoBehaviour
 	public GameObject marketUI;
 	public GameObject tavernUI;
 	public GameObject shipCrewUI;
+    public GameObject crewRationUI;
 	public GameObject eventUI;
 	public GameObject eventResultUI;
 	public GameObject weekInfoUI;
 	public GameObject CrewUITav;
 	public GameObject CrewUIShip;
+    public GameObject CrewUIRations;
     public GameObject Manager;
     public ManagerScript managerScript;
     private List<GameObject> townCrew = new List<GameObject>();
     private List<GameObject> shipCrew = new List<GameObject>();
+    private List<GameObject> rationCrew = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
@@ -76,6 +79,10 @@ public class UIManager : MonoBehaviour
 
     public void ShipCrewUI(bool active){
     	shipCrewUI.SetActive(active);
+    }
+
+    public void CrewRationUI(bool active){
+        crewRationUI.SetActive(active);
     }
 
     public void EventUI(bool active){
@@ -166,10 +173,24 @@ public class UIManager : MonoBehaviour
 		textbox.text = crewmate.get_t2Desc();
 		textbox = crewUI.transform.Find("cost").GetComponent<Text>();
 		textbox.text = crewmate.get_cost().ToString();
+
+
+        //adds crew to ration UI        
+        crewUI = GameObject.Instantiate(CrewUIRations, crewRationUI.transform) as GameObject;
+        rationCrew.Add(crewUI);
+        //set index for confirm button
+        crewUI.GetComponent<crewUIScript>().setIndex(rationCrew.IndexOf(crewUI));
+        //update text to reflect the stats of a given crewmate
+        textbox = crewUI.transform.Find("Name").GetComponent<Text>();
+        textbox.text = crewmate.get_name();
     }
 
  	public void DestroyCrewShip(GameObject curCrew){
+        int index = shipCrew.IndexOf(curCrew);
     	shipCrew.Remove(curCrew);
+        Destroy(curCrew);
+        curCrew = rationCrew[index];
+        rationCrew.Remove(curCrew);
         Destroy(curCrew);
  	}
 

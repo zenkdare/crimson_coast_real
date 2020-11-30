@@ -98,6 +98,7 @@ public class ManagerScript : MonoBehaviour
         //tavern.SetActive(true);
         uiScript.TownUI(false);
         uiScript.TavernUI(true);
+        uiScript.ShipCrewUI(true);
     }
     public void Confirm_course()
     {
@@ -233,6 +234,7 @@ public class ManagerScript : MonoBehaviour
         //enter_tavern_button.SetActive(true);
         //tavern.SetActive(false);
         uiScript.TavernUI(false);
+        uiScript.ShipCrewUI(false);
         uiScript.TownUI(true);
     }
     public void change_gold(int change)
@@ -280,6 +282,7 @@ public class ManagerScript : MonoBehaviour
     public void weekReport(){
         string report = "generate a string\n this should have info about everything that happened in the week\n Like you spent 5 gold on crew\n you lost 7 rum to theft\n you used 20 rations on crew\n etc";
         uiScript.weekInfoDisp(report);
+        uiScript.EventResultUI(false);
         uiScript.WeekInfoUI(true);
     }
 
