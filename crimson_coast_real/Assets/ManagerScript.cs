@@ -378,7 +378,7 @@ public class ManagerScript : MonoBehaviour
             }
             else
             {
-                print("can't spend more than you have");
+                print("can't spend more than you have");    
             }
         }
         else
