@@ -9,6 +9,12 @@ public class Town : MonoBehaviour
     //public Text rum_stock_market;
     public int rum_price;
     public int rum_amount;
+    public int spice_price;
+    public int spice_amount;
+    public int timber_price;
+    public int timber_amount;
+    public int med_price;
+    public int med_amount;
     public int temp_amount;
     public List<Crew> local_crew = new List<Crew>();
     //public Text n;
@@ -31,29 +37,106 @@ public class Town : MonoBehaviour
     {
         
     }
-    public int get_buy_amount_rum()
+    public int get_buy_amount(string good)
     {
-        return rum_price;
+        if (good.Equals("rum"))
+        {
+            return rum_price;
+        }
+        if (good.Equals("spice"))
+        {
+            return spice_price;
+        }
+        if (good.Equals("timber"))
+        {
+            return timber_price;
+        }
+        if (good.Equals("med"))
+        {
+            return med_price;
+        }
+        else return -1;
     }
-    public int get_sell_amount_rum()
+    public int get_sell_amount(string good)
     {
-        return (int)(rum_price-(rum_price * .20));
+        if (good.Equals("rum"))
+        {
+            return (int)(rum_price - (rum_price * .20));
+        }
+        if (good.Equals("spice"))
+        {
+            return (int)(spice_price - (spice_price * .20));
+        }
+        if (good.Equals("timber"))
+        {
+            return (int)(timber_price - (timber_price * .20));
+        }
+        if (good.Equals("med"))
+        {
+            return (int)(med_price - (med_price * .20));
+        }
+        else
+        {
+            return -1;
+        }
     }
-    public int get_rum_amount()
+    public int get_good_amount(string good)
     {
-        return rum_amount;
+        if (good.Equals("rum"))
+        {
+            return rum_amount;
+        }
+        if (good.Equals("spice"))
+        {
+            return spice_amount;
+        }
+        if (good.Equals("timber"))
+        {
+            return timber_amount;
+        }
+        if (good.Equals("med"))
+        {
+            return med_amount;
+        }
+        else
+        {
+            return - 1;
+        }
     }
     public void set_shop_stock()
     {
-        temp_amount = rum_amount;
+        //temp_amount = rum_amount;
         //rum_stock_market.text = (temp_amount.ToString());
-        uiScript.updateMarket("Rum", "Stock", temp_amount);
+        uiScript.updateMarket("Rum", "Stock", rum_amount);
+        uiScript.updateMarket("Spice", "Stock", spice_amount);
+        uiScript.updateMarket("Timber", "Stock", timber_amount);
+        uiScript.updateMarket("Medicine", "Stock", med_amount);
     }
-    public void alter_shop_stock(int diff)
+    public void alter_shop_stock(int diff, string good)
     {
-        temp_amount+=diff;
+        if (good.Equals("rum"))
+        {
+            rum_amount += diff;
+            uiScript.updateMarket("Rum", "Stock", rum_amount);
+        }
+        if (good.Equals("spice"))
+        {
+            spice_amount += diff;
+            uiScript.updateMarket("Spice", "Stock", spice_amount);
+        }
+        if (good.Equals("timber"))
+        {
+            timber_amount += diff;
+            uiScript.updateMarket("Timber", "Stock", timber_amount);
+        }
+        if (good.Equals("med"))
+        {
+            med_amount += diff;
+            uiScript.updateMarket("Medicine", "Stock", med_amount);
+        }
+
         //rum_stock_market.text = (temp_amount.ToString());
-        uiScript.updateMarket("Rum", "Stock", temp_amount);
+
     }
     public void set_up_tavern(string [] names, string [] t1_lis, string [] t2_lis)
     {
@@ -97,8 +180,23 @@ public class Town : MonoBehaviour
         int t2_num = Random.Range(0, t2_lis.Length);
         return new Crew(names[name_num], 2, t1_lis[t1_num], t2_lis[t2_num]);
     }
-    public void change_rum_price(int num)
+    public void change_good_price(int num, string good)
     {
-        rum_price += num;
+        if (good.Equals("rum"))
+        {
+            rum_price += num;
+        }
+        if (good.Equals("spice"))
+        {
+            spice_price += num;
+        }
+        if (good.Equals("timber"))
+        {
+            timber_price += num;
+        }
+        if (good.Equals("med"))
+        {
+            med_price += num;
+        }
     }
 }

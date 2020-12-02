@@ -24,10 +24,20 @@ public class ManagerScript : MonoBehaviour
     //public GameObject shop_screen;
     //public Text rum_diff;
     public int rum_dif_int;
+    public int spice_dif_int;
+    public int timber_dif_int;
+    public int med_dif_int;
     //public Text rum_cost;
     public int rum_cargo_count;
+    public int spice_cargo_count;
+    public int timber_cargo_count;
+    public int med_cargo_count;
     //public Text rum_cargo_amount_text;
     public int temp_diff;
+    private int rum_temp_diff;
+    private int spice_temp_diff;
+    private int timber_temp_diff;
+    private int med_temp_diff;
     string[] crew_names;
     string[] trait1_lis;
     string[] trait2_lis;
@@ -44,6 +54,10 @@ public class ManagerScript : MonoBehaviour
         SetUpTown(start_town);
         current_location = start_town;
         rum_dif_int = 0;
+        spice_dif_int = 0;
+        timber_dif_int = 0;
+        med_dif_int = 0; 
+
         change_gold(0);
         //uiScript = canvas.GetComponent<UIManager>();
     }
@@ -167,60 +181,243 @@ public class ManagerScript : MonoBehaviour
     }
     public void add_item(string item)
     {
-        if (item.Equals("rum"))
+        Town townscript = current_location.GetComponent<Town>();
+        if (item.Equals("rum") && townscript.get_good_amount("rum")>rum_dif_int)
         {
             rum_dif_int += 1;
             //rum_diff.text = rum_dif_int.ToString();
             uiScript.updateMarket("Rum", "Amount", rum_dif_int);
             if (rum_dif_int > 0)
             {
-                Town townscript = current_location.GetComponent<Town>();
-                temp_diff -= townscript.get_rum_amount();
+                temp_diff -= townscript.get_buy_amount("rum");
+                rum_temp_diff -= townscript.get_buy_amount("rum");
             }
             else if (rum_dif_int <= 0)
             {
-                Town townscript = current_location.GetComponent<Town>();
-                temp_diff -= townscript.get_sell_amount_rum();
+                temp_diff -= townscript.get_sell_amount("rum");
+                rum_temp_diff -= townscript.get_sell_amount("rum");
             }
             //rum_cost.text = temp_diff.ToString();
-            uiScript.updateMarket("Rum", "Cost", temp_diff);
+            uiScript.updateMarket("Rum", "Cost", rum_temp_diff);
+        }
+        else if (item.Equals("spice") && townscript.get_good_amount("spice")>spice_dif_int)
+        {
+            spice_dif_int += 1;
+            //rum_diff.text = rum_dif_int.ToString();
+            uiScript.updateMarket("Spice", "Amount", spice_dif_int);
+            if (spice_dif_int > 0)
+            {
+                temp_diff -= townscript.get_buy_amount("spice");
+                spice_temp_diff -= townscript.get_buy_amount("spice");
+            }
+            else if (spice_dif_int <= 0)
+            {
+                temp_diff -= townscript.get_sell_amount("spice");
+                spice_temp_diff -= townscript.get_sell_amount("spice");
+            }
+            //rum_cost.text = temp_diff.ToString();
+            uiScript.updateMarket("Spice", "Cost", spice_temp_diff);
+        }
+        else if (item.Equals("timber") && townscript.get_good_amount("timber")>timber_dif_int)
+        {
+            timber_dif_int += 1;
+            //rum_diff.text = rum_dif_int.ToString();
+            uiScript.updateMarket("Timber", "Amount", timber_dif_int);
+            if (timber_dif_int > 0)
+            {
+                temp_diff -= townscript.get_buy_amount("timber");
+                timber_temp_diff -= townscript.get_buy_amount("timber");
+            }
+            else if (timber_dif_int <= 0)
+            {
+                temp_diff -= townscript.get_sell_amount("timber");
+                timber_temp_diff -= townscript.get_sell_amount("timber");
+            }
+            //rum_cost.text = temp_diff.ToString();
+            uiScript.updateMarket("Timber", "Cost", timber_temp_diff);
+        }
+        else if (item.Equals("medicine") && townscript.get_good_amount("med")>med_dif_int)
+        {
+            med_dif_int += 1;
+            //rum_diff.text = rum_dif_int.ToString();
+            uiScript.updateMarket("Medicine", "Amount", med_dif_int);
+            if (med_dif_int > 0)
+            {
+                temp_diff -= townscript.get_buy_amount("med");
+                med_temp_diff -= townscript.get_buy_amount("med");
+            }
+            else if (med_dif_int <= 0)
+            {
+                temp_diff -= townscript.get_sell_amount("med");
+                med_temp_diff -= townscript.get_sell_amount("med");
+            }
+            //rum_cost.text = temp_diff.ToString();
+            uiScript.updateMarket("Medicine", "Cost", med_temp_diff);
+        }
+        else
+        {
+            print("can't buy more than stock allows");
         }
     }
     public void sub_item(string item)
     {
-        if (item.Equals("rum"))
+        Town townscript = current_location.GetComponent<Town>();
+        if (item.Equals("rum") && rum_cargo_count > -rum_dif_int)
         {
             rum_dif_int -= 1;
             //rum_diff.text = rum_dif_int.ToString();
             uiScript.updateMarket("Rum", "Amount", rum_dif_int);
             if (rum_dif_int >= 0)
             {
-                Town townscript = current_location.GetComponent<Town>();
-                temp_diff += townscript.get_rum_amount();
+                temp_diff += townscript.get_buy_amount("rum");
+                rum_temp_diff += townscript.get_buy_amount("rum");
             }
             else if (rum_dif_int < 0)
             {
-                Town townscript = current_location.GetComponent<Town>();
-                temp_diff += townscript.get_sell_amount_rum();
+                temp_diff += townscript.get_sell_amount("rum");
+                rum_temp_diff += townscript.get_sell_amount("rum");
             }
             //rum_cost.text = temp_diff.ToString();
-            uiScript.updateMarket("Rum", "Cost", temp_diff);
+            uiScript.updateMarket("Rum", "Cost", rum_temp_diff);
+        }
+        if (item.Equals("spice") && spice_cargo_count > -spice_dif_int)
+        {
+            spice_dif_int -= 1;
+            //rum_diff.text = rum_dif_int.ToString();
+            uiScript.updateMarket("Spice", "Amount", spice_dif_int);
+            if (spice_dif_int >= 0)
+            {
+                temp_diff += townscript.get_buy_amount("spice");
+                spice_temp_diff += townscript.get_buy_amount("spice");
+            }
+            else if (spice_dif_int < 0)
+            {
+                temp_diff += townscript.get_sell_amount("spice");
+                spice_temp_diff += townscript.get_sell_amount("spice");
+            }
+            //rum_cost.text = temp_diff.ToString();
+            uiScript.updateMarket("Spice", "Cost", spice_temp_diff);
+        }
+        if (item.Equals("timber") && timber_cargo_count > -timber_dif_int)
+        {
+            timber_dif_int -= 1;
+            //rum_diff.text = rum_dif_int.ToString();
+            uiScript.updateMarket("Timber", "Amount", timber_dif_int);
+            if (timber_dif_int >= 0)
+            {
+                temp_diff += townscript.get_buy_amount("timber");
+                timber_temp_diff += townscript.get_buy_amount("timber");
+            }
+            else if (timber_dif_int < 0)
+            {
+                temp_diff += townscript.get_sell_amount("timber");
+                timber_temp_diff += townscript.get_sell_amount("timber");
+            }
+            //rum_cost.text = temp_diff.ToString();
+            uiScript.updateMarket("Timber", "Cost", timber_temp_diff);
+        }
+        if (item.Equals("medicine") && med_cargo_count > -med_dif_int)
+        {
+            med_dif_int -= 1;
+            //rum_diff.text = rum_dif_int.ToString();
+            uiScript.updateMarket("Medicine", "Amount", med_dif_int);
+            if (med_dif_int >= 0)
+            {
+                temp_diff += townscript.get_buy_amount("med");
+                med_temp_diff += townscript.get_buy_amount("med");
+            }
+            else if (med_dif_int < 0)
+            {
+                temp_diff += townscript.get_sell_amount("med");
+                med_temp_diff += townscript.get_sell_amount("med");
+            }
+            //rum_cost.text = temp_diff.ToString();
+            uiScript.updateMarket("Medicine", "Cost", med_temp_diff);
         }
     }
     public void confirm_purchase()
     {
-        Town townscript = current_location.GetComponent<Town>();
-        townscript.alter_shop_stock(-rum_dif_int);
-        //rum_diff.text = ("0");
-        uiScript.updateMarket("Rum", "Amount", 0);
-        //rum_cost.text = ("0");
-        uiScript.updateMarket("Rum", "Cost", 0);
-        rum_cargo_count += rum_dif_int;
-        //rum_cargo_amount_text.text = rum_cargo_count.ToString();
-        uiScript.updateMarket("Rum", "Cargo", rum_cargo_count);
-        rum_dif_int = 0;
-        change_gold(temp_diff);
-        temp_diff = 0;
+        if (temp_diff<0)
+        {
+            if (-temp_diff <= gold)
+            {
+                Town townscript = current_location.GetComponent<Town>();
+                townscript.alter_shop_stock(-rum_dif_int, "rum");
+                townscript.alter_shop_stock(-spice_dif_int, "spice");
+                townscript.alter_shop_stock(-timber_dif_int, "timber");
+                townscript.alter_shop_stock(-med_dif_int, "med");
+                //rum_diff.text = ("0");
+                uiScript.updateMarket("Rum", "Amount", 0);
+                uiScript.updateMarket("Spice", "Amount", 0);
+                uiScript.updateMarket("Timber", "Amount", 0);
+                uiScript.updateMarket("Medicine", "Amount", 0);
+                //rum_cost.text = ("0");
+                uiScript.updateMarket("Rum", "Cost", 0);
+                uiScript.updateMarket("Spice", "Cost", 0);
+                uiScript.updateMarket("Timber", "Cost", 0);
+                uiScript.updateMarket("Medicine", "Cost", 0);
+                rum_cargo_count += rum_dif_int;
+                spice_cargo_count += spice_dif_int;
+                timber_cargo_count += timber_dif_int;
+                med_cargo_count += med_dif_int;
+                //rum_cargo_amount_text.text = rum_cargo_count.ToString();
+                uiScript.updateMarket("Rum", "Cargo", rum_cargo_count);
+                uiScript.updateMarket("Spice", "Cargo", spice_cargo_count);
+                uiScript.updateMarket("Timber", "Cargo", timber_cargo_count);
+                uiScript.updateMarket("Medicine", "Cargo", med_cargo_count);
+                rum_dif_int = 0;
+                spice_dif_int = 0;
+                timber_dif_int = 0;
+                med_dif_int = 0;
+                change_gold(temp_diff);
+                temp_diff = 0;
+                rum_temp_diff = 0;
+                spice_temp_diff = 0;
+                timber_temp_diff = 0;
+                med_temp_diff = 0;
+            }
+            else
+            {
+                print("can't spend more than you have");
+            }
+        }
+        else
+        {
+            Town townscript = current_location.GetComponent<Town>();
+            townscript.alter_shop_stock(-rum_dif_int, "rum");
+            townscript.alter_shop_stock(-spice_dif_int, "spice");
+            townscript.alter_shop_stock(-timber_dif_int, "timber");
+            townscript.alter_shop_stock(-med_dif_int, "med");
+            //rum_diff.text = ("0");
+            uiScript.updateMarket("Rum", "Amount", 0);
+            uiScript.updateMarket("Spice", "Amount", 0);
+            uiScript.updateMarket("Timber", "Amount", 0);
+            uiScript.updateMarket("Medicine", "Amount", 0);
+            //rum_cost.text = ("0");
+            uiScript.updateMarket("Rum", "Cost", 0);
+            uiScript.updateMarket("Spice", "Cost", 0);
+            uiScript.updateMarket("Timber", "Cost", 0);
+            uiScript.updateMarket("Medicine", "Cost", 0);
+            rum_cargo_count += rum_dif_int;
+            spice_cargo_count += spice_dif_int;
+            timber_cargo_count += timber_dif_int;
+            med_cargo_count += med_dif_int;
+            //rum_cargo_amount_text.text = rum_cargo_count.ToString();
+            uiScript.updateMarket("Rum", "Cargo", rum_cargo_count);
+            uiScript.updateMarket("Spice", "Cargo", spice_cargo_count);
+            uiScript.updateMarket("Timber", "Cargo", timber_cargo_count);
+            uiScript.updateMarket("Medicine", "Cargo", med_cargo_count);
+            rum_dif_int = 0;
+            spice_dif_int = 0;
+            timber_dif_int = 0;
+            med_dif_int = 0;
+            change_gold(temp_diff);
+            temp_diff = 0;
+            rum_temp_diff = 0;
+            spice_temp_diff = 0;
+            timber_temp_diff = 0;
+            med_temp_diff = 0;
+        }
     }
     public void exit_market()
     {

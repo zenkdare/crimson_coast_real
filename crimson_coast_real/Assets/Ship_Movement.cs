@@ -92,12 +92,14 @@ public class Ship_Movement : MonoBehaviour
     }
     public void add_crew(Crew new_hire)
     {
+        /*
         ship_crew.Add(new_hire);
         if(String.Equals(new_hire.get_t1(), "Silver Tongue"))
         {
             townscript = current_port.GetComponent<Town>();
             
         }
+        */
     }
     public void trigger_event(int num)
     {
