@@ -28,6 +28,9 @@ public class ManagerScript : MonoBehaviour
     public int rum_cargo_count;
     //public Text rum_cargo_amount_text;
     public int temp_diff;
+    string[] crew_names;
+    string[] trait1_lis;
+    string[] trait2_lis;
     //public GameObject tavern;
     //public GameObject enter_tavern_button;
     public GameObject canvas;
@@ -35,6 +38,9 @@ public class ManagerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        crew_names = new string[5] { "John", "Stevens", "Baker", "Robert", "Larry" };
+        trait1_lis = new string[2] { "Silver Tongue", "Keen Eyes" };
+        trait2_lis = new string[2] { "Greedy", "Theif" };
         SetUpTown(start_town);
         current_location = start_town;
         rum_dif_int = 0;
@@ -54,7 +60,7 @@ public class ManagerScript : MonoBehaviour
         camscript.Look_at_Location(town);
         Town townscript = town.GetComponent<Town>();
         townscript.set_shop_stock();
-        townscript.set_up_tavern();
+        townscript.set_up_tavern(crew_names, trait1_lis, trait2_lis);
         //rum_cargo_amount_text.text = rum_cargo_count.ToString();
         //chart_course_button.SetActive(true);
         //set_sail_button.SetActive(true);

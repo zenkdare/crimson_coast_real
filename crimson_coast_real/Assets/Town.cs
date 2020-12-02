@@ -51,17 +51,13 @@ public class Town : MonoBehaviour
         temp_amount+=diff;
         rum_stock_market.text = (temp_amount.ToString());
     }
-    public void set_up_tavern()
+    public void set_up_tavern(string [] names, string [] t1_lis, string [] t2_lis)
     {
-        if (name == "Town3")
-        {
-            local_crew.Add(new Crew("Skippy", 2, "sharp eyes", "theif"));
-        }
+        local_crew.Clear();
+        local_crew.Add(generate_crew(names, t1_lis, t2_lis));
+        local_crew.Add(generate_crew(names, t1_lis, t2_lis));
+        local_crew.Add(generate_crew(names, t1_lis, t2_lis));
         temp_amount = rum_amount;
-        if (name == "Town1")
-        {
-            local_crew.Add(new Crew("Fred", 2, "Drunk", "superstitious"));
-        }
         n.text = local_crew[0].get_name();
         t1.text = local_crew[0].get_t1();
         t2.text = local_crew[0].get_t2();
@@ -72,5 +68,17 @@ public class Town : MonoBehaviour
         Ship_Movement ship_code = ship.GetComponent<Ship_Movement>();
         ship_code.add_crew(local_crew[num]);
         crew1.SetActive(false);
+    }
+
+    private Crew generate_crew(string[] names, string[] t1_lis, string [] t2_lis)
+    {
+        int name_num = Random.Range(0, names.Length);
+        int t1_num = Random.Range(0, t1_lis.Length);
+        int t2_num = Random.Range(0, t2_lis.Length);
+        return new Crew(names[name_num], 2, t1_lis[t1_num], t2_lis[t2_num]);
+    }
+    public void change_rum_price(int num)
+    {
+        rum_price += num;
     }
 }
