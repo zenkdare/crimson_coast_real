@@ -1,30 +1,58 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+
 	public Text goldText;
 	public Text crewCountText;
-	//public list townCrew;
-	//public list playerCrew;
-	public Text eventTitle;
-	public Text eventText;
-	public Text eventOption1;
-	public Text eventOption2;
+	private Text eventTitle;
+	private Text eventText;
+	private Text eventOption1;
+	private Text eventOption2;
+	private Text eventDesc1;
+	private Text eventDesc2;
+	private Text eventResultText;
+	private Text weekInfoText;
+	public GameObject tavExitButton;
+	public GameObject tavList;
+	public GameObject crewExitButton;
+	public GameObject shipCrewList;
 	public GameObject townUI;
 	public GameObject confirmCourseUI;
 	public GameObject marketUI;
 	public GameObject tavernUI;
+	public GameObject shipCrewUI;
+    public GameObject crewRationUI;
 	public GameObject eventUI;
+	public GameObject eventResultUI;
+	public GameObject weekInfoUI;
+	public GameObject CrewUITav;
+	public GameObject CrewUIShip;
+    public GameObject CrewUIRations;
     public GameObject Manager;
-    public ManagerScript managScript;
+    public ManagerScript managerScript;
+    private List<GameObject> townCrew = new List<GameObject>();
+    private List<GameObject> shipCrew = new List<GameObject>();
+    private List<GameObject> rationCrew = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
     {
-        //managScript = Manager.GetComponent<ManagerScript>();
+    	eventTitle = eventUI.transform.Find("Title").GetComponent<Text>();
+    	eventText = eventUI.transform.Find("Main").GetComponent<Text>();
+    	eventOption1 = eventUI.transform.Find("Buttons/Button1/Text").GetComponent<Text>();
+    	eventOption2 = eventUI.transform.Find("Buttons/Button2/Text").GetComponent<Text>();
+    	eventDesc1 = eventUI.transform.Find("Buttons/Button1/Description/Text").GetComponent<Text>();
+    	eventDesc2 = eventUI.transform.Find("Buttons/Button2/Description/Text").GetComponent<Text>();
+    	eventResultText = eventResultUI.transform.Find("Main").GetComponent<Text>();
+    	weekInfoText = weekInfoUI.transform.Find("Main").GetComponent<Text>();
+    	//tavExitButton = tavernUI.transform.GetChild(1).gameObject;
+    	//tavList = tavernUI.transform.GetChild(0).gameObject;
+    	//crewExitButton = shipCrewUI.transform.GetChild(1).gameObject;
+    	//shipCrewList = shipCrewUI.transform.GetChild(0).gameObject;
     }
 
     // Update is called once per frame
@@ -35,9 +63,6 @@ public class UIManager : MonoBehaviour
 
     public void TownUI(bool active){
     	townUI.SetActive(active);
-    	if (active){
-    		//set cargo
-    	}
     }
 
     public void ChartUI(bool active){
@@ -52,8 +77,24 @@ public class UIManager : MonoBehaviour
     	tavernUI.SetActive(active);
     }
 
+    public void ShipCrewUI(bool active){
+    	shipCrewUI.SetActive(active);
+    }
+
+    public void CrewRationUI(bool active){
+        crewRationUI.SetActive(active);
+    }
+
     public void EventUI(bool active){
     	eventUI.SetActive(active);
+    }
+
+    public void EventResultUI(bool active){
+    	eventResultUI.SetActive(active);
+    }
+
+    public void WeekInfoUI(bool active){
+    	weekInfoUI.SetActive(active);
     }
 
     public void updateGold(int gold){
@@ -62,6 +103,112 @@ public class UIManager : MonoBehaviour
 
     public void updateCrewCount(int crew){
     	crewCountText.text = ("Crew Count: " + crew);
+    }
+
+    public void updateMarket(string item, string index, int value){
+    	Text textbox = marketUI.transform.Find(item+"/"+index).GetComponent<Text>();
+    	textbox.text = value.ToString();
+    }
+
+    public void updateTavern(List<Crew> local_crew){//spawns in crewmate listings for tavern
+    	//make a loop here for each crew member in the list
+    	crewExitButton.SetActive(false);
+    	tavExitButton.SetActive(true);
+    	for (int i = 0; i < local_crew.Count; i++){
+    		Crew crewmate = local_crew[i];
+    		GameObject crewUI = GameObject.Instantiate(CrewUITav, tavList.transform) as GameObject;
+    		townCrew.Add(crewUI);
+    		//set index for hire button
+    		crewUI.GetComponent<crewUIScript>().setIndex(i);
+    		//update text to reflect the stats of a given crewmate
+			Text textbox = crewUI.transform.Find("Name").GetComponent<Text>();
+			textbox.text = crewmate.get_name();
+			textbox = crewUI.transform.Find("trait1").GetComponent<Text>();
+			textbox.text = crewmate.get_t1();
+			textbox = textbox.transform.Find("description/Text").GetComponent<Text>();
+			textbox.text = crewmate.get_t1Desc();
+			textbox = crewUI.transform.Find("trait2").GetComponent<Text>();
+			textbox.text = crewmate.get_t2();
+			textbox = textbox.transform.Find("description/Text").GetComponent<Text>();
+			textbox.text = crewmate.get_t2Desc();
+			textbox = crewUI.transform.Find("cost").GetComponent<Text>();
+			textbox.text = crewmate.get_cost().ToString();
+		}
+    }
+
+    public void DestroyCrewTav(){
+    	tavExitButton.SetActive(false);
+    	crewExitButton.SetActive(true);
+ 		GameObject curCrew;
+	    for(int i = 0; i < townCrew.Count; i++)
+	    {
+	    	//Debug.Log("townCrew: "+i);
+	    	curCrew = townCrew[i];
+	    	//townCrew.Remove(curCrew);
+	        Destroy(curCrew);
+	    }
+	    townCrew.Clear();
+ 	}
+
+ 	public void DestroyCrewTav(GameObject curCrew){
+    	townCrew.Remove(curCrew);
+        Destroy(curCrew);
+ 	}
+
+    public void addCrew(Crew crewmate){//adds crew member to ship UI
+		GameObject crewUI = GameObject.Instantiate(CrewUIShip, shipCrewList.transform) as GameObject;
+		shipCrew.Add(crewUI);
+		//set index for fire button
+		crewUI.GetComponent<crewUIScript>().setIndex(shipCrew.IndexOf(crewUI));
+		//update text to reflect the stats of a given crewmate
+		Text textbox = crewUI.transform.Find("Name").GetComponent<Text>();
+		textbox.text = crewmate.get_name();
+		textbox = crewUI.transform.Find("trait1").GetComponent<Text>();
+		textbox.text = crewmate.get_t1();
+		textbox = textbox.transform.Find("description/Text").GetComponent<Text>();
+		textbox.text = crewmate.get_t1Desc();
+		textbox = crewUI.transform.Find("trait2").GetComponent<Text>();
+		textbox.text = crewmate.get_t2();
+		textbox = textbox.transform.Find("description/Text").GetComponent<Text>();
+		textbox.text = crewmate.get_t2Desc();
+		textbox = crewUI.transform.Find("cost").GetComponent<Text>();
+		textbox.text = crewmate.get_cost().ToString();
+
+
+        //adds crew to ration UI        
+        crewUI = GameObject.Instantiate(CrewUIRations, crewRationUI.transform) as GameObject;
+        rationCrew.Add(crewUI);
+        //set index for confirm button
+        crewUI.GetComponent<crewUIScript>().setIndex(rationCrew.IndexOf(crewUI));
+        //update text to reflect the stats of a given crewmate
+        textbox = crewUI.transform.Find("Name").GetComponent<Text>();
+        textbox.text = crewmate.get_name();
+    }
+
+ 	public void DestroyCrewShip(GameObject curCrew){
+        int index = shipCrew.IndexOf(curCrew);
+    	shipCrew.Remove(curCrew);
+        Destroy(curCrew);
+        curCrew = rationCrew[index];
+        rationCrew.Remove(curCrew);
+        Destroy(curCrew);
+ 	}
+
+    public void updateEvent(string title, string info, string option1, string option2, string option1Desc, string option2Desc){
+    	eventTitle.text = title;
+    	eventText.text = info;
+    	eventOption1.text = option1;
+    	eventOption2.text = option2;
+    	eventDesc1.text = option1Desc;
+    	eventDesc2.text = option2Desc;
+    }
+
+    public void eventResult(string info){
+    	eventResultText.text = info;
+    }
+
+    public void weekInfoDisp(string info){
+    	weekInfoText.text = info;
     }
 
 }

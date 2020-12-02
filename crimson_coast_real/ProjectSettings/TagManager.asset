@@ -8,6 +8,9 @@ TagManager:
   - land
   - island
   - town
+  - manager
+  - crewTav
+  - canvas
   layers:
   - Default
   - TransparentFX

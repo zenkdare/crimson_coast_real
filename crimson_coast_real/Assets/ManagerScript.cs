@@ -62,6 +62,7 @@ public class ManagerScript : MonoBehaviour
         townscript.set_shop_stock();
         townscript.set_up_tavern(crew_names, trait1_lis, trait2_lis);
         //rum_cargo_amount_text.text = rum_cargo_count.ToString();
+        uiScript.updateMarket("Rum", "Cargo", rum_cargo_count);
         //chart_course_button.SetActive(true);
         //set_sail_button.SetActive(true);
         //enter_market_button.SetActive(true);
@@ -80,6 +81,7 @@ public class ManagerScript : MonoBehaviour
         //enter_tavern_button.SetActive(false);
         //confirm_course_button.SetActive(true);
         //reset_course_button.SetActive(true);
+        uiScript.TownUI(false);
         uiScript.ChartUI(true);
         courseCharter.GetComponent<Charting_a_Course>().enabled = true;
     }
@@ -90,6 +92,7 @@ public class ManagerScript : MonoBehaviour
         //enter_market_button.SetActive(false);
         //enter_tavern_button.SetActive(false);
         //shop_screen.SetActive(true);
+        uiScript.TownUI(false);
         uiScript.MarketUI(true);
     }
     public void enter_tavern()
@@ -99,7 +102,9 @@ public class ManagerScript : MonoBehaviour
         //enter_market_button.SetActive(false);
         //enter_tavern_button.SetActive(false);
         //tavern.SetActive(true);
+        uiScript.TownUI(false);
         uiScript.TavernUI(true);
+        uiScript.ShipCrewUI(true);
     }
     public void Confirm_course()
     {
@@ -136,6 +141,7 @@ public class ManagerScript : MonoBehaviour
             //enter_market_button.SetActive(false);
             //enter_tavern_button.SetActive(false);
             uiScript.TownUI(false);
+            uiScript.DestroyCrewTav();
         }
         else
         {
@@ -165,6 +171,7 @@ public class ManagerScript : MonoBehaviour
         {
             rum_dif_int += 1;
             //rum_diff.text = rum_dif_int.ToString();
+            uiScript.updateMarket("Rum", "Amount", rum_dif_int);
             if (rum_dif_int > 0)
             {
                 Town townscript = current_location.GetComponent<Town>();
@@ -176,6 +183,7 @@ public class ManagerScript : MonoBehaviour
                 temp_diff -= townscript.get_sell_amount_rum();
             }
             //rum_cost.text = temp_diff.ToString();
+            uiScript.updateMarket("Rum", "Cost", temp_diff);
         }
     }
     public void sub_item(string item)
@@ -184,6 +192,7 @@ public class ManagerScript : MonoBehaviour
         {
             rum_dif_int -= 1;
             //rum_diff.text = rum_dif_int.ToString();
+            uiScript.updateMarket("Rum", "Amount", rum_dif_int);
             if (rum_dif_int >= 0)
             {
                 Town townscript = current_location.GetComponent<Town>();
@@ -195,6 +204,7 @@ public class ManagerScript : MonoBehaviour
                 temp_diff += townscript.get_sell_amount_rum();
             }
             //rum_cost.text = temp_diff.ToString();
+            uiScript.updateMarket("Rum", "Cost", temp_diff);
         }
     }
     public void confirm_purchase()
@@ -202,9 +212,12 @@ public class ManagerScript : MonoBehaviour
         Town townscript = current_location.GetComponent<Town>();
         townscript.alter_shop_stock(-rum_dif_int);
         //rum_diff.text = ("0");
+        uiScript.updateMarket("Rum", "Amount", 0);
         //rum_cost.text = ("0");
+        uiScript.updateMarket("Rum", "Cost", 0);
         rum_cargo_count += rum_dif_int;
         //rum_cargo_amount_text.text = rum_cargo_count.ToString();
+        uiScript.updateMarket("Rum", "Cargo", rum_cargo_count);
         rum_dif_int = 0;
         change_gold(temp_diff);
         temp_diff = 0;
@@ -227,6 +240,7 @@ public class ManagerScript : MonoBehaviour
         //enter_tavern_button.SetActive(true);
         //tavern.SetActive(false);
         uiScript.TavernUI(false);
+        uiScript.ShipCrewUI(false);
         uiScript.TownUI(true);
     }
     public void change_gold(int change)
@@ -237,9 +251,18 @@ public class ManagerScript : MonoBehaviour
     }
     public void hire_crew(int num)
     {
+        //Debug.Log("hire_crew manager:"+num);
         Town townscript = current_location.GetComponent<Town>();
         townscript.hire_crew(num);
         Ship_Movement ship_script = ship.GetComponent<Ship_Movement>();
+        //crew_count_text.text = ("Crew Count: "+ship_script.get_crew_count().ToString());
+        uiScript.updateCrewCount(ship_script.get_crew_count());
+    }
+    public void fire_crew(int num)
+    {//Removes a crewmate from crew listing
+        //Debug.Log("fire_crew manager:"+num);
+        Ship_Movement ship_script = ship.GetComponent<Ship_Movement>();
+
         //crew_count_text.text = ("Crew Count: "+ship_script.get_crew_count().ToString());
         uiScript.updateCrewCount(ship_script.get_crew_count());
     }
@@ -262,4 +285,11 @@ public class ManagerScript : MonoBehaviour
             }
         }
     }
+    public void weekReport(){
+        string report = "generate a string\n this should have info about everything that happened in the week\n Like you spent 5 gold on crew\n you lost 7 rum to theft\n you used 20 rations on crew\n etc";
+        uiScript.weekInfoDisp(report);
+        uiScript.EventResultUI(false);
+        uiScript.WeekInfoUI(true);
+    }
+
 }
