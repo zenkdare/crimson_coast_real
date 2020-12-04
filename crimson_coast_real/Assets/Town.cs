@@ -17,6 +17,10 @@ public class Town : MonoBehaviour
     public int med_amount;
     public int temp_amount;
     public List<Crew> local_crew = new List<Crew>();
+    private int og_rum_amount;
+    private int og_spice_amount;
+    private int og_timber_amount;
+    private int og_med_amount; 
     //public Text n;
     //public Text t1;
     //public Text t2;
@@ -28,7 +32,10 @@ public class Town : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        og_rum_amount = rum_amount;
+        og_spice_amount = spice_amount;
+        og_timber_amount = timber_amount;
+        og_med_amount = med_amount;
         temp_amount = rum_amount;
     }
 
@@ -138,23 +145,39 @@ public class Town : MonoBehaviour
         //rum_stock_market.text = (temp_amount.ToString());
 
     }
-    public void set_up_tavern(string [] names, string [] t1_lis, string [] t2_lis)
+    public void set_up_tavern(List<string> names, List<string> t1_lis, List<string> t2_lis, List<string> t1_d, List<string> t2_d)
     {
         if (name == "Town3")
         {
-            local_crew.Add(new Crew("Skippy", 2, "sharp eyes", "theif"));
-            local_crew.Add(new Crew("Adam", 5, "a", "1"));
-            local_crew.Add(new Crew("Jerry", 23, "b", "2"));
-            local_crew.Add(new Crew("Tom", 6, "c", "3"));
-            local_crew.Add(new Crew("Tim", 7, "d", "4"));
-            local_crew.Add(new Crew("Jones", 8, "e", "5"));
-            local_crew.Add(new Crew("Jim", 3, "f", "6"));
-            local_crew.Add(new Crew("Morgen", 4, "g", "7"));
+            local_crew.Add(generate_crew(names, t1_lis, t2_lis, t1_d, t2_d));
+            local_crew.Add(generate_crew(names, t1_lis, t2_lis, t1_d, t2_d));
+            local_crew.Add(generate_crew(names, t1_lis, t2_lis, t1_d, t2_d));
+            local_crew.Add(generate_crew(names, t1_lis, t2_lis, t1_d, t2_d));
+            local_crew.Add(generate_crew(names, t1_lis, t2_lis, t1_d, t2_d));
+            local_crew.Add(generate_crew(names, t1_lis, t2_lis, t1_d, t2_d));
+            local_crew.Add(generate_crew(names, t1_lis, t2_lis, t1_d, t2_d));
+            local_crew.Add(generate_crew(names, t1_lis, t2_lis, t1_d, t2_d));
+            rum_amount = og_rum_amount;
+            spice_amount = og_spice_amount;
+            timber_amount = og_timber_amount;
+            med_amount = og_med_amount;
         }
         temp_amount = rum_amount;
         if (name == "Town1")
         {
-            local_crew.Add(new Crew("Fred", 2, "Drunk", "superstitious"));
+            //local_crew.Add(new Crew("Fred", 2, "Drunk", "superstitious", 5));
+            local_crew.Add(generate_crew(names, t1_lis, t2_lis, t1_d, t2_d));
+            local_crew.Add(generate_crew(names, t1_lis, t2_lis, t1_d, t2_d));
+            local_crew.Add(generate_crew(names, t1_lis, t2_lis, t1_d, t2_d));
+            local_crew.Add(generate_crew(names, t1_lis, t2_lis, t1_d, t2_d));
+            local_crew.Add(generate_crew(names, t1_lis, t2_lis, t1_d, t2_d));
+            local_crew.Add(generate_crew(names, t1_lis, t2_lis, t1_d, t2_d));
+            local_crew.Add(generate_crew(names, t1_lis, t2_lis, t1_d, t2_d));
+            local_crew.Add(generate_crew(names, t1_lis, t2_lis, t1_d, t2_d));
+            rum_amount = og_rum_amount;
+            spice_amount = og_spice_amount;
+            timber_amount = og_timber_amount;
+            med_amount = og_med_amount;
         }
         //n.text = local_crew[0].get_name();
         //t1.text = local_crew[0].get_t1();
@@ -173,12 +196,12 @@ public class Town : MonoBehaviour
         //uiScript.updateTavern(local_crew);
     }
 
-    private Crew generate_crew(string[] names, string[] t1_lis, string [] t2_lis)
+    private Crew generate_crew(List<string> names, List<string> t1_lis, List<string> t2_lis, List<string> t1_d, List<string> t2_d)
     {
-        int name_num = Random.Range(0, names.Length);
-        int t1_num = Random.Range(0, t1_lis.Length);
-        int t2_num = Random.Range(0, t2_lis.Length);
-        return new Crew(names[name_num], 2, t1_lis[t1_num], t2_lis[t2_num]);
+        int name_num = Random.Range(0, names.Count);
+        int t1_num = Random.Range(0, t1_lis.Count);
+        int t2_num = Random.Range(0, t2_lis.Count);
+        return new Crew(names[name_num], 2, t1_lis[t1_num], t2_lis[t2_num], t1_d[t1_num], t2_d[t2_num], 5);
     }
     public void change_good_price(int num, string good)
     {

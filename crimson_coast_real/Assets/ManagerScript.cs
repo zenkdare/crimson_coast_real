@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
+using System.IO;
 
 public class ManagerScript : MonoBehaviour
 {
@@ -38,9 +39,11 @@ public class ManagerScript : MonoBehaviour
     private int spice_temp_diff;
     private int timber_temp_diff;
     private int med_temp_diff;
-    string[] crew_names;
-    string[] trait1_lis;
-    string[] trait2_lis;
+    List<string> crew_names;
+    List<string> trait1_lis;
+    List<string> trait2_lis;
+    List<string> trait1d;
+    List<string> trait2d;
     //public GameObject tavern;
     //public GameObject enter_tavern_button;
     public GameObject canvas;
@@ -48,17 +51,50 @@ public class ManagerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        crew_names = new string[5] { "John", "Stevens", "Baker", "Robert", "Larry" };
-        trait1_lis = new string[2] { "Silver Tongue", "Keen Eyes" };
-        trait2_lis = new string[2] { "Greedy", "Theif" };
-        SetUpTown(start_town);
+        crew_names = new List<string>();
+        trait1_lis = new List<string>();
+        trait2_lis = new List<string>();
+        trait1d = new List<string>();
+        trait2d = new List<string>();
         current_location = start_town;
         rum_dif_int = 0;
         spice_dif_int = 0;
         timber_dif_int = 0;
         med_dif_int = 0; 
-
         change_gold(0);
+        //where you load the strings from a text file for crew generation
+        StreamReader sr = new StreamReader("Assets/CrewNames.txt");
+        string line;
+        while ((line = sr.ReadLine()) != null)
+        {
+            crew_names.Add(line);
+        }
+        sr.Close();
+        sr = new StreamReader("Assets/Traits_1.txt");
+        while ((line = sr.ReadLine()) != null)
+        {
+            trait1_lis.Add(line);
+        }
+        sr.Close();
+        sr = new StreamReader("Assets/Traits_2.txt");
+        while ((line = sr.ReadLine()) != null)
+        {
+            trait2_lis.Add(line);
+        }
+        sr.Close();
+        sr = new StreamReader("Assets/T1_D.txt");
+        while ((line = sr.ReadLine()) != null)
+        {
+            trait1d.Add(line);
+        }
+        sr.Close();
+        sr = new StreamReader("Assets/T2_D.txt");
+        while ((line = sr.ReadLine()) != null)
+        {
+            trait2d.Add(line);
+        }
+        sr.Close();
+        SetUpTown(start_town);
         //uiScript = canvas.GetComponent<UIManager>();
     }
 
@@ -74,7 +110,7 @@ public class ManagerScript : MonoBehaviour
         camscript.Look_at_Location(town);
         Town townscript = town.GetComponent<Town>();
         townscript.set_shop_stock();
-        townscript.set_up_tavern(crew_names, trait1_lis, trait2_lis);
+        townscript.set_up_tavern(crew_names, trait1_lis, trait2_lis, trait1d, trait2d);
         //rum_cargo_amount_text.text = rum_cargo_count.ToString();
         uiScript.updateMarket("Rum", "Cargo", rum_cargo_count);
         //chart_course_button.SetActive(true);
@@ -459,7 +495,7 @@ public class ManagerScript : MonoBehaviour
     {//Removes a crewmate from crew listing
         //Debug.Log("fire_crew manager:"+num);
         Ship_Movement ship_script = ship.GetComponent<Ship_Movement>();
-
+        ship_script.fire_crew(num);
         //crew_count_text.text = ("Crew Count: "+ship_script.get_crew_count().ToString());
         uiScript.updateCrewCount(ship_script.get_crew_count());
     }

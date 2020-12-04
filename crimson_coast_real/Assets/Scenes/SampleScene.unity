@@ -27147,7 +27147,7 @@ GameObject:
   - component: {fileID: 1343203708}
   m_Layer: 0
   m_Name: Manager
-  m_TagString: Untagged
+  m_TagString: manager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -43330,7 +43330,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1343203708}
         m_TargetAssemblyTypeName: ManagerScript, Assembly-CSharp
         m_MethodName: exit_tavern
         m_Mode: 1

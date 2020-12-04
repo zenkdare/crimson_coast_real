@@ -29,8 +29,24 @@ public class Ship_Movement : MonoBehaviour
     public Vector3 lastpos;
     public GameObject canvas;
     public UIManager uiScript;
+    private int has_wind_reader;
+    private int has_watch_dog;
+    private int has_peacemaker;
+    private int num_lucky;
+    private int has_doctor;
+    private int has_bosun;
+    private int has_coneccted;
+    private int num_silver_tongue;
     void Start()
     {
+        has_wind_reader=0;
+        has_watch_dog=0;
+        has_peacemaker=0;
+        num_lucky = 0; 
+        has_doctor = 0;
+        has_bosun = 0;
+        has_coneccted = 0;
+        num_silver_tongue=0;
         inport = true;
         rb = GetComponent<Rigidbody>();
         agent = GetComponent<NavMeshAgent>();
@@ -100,6 +116,76 @@ public class Ship_Movement : MonoBehaviour
             
         }
         */
+        ship_crew.Add(new_hire);
+        if(new_hire.get_t1().Equals("Wind Reader"))
+        {
+            has_wind_reader++;
+        }
+        if (new_hire.get_t1().Equals("Watch Dog"))
+        {
+            has_watch_dog++;
+        }
+        if (new_hire.get_t1().Equals("Peacemaker"))
+        {
+            has_peacemaker ++;
+        }
+        if (new_hire.get_t1().Equals("Lucky"))
+        {
+            num_lucky++;
+        }
+        if (new_hire.get_t1().Equals("Doctor"))
+        {
+            has_doctor ++;
+        }
+        if (new_hire.get_t1().Equals("Bosun"))
+        {
+            has_bosun ++;
+        }
+        if (new_hire.get_t1().Equals("Silver Tongue"))
+        {
+            num_silver_tongue++; ;
+        }
+        if (new_hire.get_t1().Equals("Connected"))
+        {
+            has_coneccted ++;
+        }
+    }
+    public void fire_crew(int num)
+    {
+        Crew newly_fired = ship_crew[num];
+        if (newly_fired.get_t1().Equals("Wind Reader"))
+        {
+            has_wind_reader--;
+        }
+        if (newly_fired.get_t1().Equals("Watch Dog"))
+        {
+            has_watch_dog--;
+        }
+        if (newly_fired.get_t1().Equals("Peacemaker"))
+        {
+            has_peacemaker--;
+        }
+        if (newly_fired.get_t1().Equals("Lucky"))
+        {
+            num_lucky--;
+        }
+        if (newly_fired.get_t1().Equals("Doctor"))
+        {
+            has_doctor--;
+        }
+        if (newly_fired.get_t1().Equals("Bosun"))
+        {
+            has_bosun--;
+        }
+        if (newly_fired.get_t1().Equals("Silver Tongue"))
+        {
+            num_silver_tongue--; ;
+        }
+        if (newly_fired.get_t1().Equals("Connected"))
+        {
+            has_coneccted--;
+        }
+
     }
     public void trigger_event(int num)
     {

@@ -11,13 +11,21 @@ public class Crew : MonoBehaviour
     public string trait2;
     public string trait1Desc = "trait 1 description";
     public string trait2Desc = "trait 2 description";
+    public int loyalty;
     // Start is called before the first frame update\
-    public Crew(string n, int c, string t1, string t2)
+    public Crew(string n, int c, string t1, string t2, string t1d, string t2d, int loy)
     {
         crew_name = n;
         pay = c;
         trait1 = t1;
         trait2 = t2;
+        trait1Desc = t1d;
+        trait2Desc = t2d;
+        loyalty = loy;
+        if (t2.Equals("Greedy"))
+        {
+            c += 3;
+        }
     }
     void Start()
     {
@@ -52,5 +60,9 @@ public class Crew : MonoBehaviour
     public string get_t2Desc()
     {
         return trait2Desc;
+    }
+    public int getLoyalty()
+    {
+        return loyalty;
     }
 }
