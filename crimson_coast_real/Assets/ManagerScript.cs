@@ -28,17 +28,20 @@ public class ManagerScript : MonoBehaviour
     public int spice_dif_int;
     public int timber_dif_int;
     public int med_dif_int;
+    public int rations_dif_int;
     //public Text rum_cost;
     public int rum_cargo_count;
     public int spice_cargo_count;
     public int timber_cargo_count;
     public int med_cargo_count;
+    public int rations_cargo_count;
     //public Text rum_cargo_amount_text;
     public int temp_diff;
     private int rum_temp_diff;
     private int spice_temp_diff;
     private int timber_temp_diff;
     private int med_temp_diff;
+    private int rations_temp_diff;
     List<string> crew_names;
     List<string> trait1_lis;
     List<string> trait2_lis;
@@ -60,7 +63,8 @@ public class ManagerScript : MonoBehaviour
         rum_dif_int = 0;
         spice_dif_int = 0;
         timber_dif_int = 0;
-        med_dif_int = 0; 
+        med_dif_int = 0;
+        rations_dif_int = 0;
         change_gold(0);
         //where you load the strings from a text file for crew generation
         StreamReader sr = new StreamReader("Assets/CrewNames.txt");
@@ -113,6 +117,9 @@ public class ManagerScript : MonoBehaviour
         townscript.set_up_tavern(crew_names, trait1_lis, trait2_lis, trait1d, trait2d);
         //rum_cargo_amount_text.text = rum_cargo_count.ToString();
         uiScript.updateMarket("Rum", "Cargo", rum_cargo_count);
+        uiScript.updateMarket("Spice", "Cargo", spice_cargo_count);
+        uiScript.updateMarket("Timber", "Cargo", timber_cargo_count);
+        uiScript.updateMarket("Medicine", "Cargo", med_cargo_count);
         //chart_course_button.SetActive(true);
         //set_sail_button.SetActive(true);
         //enter_market_button.SetActive(true);

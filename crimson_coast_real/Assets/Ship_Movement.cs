@@ -149,6 +149,7 @@ public class Ship_Movement : MonoBehaviour
         {
             has_coneccted ++;
         }
+        print(has_wind_reader + " , "+ has_watch_dog + " , "+ has_peacemaker+" , "+ num_lucky+" , "+ num_lucky+","+ has_doctor+","+ has_bosun+","+ num_silver_tongue+","+has_coneccted);
     }
     public void fire_crew(int num)
     {
@@ -185,6 +186,7 @@ public class Ship_Movement : MonoBehaviour
         {
             has_coneccted--;
         }
+        print(has_wind_reader + " , " + has_watch_dog + " , " + has_peacemaker + " , " + num_lucky + " , " + num_lucky + "," + has_doctor + "," + has_bosun + "," + num_silver_tongue + "," + has_coneccted);
 
     }
     public void trigger_event(int num)
