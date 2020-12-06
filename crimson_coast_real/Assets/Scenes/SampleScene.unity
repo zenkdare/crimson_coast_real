@@ -2833,6 +2833,7 @@ MonoBehaviour:
   boat: {fileID: 1031851749}
   b_agent: {fileID: 1031851751}
   weekdis: 0
+  dis_in_a_week: 2000
 --- !u!114 &215265604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16589,7 +16590,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1031851752}
         m_TargetAssemblyTypeName: Ship_Movement, Assembly-CSharp
         m_MethodName: makedecision
         m_Mode: 3
@@ -20870,11 +20871,16 @@ MonoBehaviour:
   current_port: {fileID: 0}
   ship_crew: []
   events: []
-  current_event: 
+  possible_events: []
+  current_event: {fileID: 0}
   weekdis: 2000
   lastpos: {x: 0, y: 0, z: 0}
   canvas: {fileID: 1356755786}
   uiScript: {fileID: 1356755787}
+  event_rate: 0.25
+  watchdog_success_chance: 0.25
+  reader_success_chance: 0.25
+  peace_success_chance: 0.25
 --- !u!4 &1037311658 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 087d1c5ad16ce2344bf4b955e9014f52, type: 3}
@@ -27190,10 +27196,12 @@ MonoBehaviour:
   spice_dif_int: 0
   timber_dif_int: 0
   med_dif_int: 0
+  rations_dif_int: 0
   rum_cargo_count: 0
   spice_cargo_count: 0
   timber_cargo_count: 0
   med_cargo_count: 0
+  rations_cargo_count: 0
   temp_diff: 0
   canvas: {fileID: 1356755786}
   uiScript: {fileID: 1356755787}
@@ -44738,7 +44746,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1031851752}
         m_TargetAssemblyTypeName: Ship_Movement, Assembly-CSharp
         m_MethodName: makedecision
         m_Mode: 3

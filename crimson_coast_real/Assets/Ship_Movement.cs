@@ -3,28 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
+using System.IO;
 
 public class Ship_Movement : MonoBehaviour
 {
     public GameObject manager;
-    //public GameObject dock_Button;
-    //public GameObject sail_On_Button;
-    //public GameObject port_Text;
     public bool inport;
     private GameObject targetPort;
     public GameObject current_port;
     private NavMeshAgent agent;
-    // Start is called before the first frame update
     Rigidbody rb;
     public List<Crew> ship_crew = new List<Crew>();
     public List<Event> events = new List<Event>();
+    public List<Event> possible_events = new List<Event>();
     private float halfway=0;
-    //public GameObject local_event;
-    //public Text event_name;
-    //public Text evnet_flavor;
-    //public Text decision1;
-    //public Text decision2;
-    public string current_event;
+    public Event current_event;
     public int weekdis;
     public Vector3 lastpos;
     public GameObject canvas;
@@ -37,6 +30,10 @@ public class Ship_Movement : MonoBehaviour
     private int has_bosun;
     private int has_coneccted;
     private int num_silver_tongue;
+    public float event_rate;
+    public float watchdog_success_chance;
+    public float reader_success_chance;
+    public float peace_success_chance;
     void Start()
     {
         has_wind_reader=0;
@@ -50,8 +47,17 @@ public class Ship_Movement : MonoBehaviour
         inport = true;
         rb = GetComponent<Rigidbody>();
         agent = GetComponent<NavMeshAgent>();
-        events.Add(new Event("Storm", "", "", "", ""));
-        events.Add(new Event("Theft", "Stop the theft, for a watch dog is in your service", "accept the loss, whoever the theif is, they were too sneaky to catch", "Rumors abound of cargo going missing. You head into the lower decks to see if your crew tell the truth", ""));
+        StreamReader sr = new StreamReader("Assets/Event_info.txt");
+        string all_event_info;
+        all_event_info = sr.ReadToEnd();
+        sr.Close();
+        string[] text_events = all_event_info.Split(';');
+        for(int i = 0; i < text_events.Length; i++)
+        {
+            events.Add(new Event(text_events[i]));
+        }
+        possible_events.Add(events[1]);
+        possible_events.Add(events[2]);
     }
 
     // Update is called once per frame
@@ -69,8 +75,12 @@ public class Ship_Movement : MonoBehaviour
                 else if(Vector3.Distance(gameObject.transform.position, lastpos) >= weekdis)
                 {
                     //print(Vector3.Distance(gameObject.transform.position, lastpos));
-                    trigger_event(0);
-                    events.RemoveAt(0);
+                    if (Random.value <= event_rate)
+                    {
+                        int event_num = Random.Range(0, possible_events.Count);
+                        current_event = possible_events[event_num];
+                        trigger_event(possible_events[event_num]);
+                    }
                     agent.isStopped = true;
                     lastpos = gameObject.transform.position;
                 }
@@ -189,7 +199,7 @@ public class Ship_Movement : MonoBehaviour
         print(has_wind_reader + " , " + has_watch_dog + " , " + has_peacemaker + " , " + num_lucky + " , " + num_lucky + "," + has_doctor + "," + has_bosun + "," + num_silver_tongue + "," + has_coneccted);
 
     }
-    public void trigger_event(int num)
+    public void trigger_event(Event e)
     {
         // local_event.SetActive(true);
         // event_name.text = events[num].get_name();
@@ -198,18 +208,87 @@ public class Ship_Movement : MonoBehaviour
         // decision2.text = events[num].get_o2();
         // current_event = events[num].get_name();
         uiScript.EventUI(true);
-        uiScript.updateEvent(events[num].get_name(), events[num].get_flavor(), events[num].get_o1(), events[num].get_o2(), "option1 description", "option 2 description");
+        uiScript.updateEvent(e.get_name(), e.get_flavor(), e.get_o1(), e.get_o2(),e.get_o1_descrip(), e.get_o2_descrip());
 
     }
     public void makedecision(int num)
     {
-        ManagerScript manage = manager.GetComponent<ManagerScript>();
-        manage.handle_event(current_event, num);
         //local_event.SetActive(false);
-        uiScript.EventUI(false);
-        uiScript.eventResult("Description of what happened");
-        uiScript.EventResultUI(true);
+        string result="hmmmm, not suppossed to happen";
+        int num_result = -1;
+        if (current_event.is_active())
+        {
+            float odds = Random.value;
+            if(current_event.get_name().Equals("A Theif in the Night"))
+            {
+                if (num == 0)
+                {
+                    if (has_watch_dog > 0 || odds <= watchdog_success_chance)
+                    {
+                        result = current_event.get_good_result();
+                        num_result = 0;
+                    }
+                    else
+                    {
+                        result = current_event.get_failed_result();
+                        num_result = 1;
+                    }
+                }
+                else
+                {
+                    result = current_event.get_bad_result();
+                    num_result = 2;
+                }   
+            }
+            if (current_event.get_name().Equals("Brewing Storm"))
+            {
+                if (num == 0)
+                {
+                    if (has_wind_reader > 0 || odds <= reader_success_chance)
+                    {
+                        result = current_event.get_good_result();
+                        num_result = 0;
+                    }
+                    else
+                    {
+                        result = current_event.get_failed_result();
+                        num_result = 1;
+                    }
+                }
+                else
+                {
+                    result = current_event.get_bad_result();
+                    num_result = 2;
+                }
+            }
+            if (current_event.get_name().Equals("On Deck Brawl"))
+            {
+                if (num == 0)
+                {
+                    if (has_peacemaker > 0 || odds <= peace_success_chance)
+                    {
+                        result = current_event.get_good_result();
+                        num_result = 0;
+                    }
+                    else
+                    {
+                        result = current_event.get_failed_result();
+                        num_result = 1;
+                    }
+                }
+                else
+                {
+                    result = current_event.get_bad_result();
+                    num_result = 2;
+                }
+            }
 
+        }
+        uiScript.EventUI(false);
+        uiScript.eventResult(result);
+        uiScript.EventResultUI(true);
+        ManagerScript manage = manager.GetComponent<ManagerScript>();
+        manage.handle_event(current_event, num_result);
         //agent.isStopped = false;
     }
     public void continueJourney(){

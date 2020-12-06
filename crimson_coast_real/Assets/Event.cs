@@ -7,18 +7,29 @@ public class Event : MonoBehaviour
     private string id;
     private string option1;
     private string option2;
+    private string option1_descrip;
+    private string option2_descrip;
     private string flavor;
     private string trigger;
+    private string good_result;
+    private string failed_result;
+    private string bad_result;
     // Start is called before the first frame update
-    public Event(string n, string o1, string o2, string f, string t)
+    public Event(string info)
     {
-        id = n;
-        option1 = o1;
-        option2 = o2;
-        flavor = f;
-        if (t != null)
+        string[] parsed_info = info.Split('\n');
+        if (parsed_info.Length == 10)
         {
-            trigger = t;
+            id = parsed_info[0];
+            flavor = parsed_info[1];
+            option1_descrip = parsed_info[2];
+            option2_descrip = parsed_info[3];
+            option1 = parsed_info[4];
+            option2 = parsed_info[5];
+            good_result = parsed_info[6];
+            failed_result = parsed_info[7];
+            bad_result = parsed_info[8];
+            trigger = "fate";
         }
     }
     void Start()
@@ -50,5 +61,36 @@ public class Event : MonoBehaviour
     public string get_trigger()
     {
         return trigger;
+    }
+    public string get_o1_descrip()
+    {
+        return option1_descrip;
+    }
+    public string get_o2_descrip()
+    {
+        return option2_descrip;
+    }
+    public string get_good_result()
+    {
+        return good_result;
+    }
+    public string get_failed_result()
+    {
+        return failed_result;
+    }
+    public string get_bad_result()
+    {
+        return bad_result;
+    }
+    public bool is_active()
+    {
+        if(id.Equals("A Theif in the Night") || id.Equals("Brewing Storm") || id.Equals("On Deck Brawl"))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }

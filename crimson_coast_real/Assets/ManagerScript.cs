@@ -506,22 +506,80 @@ public class ManagerScript : MonoBehaviour
         //crew_count_text.text = ("Crew Count: "+ship_script.get_crew_count().ToString());
         uiScript.updateCrewCount(ship_script.get_crew_count());
     }
-    public void handle_event(string n, int option)
+    public void handle_event(Event e, int result)
     {
-        if (n.Equals("storm"))
+        if (e.get_name().Equals("A Theif in the Night"))
         {
-            if (option == 0)
+            if (result == 1)
             {
-
+                int stolen_good = Random.Range(0, 5);
+                if (stolen_good == 0)
+                {
+                    rum_cargo_count -= 3;
+                }
+                if (stolen_good == 1)
+                {
+                    spice_cargo_count -= 3;
+                }
+                if (stolen_good == 2)
+                {
+                    timber_cargo_count -= 3;
+                }
+                if (stolen_good == 2)
+                {
+                    med_cargo_count -= 3;
+                }
+            }
+            if (result == 2)
+            {
+                int stolen_good = Random.Range(0, 5);
+                if (stolen_good == 0)
+                {
+                    rum_cargo_count -= 1;
+                }
+                if (stolen_good == 1)
+                {
+                    spice_cargo_count -= 1;
+                }
+                if (stolen_good == 2)
+                {
+                    timber_cargo_count -= 1;
+                }
+                if (stolen_good == 2)
+                {
+                    med_cargo_count -= 1;
+                }
             }
         }
-        if (n.Equals("Theft"))
+        if (e.get_name().Equals("Brewing Storm"))
         {
-            if (option == 1)
+            if (result == 1)
             {
-                rum_cargo_count -= 2;
-                Ship_Movement ship_script = ship.GetComponent<Ship_Movement>();
-                ship_script.dock();
+                rum_cargo_count -= 3;
+                //food count-9
+            }
+            if (result == 2)
+            {
+                //all loyalty-1
+            }
+        }
+        if (e.get_name().Equals("On Deck Brawl"))
+        {
+            if (result == 0)
+            {
+                //+2 loyalty to all
+            }
+            if (result == 1)
+            {
+                med_cargo_count -= 3;
+                timber_cargo_count -= 3;
+                //+2 to 2 random loyalty
+            }
+            if (result == 2)
+            {
+                med_cargo_count--;
+                timber_cargo_count--;
+                //+1 loyalty to 2 random
             }
         }
     }

@@ -10,6 +10,7 @@ public class Charting_a_Course : MonoBehaviour
     public GameObject boat;
     public NavMeshAgent b_agent;
     public int weekdis;
+    public float dis_in_a_week;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,7 +28,7 @@ public class Charting_a_Course : MonoBehaviour
         Draw_Chart_path.path = b_agent.path.corners;
         if (!(b_agent.pathPending))
         {
-            //print(RemainingDistance(b_agent.path.corners));
+            weekdis = (int)(RemainingDistance(b_agent.path.corners)/dis_in_a_week);
         }
     }
 
@@ -62,6 +63,11 @@ public class Charting_a_Course : MonoBehaviour
         for (int i = 0; i < points.Length - 1; i++)
             distance += Vector3.Distance(points[i], points[i + 1]);
         return distance;
+    }
+    //method to call for the ui to get the amount of weeks it will take to make a journey
+    public int Get_Distacne_in_Weeks()
+    {
+        return weekdis;
     }
     /*
     public void RemoveanItem(Point point)
