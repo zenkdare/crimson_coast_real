@@ -22763,7 +22763,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1343203708}
         m_TargetAssemblyTypeName: ManagerScript, Assembly-CSharp
         m_MethodName: weekReport
         m_Mode: 1
@@ -24416,7 +24416,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1031851752}
         m_TargetAssemblyTypeName: Ship_Movement, Assembly-CSharp
         m_MethodName: continueJourney
         m_Mode: 1

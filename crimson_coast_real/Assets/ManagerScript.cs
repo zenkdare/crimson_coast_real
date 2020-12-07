@@ -47,6 +47,7 @@ public class ManagerScript : MonoBehaviour
     List<string> trait2_lis;
     List<string> trait1d;
     List<string> trait2d;
+    public int current_ration_state;
     //public GameObject tavern;
     //public GameObject enter_tavern_button;
     public GameObject canvas;
@@ -66,6 +67,7 @@ public class ManagerScript : MonoBehaviour
         med_dif_int = 0;
         rations_dif_int = 0;
         change_gold(0);
+        current_ration_state = 2;
         //where you load the strings from a text file for crew generation
         StreamReader sr = new StreamReader("Assets/CrewNames.txt");
         string line;
@@ -583,11 +585,72 @@ public class ManagerScript : MonoBehaviour
             }
         }
     }
+    //code for the stuff that comes after events
     public void weekReport(){
+        Ship_Movement ship_script = ship.GetComponent<Ship_Movement>();
+        if (current_ration_state == 0)
+        {
+            rations_cargo_count -= (ship_script.get_crew_count() * 2);
+            ship_script.extra_rations();
+        }
+        if (current_ration_state == 1)
+        {
+            rations_cargo_count -= ship_script.get_crew_count();
+            ship_script.normal_rations();
+        }
+        if (current_ration_state == 2)
+        {
+            ship_script.extra_rations();
+        }
         string report = "generate a string\n this should have info about everything that happened in the week\n Like you spent 5 gold on crew\n you lost 7 rum to theft\n you used 20 rations on crew\n etc";
         uiScript.weekInfoDisp(report);
         uiScript.EventResultUI(false);
         uiScript.WeekInfoUI(true);
     }
 
+    public void choose_ration_type(int num)
+    {
+        //generous should be 0, normal is 1, none is 2
+        current_ration_state = num;
+    }
+
+    //methods for getting the cargo and stuff
+    public int get_cargo_rum()
+    {
+        return rum_cargo_count;
+    }
+    public int get_cargo_spice()
+    {
+        return spice_cargo_count;
+    }
+    public int get_cargo_timber()
+    {
+        return timber_cargo_count;
+    }
+    public int get_cargo_med()
+    {
+        return med_cargo_count;
+    }
+    public int get_cargo_rations()
+    {
+        return rations_cargo_count;
+    }
+
+    public void give_rum()
+    {
+        if (rum_cargo_count > 0)
+        {
+            Ship_Movement ship_script = ship.GetComponent<Ship_Movement>();
+            ship_script.give_rum();
+            rum_cargo_count--;
+        }
+        else
+        {
+            print("can't give what aint there");
+        }
+    }
+    public void give_spice()
+    {
+        spice_cargo_count--;
+    }
 }

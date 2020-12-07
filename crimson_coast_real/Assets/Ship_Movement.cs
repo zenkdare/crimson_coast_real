@@ -34,6 +34,8 @@ public class Ship_Movement : MonoBehaviour
     public float watchdog_success_chance;
     public float reader_success_chance;
     public float peace_success_chance;
+    private int no_rations_num;
+    private bool using_spice;
     void Start()
     {
         has_wind_reader=0;
@@ -44,7 +46,9 @@ public class Ship_Movement : MonoBehaviour
         has_bosun = 0;
         has_coneccted = 0;
         num_silver_tongue=0;
+        no_rations_num = 0;
         inport = true;
+        using_spice = false;
         rb = GetComponent<Rigidbody>();
         agent = GetComponent<NavMeshAgent>();
         StreamReader sr = new StreamReader("Assets/Event_info.txt");
@@ -293,5 +297,58 @@ public class Ship_Movement : MonoBehaviour
     }
     public void continueJourney(){
         agent.isStopped = false;
+    }
+    public void give_rum()
+    {
+        for(int i=0; i < ship_crew.Count; i++)
+        {
+            ship_crew[i].change_loyalty(2);
+        }
+    }
+    public void extra_rations()
+    {
+        for (int i = 0; i < ship_crew.Count; i++)
+        {
+            if (using_spice)
+            {
+                ship_crew[i].change_loyalty(4);
+            }
+            ship_crew[i].change_loyalty(1);
+
+        }
+        if (using_spice)
+        {
+            using_spice = false;
+        }
+        no_rations_num = 0;
+    }
+    public void normal_rations()
+    {
+        no_rations_num = 0;
+        if (using_spice)
+        {
+            for (int i = 0; i < ship_crew.Count; i++)
+            { 
+                ship_crew[i].change_loyalty(3);
+            }
+            using_spice = false;
+        }
+    }
+    public void no_rations()
+    {
+        for (int i = 0; i < ship_crew.Count; i++)
+        {
+            ship_crew[i].change_loyalty(-1);
+            no_rations_num++;
+        }
+        if (no_rations_num > 2)
+        {
+            ship_crew.RemoveAt(Random.Range(0, ship_crew.Count));
+            //need to update the ui here
+        }
+    }
+    public void toggle_spice()
+    {
+        using_spice = true;
     }
 }

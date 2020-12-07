@@ -65,4 +65,8 @@ public class Crew : MonoBehaviour
     {
         return loyalty;
     }
+    public void change_loyalty(int num)
+    {
+        loyalty += num;
+    }
 }
