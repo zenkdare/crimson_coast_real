@@ -351,4 +351,25 @@ public class Ship_Movement : MonoBehaviour
     {
         using_spice = true;
     }
+    public void handle_mutiny_spread()
+    {
+        int mutany_count=0;
+        for(int i = 0; i < ship_crew.Count; i++)
+        {
+            if (ship_crew[0].getLoyalty() == 0)
+            {
+                mutany_count++;
+                int num = i;
+                while (ship_crew[num].getLoyalty() == 0)
+                {
+                    num = Random.Range(0, ship_crew.Count);
+                }
+                ship_crew[i].change_loyalty(-2);
+            }
+        }
+        if (mutany_count >= ship_crew.Count / 2)
+        {
+            //you lose here
+        }
+    }
 }

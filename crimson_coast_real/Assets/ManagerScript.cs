@@ -602,6 +602,7 @@ public class ManagerScript : MonoBehaviour
         {
             ship_script.extra_rations();
         }
+        ship_script.handle_mutiny_spread();
         string report = "generate a string\n this should have info about everything that happened in the week\n Like you spent 5 gold on crew\n you lost 7 rum to theft\n you used 20 rations on crew\n etc";
         uiScript.weekInfoDisp(report);
         uiScript.EventResultUI(false);

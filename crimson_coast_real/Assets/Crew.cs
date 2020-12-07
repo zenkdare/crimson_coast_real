@@ -68,5 +68,9 @@ public class Crew : MonoBehaviour
     public void change_loyalty(int num)
     {
         loyalty += num;
+        if (loyalty < 0)
+        {
+            loyalty = 0;
+        }
     }
 }
