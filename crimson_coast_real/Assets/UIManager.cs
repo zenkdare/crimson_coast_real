@@ -22,21 +22,23 @@ public class UIManager : MonoBehaviour
 	public GameObject shipCrewList;
 	public GameObject townUI;
 	public GameObject confirmCourseUI;
+    public GameObject confirmCourseReportUI;
 	public GameObject marketUI;
 	public GameObject tavernUI;
 	public GameObject shipCrewUI;
-    public GameObject crewRationUI;
+    public GameObject crewListUI;
 	public GameObject eventUI;
 	public GameObject eventResultUI;
 	public GameObject weekInfoUI;
+    public GameObject cargoUI;
 	public GameObject CrewUITav;
 	public GameObject CrewUIShip;
-    public GameObject CrewUIRations;
+    public GameObject CrewUIList;
     public GameObject Manager;
     public ManagerScript managerScript;
     private List<GameObject> townCrew = new List<GameObject>();
     private List<GameObject> shipCrew = new List<GameObject>();
-    private List<GameObject> rationCrew = new List<GameObject>();
+    private List<GameObject> crewListCrew = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
@@ -69,6 +71,10 @@ public class UIManager : MonoBehaviour
     	confirmCourseUI.SetActive(active);
     }
 
+    public void ChartReportUI(bool active){
+        confirmCourseReportUI.SetActive(active);
+    }
+
     public void MarketUI(bool active){
     	marketUI.SetActive(active);
     }
@@ -81,8 +87,8 @@ public class UIManager : MonoBehaviour
     	shipCrewUI.SetActive(active);
     }
 
-    public void CrewRationUI(bool active){
-        crewRationUI.SetActive(active);
+    public void CrewListUI(bool active){
+       crewListUI.SetActive(active);
     }
 
     public void EventUI(bool active){
@@ -97,12 +103,16 @@ public class UIManager : MonoBehaviour
     	weekInfoUI.SetActive(active);
     }
 
+    public void CargoUI(bool active){
+        cargoUI.SetActive(active);
+    }
+
     public void updateGold(int gold){
     	goldText.text = ("Gold: " + gold);
     }
 
-    public void updateCrewCount(int crew){
-    	crewCountText.text = ("Crew Count: " + crew);
+    public void updateCrewCount(int crew, int maxCrew){
+    	crewCountText.text = ("Crew Count: " + crew + " / " + maxCrew);
     }
 
     public void updateMarket(string item, string index, int value){
@@ -112,6 +122,7 @@ public class UIManager : MonoBehaviour
 
     public void updateTavern(List<Crew> local_crew){//spawns in crewmate listings for tavern
     	//make a loop here for each crew member in the list
+        DestroyCrewTav();
     	crewExitButton.SetActive(false);
     	tavExitButton.SetActive(true);
     	for (int i = 0; i < local_crew.Count; i++){
@@ -175,22 +186,32 @@ public class UIManager : MonoBehaviour
 		textbox.text = crewmate.get_cost().ToString();
 
 
-        //adds crew to ration UI        
-        crewUI = GameObject.Instantiate(CrewUIRations, crewRationUI.transform) as GameObject;
-        rationCrew.Add(crewUI);
+        //adds crew to crewList UI        
+        crewUI = GameObject.Instantiate(CrewUIList, crewListUI.transform) as GameObject;
+        crewListCrew.Add(crewUI);
         //set index for confirm button
-        crewUI.GetComponent<crewUIScript>().setIndex(rationCrew.IndexOf(crewUI));
+        crewUI.GetComponent<crewUIScript>().setIndex(crewListCrew.IndexOf(crewUI));
         //update text to reflect the stats of a given crewmate
         textbox = crewUI.transform.Find("Name").GetComponent<Text>();
         textbox.text = crewmate.get_name();
+        textbox = crewUI.transform.Find("trait1").GetComponent<Text>();
+        textbox.text = crewmate.get_t1();
+        textbox = textbox.transform.Find("description/Text").GetComponent<Text>();
+        textbox.text = crewmate.get_t1Desc();
+        textbox = crewUI.transform.Find("trait2").GetComponent<Text>();
+        textbox.text = crewmate.get_t2();
+        textbox = textbox.transform.Find("description/Text").GetComponent<Text>();
+        textbox.text = crewmate.get_t2Desc();
+        textbox = crewUI.transform.Find("cost").GetComponent<Text>();
+        textbox.text = crewmate.get_cost().ToString();
     }
 
  	public void DestroyCrewShip(GameObject curCrew){
-        int index = shipCrew.IndexOf(curCrew);
-    	shipCrew.Remove(curCrew);
+        int index= crewListCrew.IndexOf(curCrew);
+        crewListCrew.Remove(curCrew);
         Destroy(curCrew);
-        curCrew = rationCrew[index];
-        rationCrew.Remove(curCrew);
+        curCrew = shipCrew[index];
+        shipCrew.Remove(curCrew);
         Destroy(curCrew);
  	}
 
@@ -209,6 +230,31 @@ public class UIManager : MonoBehaviour
 
     public void weekInfoDisp(string info){
     	weekInfoText.text = info;
+    }
+
+    public void updateCargo(string item, string index, int value){
+        Text textbox = cargoUI.transform.Find(item+"/"+index).GetComponent<Text>();
+        textbox.text = value.ToString();
+    }
+
+    public void cargoUpdate(){
+        int stock = managerScript.get_cargo_rum() + managerScript.get_cargo_spice() + managerScript.get_cargo_timber() + managerScript.get_cargo_med() + managerScript.get_cargo_rations();
+        int cargo = 0;
+        //set cargo UI to how many of each item is owned
+        updateCargo("Rum", "Stock", managerScript.get_cargo_rum());
+        updateCargo("Spice", "Stock", managerScript.get_cargo_spice());
+        updateCargo("Timber", "Stock", managerScript.get_cargo_timber());
+        updateCargo("Medicine", "Stock", managerScript.get_cargo_med());
+        updateCargo("Rations", "Stock", managerScript.get_cargo_rations());
+        //set cargo UI to how much space each item uses
+        updateCargo("Rum", "Cargo", 0);
+        updateCargo("Spice", "Cargo", 0);
+        updateCargo("Timber", "Cargo", 0);
+        updateCargo("Medicine", "Cargo", 0);
+        updateCargo("Rations", "Cargo", 0);
+        //set cargo UI totals
+        updateCargo("Footer", "Stock", stock);
+        updateCargo("Footer", "Cargo", cargo);
     }
 
 }

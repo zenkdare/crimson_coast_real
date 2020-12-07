@@ -144,6 +144,20 @@ public class ManagerScript : MonoBehaviour
         uiScript.ChartUI(true);
         courseCharter.GetComponent<Charting_a_Course>().enabled = true;
     }
+    public void Chart_a_Course_Report()
+    {
+        CameraScript camscript = cam.GetComponent<CameraScript>();
+        camscript.Look_at_Location(map);
+        //chart_course_button.SetActive(false);
+        //set_sail_button.SetActive(false);
+        //enter_market_button.SetActive(false);
+        //enter_tavern_button.SetActive(false);
+        //confirm_course_button.SetActive(true);
+        //reset_course_button.SetActive(true);
+        //uiScript.TownUI(false);
+        uiScript.ChartReportUI(true);
+        courseCharter.GetComponent<Charting_a_Course>().enabled = true;
+    }
     public void enter_market()
     {
         //chart_course_button.SetActive(false);
@@ -163,7 +177,7 @@ public class ManagerScript : MonoBehaviour
         //tavern.SetActive(true);
         uiScript.TownUI(false);
         uiScript.TavernUI(true);
-        uiScript.ShipCrewUI(true);
+        //uiScript.ShipCrewUI(true);
     }
     public void Confirm_course()
     {
@@ -177,6 +191,20 @@ public class ManagerScript : MonoBehaviour
         //reset_course_button.SetActive(false);
         uiScript.ChartUI(false);
         uiScript.TownUI(true);
+        courseCharter.GetComponent<Charting_a_Course>().enabled = false;
+    }
+    public void Confirm_course_Report()
+    {
+        CameraScript camscript = cam.GetComponent<CameraScript>();
+        camscript.Look_at_Location(current_location);
+        //chart_course_button.SetActive(true);
+        //set_sail_button.SetActive(true);
+        //enter_market_button.SetActive(true);
+        //enter_tavern_button.SetActive(true);
+        //confirm_course_button.SetActive(false);
+        //reset_course_button.SetActive(false);
+        uiScript.ChartReportUI(false);
+        uiScript.WeekInfoUI(true);
         courseCharter.GetComponent<Charting_a_Course>().enabled = false;
     }
 
@@ -303,6 +331,9 @@ public class ManagerScript : MonoBehaviour
         {
             print("can't buy more than stock allows");
         }
+
+        uiScript.updateMarket("Footer", "Cost", 0);//total cost of all items yet to be purchased
+        uiScript.updateMarket("Footer", "Amount", 0);//total number of all items yet to be purchased
     }
     public void sub_item(string item)
     {
@@ -379,6 +410,9 @@ public class ManagerScript : MonoBehaviour
             //rum_cost.text = temp_diff.ToString();
             uiScript.updateMarket("Medicine", "Cost", med_temp_diff);
         }
+
+        uiScript.updateMarket("Footer", "Cost", 0);//total cost of all items yet to be purchased
+        uiScript.updateMarket("Footer", "Amount", 0);//total number of all items yet to be purchased
     }
     public void confirm_purchase()
     {
@@ -482,7 +516,7 @@ public class ManagerScript : MonoBehaviour
         //enter_tavern_button.SetActive(true);
         //tavern.SetActive(false);
         uiScript.TavernUI(false);
-        uiScript.ShipCrewUI(false);
+        //uiScript.ShipCrewUI(false);
         uiScript.TownUI(true);
     }
     public void change_gold(int change)
@@ -498,7 +532,7 @@ public class ManagerScript : MonoBehaviour
         townscript.hire_crew(num);
         Ship_Movement ship_script = ship.GetComponent<Ship_Movement>();
         //crew_count_text.text = ("Crew Count: "+ship_script.get_crew_count().ToString());
-        uiScript.updateCrewCount(ship_script.get_crew_count());
+        uiScript.updateCrewCount(ship_script.get_crew_count(), 0);
     }
     public void fire_crew(int num)
     {//Removes a crewmate from crew listing
@@ -506,7 +540,7 @@ public class ManagerScript : MonoBehaviour
         Ship_Movement ship_script = ship.GetComponent<Ship_Movement>();
         ship_script.fire_crew(num);
         //crew_count_text.text = ("Crew Count: "+ship_script.get_crew_count().ToString());
-        uiScript.updateCrewCount(ship_script.get_crew_count());
+        uiScript.updateCrewCount(ship_script.get_crew_count(), 0);
     }
     public void handle_event(Event e, int result)
     {
