@@ -16,6 +16,9 @@ public class UIManager : MonoBehaviour
 	private Text eventDesc2;
 	private Text eventResultText;
 	private Text weekInfoText;
+    private Text errorText;
+    private float errorTime;
+    private bool error = false;
 	public GameObject tavExitButton;
 	public GameObject tavList;
 	public GameObject crewExitButton;
@@ -31,6 +34,7 @@ public class UIManager : MonoBehaviour
 	public GameObject eventResultUI;
 	public GameObject weekInfoUI;
     public GameObject cargoUI;
+    public GameObject errorUI;
 	public GameObject CrewUITav;
 	public GameObject CrewUIShip;
     public GameObject CrewUIList;
@@ -55,12 +59,16 @@ public class UIManager : MonoBehaviour
     	//tavList = tavernUI.transform.GetChild(0).gameObject;
     	//crewExitButton = shipCrewUI.transform.GetChild(1).gameObject;
     	//shipCrewList = shipCrewUI.transform.GetChild(0).gameObject;
+        errorText = errorUI.transform.Find("Text").GetComponent<Text>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (error && (Time.time - errorTime > 5)){
+            error = false;
+            errorUI.SetActive(false);
+        }
     }
 
     public void TownUI(bool active){
@@ -105,6 +113,13 @@ public class UIManager : MonoBehaviour
 
     public void CargoUI(bool active){
         cargoUI.SetActive(active);
+    }
+
+    public void ErrorDisp(string errorString){
+        errorText.text = errorString;
+        errorTime = Time.time;
+        error = true;
+        errorUI.SetActive(true);
     }
 
     public void updateGold(int gold){

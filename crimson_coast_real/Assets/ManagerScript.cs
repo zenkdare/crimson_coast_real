@@ -232,6 +232,7 @@ public class ManagerScript : MonoBehaviour
         }
         else
         {
+            uiScript.ErrorDisp("you must choose a destination before setting sail");
             print("you must choose a destination before setting sail");
         }
         
@@ -329,6 +330,7 @@ public class ManagerScript : MonoBehaviour
         }
         else
         {
+            uiScript.ErrorDisp("can't buy more than stock allows");
             print("can't buy more than stock allows");
         }
 
@@ -457,6 +459,7 @@ public class ManagerScript : MonoBehaviour
             }
             else
             {
+                uiScript.ErrorDisp("can't spend more than you have");
                 print("can't spend more than you have");    
             }
         }
@@ -681,6 +684,7 @@ public class ManagerScript : MonoBehaviour
         }
         else
         {
+            uiScript.ErrorDisp("can't give what aint there");
             print("can't give what aint there");
         }
     }

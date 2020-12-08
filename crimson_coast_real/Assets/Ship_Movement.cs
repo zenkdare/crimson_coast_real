@@ -85,6 +85,10 @@ public class Ship_Movement : MonoBehaviour
                         current_event = possible_events[event_num];
                         trigger_event(possible_events[event_num]);
                     }
+                    else{
+                        ManagerScript mScript = manager.GetComponent<ManagerScript>();
+                        mScript.weekReport();
+                    }
                     agent.isStopped = true;
                     lastpos = gameObject.transform.position;
                 }
