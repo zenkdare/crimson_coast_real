@@ -25,3 +25,15 @@ leave them be
 Luckily, a member or two of the crew backed me up, and we managed to break up the fight. Here's to hoping they don't try again later. 
 Could've gone better. Now three of us need to be patched up instead of two of us. At least those two learned a bit of respect. 
 Damage was minimal and they weren't hurt to bad. Maybe I should start a fight night for the boys. 
+;Floatsam Found
+While sailing on the open sea, you're crew spotted some floating cargo. 
+You pulled up some extra resources. 
+You pulled up some resources and it would seem you got lucky with your find. 
+;Sickness
+A disease has begun to spread amongst your crew and medicine must be used to cure it. 
+A sickess is spreading but your crew has a physician aboard. 
+;Rough Seas
+Waves swell and batter your ship
+Despite the swelling waves, a bosun aboard keeps you seaworthy
+;Accident
+ The clumsiness of some of your crew has caused some damage. 
