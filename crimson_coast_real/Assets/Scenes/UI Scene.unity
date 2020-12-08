@@ -23393,6 +23393,7 @@ GameObject:
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
   - component: {fileID: 963194230}
+  - component: {fileID: 963194231}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -23496,6 +23497,22 @@ MonoBehaviour:
   turnSpeed: 1
   ship: {fileID: 1031851749}
   b_agent: {fileID: 1031851751}
+--- !u!114 &963194231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 488ebecda0e5ebc49824bb80b0501593, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MovingObject: {fileID: 0}
+  offset: {x: 5, y: -5, z: 0}
+  BasisObject: {fileID: 0}
+  cam: {fileID: 963194227}
 --- !u!4 &972026670 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1c1311525d79abe4f9f1e23ced1b3fe0, type: 3}
@@ -48539,8 +48556,8 @@ MonoBehaviour:
   weekInfoUI: {fileID: 910463845}
   cargoUI: {fileID: 1545439641}
   errorUI: {fileID: 211450505}
-  winUI: {fileID: 0}
-  loseUI: {fileID: 0}
+  winUI: {fileID: 9652346}
+  loseUI: {fileID: 913626322}
   CrewUITav: {fileID: 593659318372892364, guid: 9b43a0596ee736141b8ca785de864944, type: 3}
   CrewUIShip: {fileID: 593659318372892364, guid: 94b307419142fa841ae21357d31c83e3, type: 3}
   CrewUIList: {fileID: 6155454370787565719, guid: 376ffb7f4cad3cb49a9332eb0f799fdc, type: 3}
