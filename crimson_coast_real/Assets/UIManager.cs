@@ -16,6 +16,7 @@ public class UIManager : MonoBehaviour
 	private Text eventDesc2;
 	private Text eventResultText;
 	private Text weekInfoText;
+    private Text townInfoText;
     private Text winText;
     private Text loseText;
     private Text errorText;
@@ -36,6 +37,7 @@ public class UIManager : MonoBehaviour
 	public GameObject eventResultUI;
 	public GameObject weekInfoUI;
     public GameObject cargoUI;
+    public GameObject townInfoUI;
     public GameObject errorUI;
     public GameObject winUI;
     public GameObject loseUI;
@@ -59,12 +61,13 @@ public class UIManager : MonoBehaviour
     	eventDesc2 = eventUI.transform.Find("Buttons/Button2/Description/Text").GetComponent<Text>();
     	eventResultText = eventResultUI.transform.Find("Main").GetComponent<Text>();
     	weekInfoText = weekInfoUI.transform.Find("Main").GetComponent<Text>();
+        townInfoText = townInfoUI.transform.Find("Text").GetComponent<Text>();
     	//tavExitButton = tavernUI.transform.GetChild(1).gameObject;
     	//tavList = tavernUI.transform.GetChild(0).gameObject;
     	//crewExitButton = shipCrewUI.transform.GetChild(1).gameObject;
     	//shipCrewList = shipCrewUI.transform.GetChild(0).gameObject;
-        winText = winUI.transform.Find("Text").GetComponent<Text>();
-        loseText = loseUI.transform.Find("Text").GetComponent<Text>();
+        winText = winUI.transform.Find("Main").GetComponent<Text>();
+        loseText = loseUI.transform.Find("Main").GetComponent<Text>();
         errorText = errorUI.transform.Find("Text").GetComponent<Text>();
     }
 
@@ -119,6 +122,10 @@ public class UIManager : MonoBehaviour
 
     public void CargoUI(bool active){
         cargoUI.SetActive(active);
+    }
+
+    public void TownInfoUI(bool active){
+        townInfoUI.SetActive(active);
     }
 
     public void WinUI(bool active){
@@ -294,6 +301,10 @@ public class UIManager : MonoBehaviour
         //set cargo UI totals
         updateCargo("Footer", "Stock", stock);
         updateCargo("Footer", "Cargo", cargo);
+    }
+
+    public void updateTownInfo(string info){
+        townInfoText.text = info;
     }
 
 }

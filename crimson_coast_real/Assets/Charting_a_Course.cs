@@ -11,6 +11,8 @@ public class Charting_a_Course : MonoBehaviour
     public NavMeshAgent b_agent;
     public int weekdis;
     public float dis_in_a_week;
+    public GameObject canvas;
+    public UIManager uiScript;
     // Start is called before the first frame update
     void Start()
     {
@@ -46,6 +48,8 @@ public class Charting_a_Course : MonoBehaviour
                 
                 if (hit.transform.tag == "town" || hit.transform.tag == "island")
                 {
+
+                    uiScript.updateTownInfo("Rum price: " + 0 + "\nSpice price: " + 0 + "\nTimber price: " + 0 + "\nMedicine price: " + 0 + "\nRations price: " + 0);
                     
                     b_agent.SetDestination(hit.transform.GetChild(0).transform.position);
                     Ship_Movement shipscript = boat.GetComponent<Ship_Movement>();

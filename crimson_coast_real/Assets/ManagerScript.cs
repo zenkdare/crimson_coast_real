@@ -140,6 +140,11 @@ public class ManagerScript : MonoBehaviour
         //enter_tavern_button.SetActive(false);
         //confirm_course_button.SetActive(true);
         //reset_course_button.SetActive(true);
+
+        if (/*can see town info*/false){
+            uiScript.TownInfoUI(true);
+        }
+
         uiScript.TownUI(false);
         uiScript.ChartUI(true);
         courseCharter.GetComponent<Charting_a_Course>().enabled = true;
@@ -155,6 +160,11 @@ public class ManagerScript : MonoBehaviour
         //confirm_course_button.SetActive(true);
         //reset_course_button.SetActive(true);
         //uiScript.TownUI(false);
+
+        if (/*can see town info*/false){
+            uiScript.TownInfoUI(true);
+        }
+
         uiScript.ChartReportUI(true);
         courseCharter.GetComponent<Charting_a_Course>().enabled = true;
     }
@@ -189,6 +199,7 @@ public class ManagerScript : MonoBehaviour
         //enter_tavern_button.SetActive(true);
         //confirm_course_button.SetActive(false);
         //reset_course_button.SetActive(false);
+        uiScript.TownInfoUI(false);
         uiScript.ChartUI(false);
         uiScript.TownUI(true);
         courseCharter.GetComponent<Charting_a_Course>().enabled = false;
@@ -203,6 +214,7 @@ public class ManagerScript : MonoBehaviour
         //enter_tavern_button.SetActive(true);
         //confirm_course_button.SetActive(false);
         //reset_course_button.SetActive(false);
+        uiScript.TownInfoUI(false);
         uiScript.ChartReportUI(false);
         uiScript.WeekInfoUI(true);
         courseCharter.GetComponent<Charting_a_Course>().enabled = false;
