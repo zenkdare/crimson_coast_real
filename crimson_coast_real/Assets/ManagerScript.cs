@@ -140,11 +140,6 @@ public class ManagerScript : MonoBehaviour
         //enter_tavern_button.SetActive(false);
         //confirm_course_button.SetActive(true);
         //reset_course_button.SetActive(true);
-
-        if (/*can see town info*/false){
-            uiScript.TownInfoUI(true);
-        }
-
         uiScript.TownUI(false);
         uiScript.ChartUI(true);
         courseCharter.GetComponent<Charting_a_Course>().enabled = true;
@@ -160,11 +155,6 @@ public class ManagerScript : MonoBehaviour
         //confirm_course_button.SetActive(true);
         //reset_course_button.SetActive(true);
         //uiScript.TownUI(false);
-
-        if (/*can see town info*/false){
-            uiScript.TownInfoUI(true);
-        }
-
         uiScript.ChartReportUI(true);
         courseCharter.GetComponent<Charting_a_Course>().enabled = true;
     }
@@ -199,7 +189,6 @@ public class ManagerScript : MonoBehaviour
         //enter_tavern_button.SetActive(true);
         //confirm_course_button.SetActive(false);
         //reset_course_button.SetActive(false);
-        uiScript.TownInfoUI(false);
         uiScript.ChartUI(false);
         uiScript.TownUI(true);
         courseCharter.GetComponent<Charting_a_Course>().enabled = false;
@@ -214,7 +203,6 @@ public class ManagerScript : MonoBehaviour
         //enter_tavern_button.SetActive(true);
         //confirm_course_button.SetActive(false);
         //reset_course_button.SetActive(false);
-        uiScript.TownInfoUI(false);
         uiScript.ChartReportUI(false);
         uiScript.WeekInfoUI(true);
         courseCharter.GetComponent<Charting_a_Course>().enabled = false;
@@ -606,7 +594,7 @@ public class ManagerScript : MonoBehaviour
         {
             if (result == 1)
             {
-                rum_cargo_count -= 3;
+                timber_cargo_count -= 3;
                 //food count-9
             }
             if (result == 2)
@@ -624,14 +612,52 @@ public class ManagerScript : MonoBehaviour
             {
                 med_cargo_count -= 3;
                 timber_cargo_count -= 3;
-                //+2 to 2 random loyalty
             }
             if (result == 2)
             {
                 med_cargo_count--;
                 timber_cargo_count--;
-                //+1 loyalty to 2 random
             }
+        }
+        if(e.get_name().Equals("Floatsam Found"))
+        {
+            int r = Random.Range(0, 4);
+            Ship_Movement ship_script = ship.GetComponent<Ship_Movement>();
+            int add = ship_script.get_lucky_num() * 2;
+            if (r == 0)
+            {
+                rum_cargo_count += 1 + add;
+            }
+            if (r == 1)
+            {
+                spice_cargo_count += 1 + add;
+            }
+            if (r == 2)
+            {
+                timber_cargo_count += 1 + add;
+            }
+            if (r == 3)
+            {
+                med_cargo_count += 1 + add;
+            }
+        }
+        if(e.get_name().Equals("Sickness"))
+        {
+            if (result == 1)
+            {
+                med_cargo_count--;
+            }
+        }
+        if (e.get_name().Equals("Rough Seas"))
+        {
+            if (result == 1)
+            {
+                timber_cargo_count--;
+            }
+        }
+        if (e.get_name().Equals("Accident"))
+        {  
+            timber_cargo_count--;       
         }
     }
     //code for the stuff that comes after events

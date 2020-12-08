@@ -60,8 +60,13 @@ public class Ship_Movement : MonoBehaviour
         {
             events.Add(new Event(text_events[i]));
         }
+        possible_events.Add(events[8]);
+        possible_events.Add(events[7]);
         possible_events.Add(events[1]);
         possible_events.Add(events[2]);
+        possible_events.Add(events[3]);
+        possible_events.Add(events[4]);
+        possible_events.Add(events[5]);
     }
 
     // Update is called once per frame
@@ -75,15 +80,79 @@ public class Ship_Movement : MonoBehaviour
                 if (agent.pathStatus == NavMeshPathStatus.PathComplete && agent.remainingDistance == 0)
                 {
                     dock();
+                    for(int i = 0; i < ship_crew.Count; i++)
+                    {
+                        if (ship_crew[i].getLoyalty() <= 1)
+                        {
+                            fire_crew(i);
+                        }
+                    }
                 }
                 else if(Vector3.Distance(gameObject.transform.position, lastpos) >= weekdis)
                 {
                     //print(Vector3.Distance(gameObject.transform.position, lastpos));
                     if (Random.value <= event_rate)
                     {
-                        int event_num = Random.Range(0, possible_events.Count);
-                        current_event = possible_events[event_num];
-                        trigger_event(possible_events[event_num]);
+                        List<Crew> poss_traitor = new List<Crew>();
+                        List<Crew> poss_raise = new List<Crew>();
+                        bool possible_raise=false;
+                        bool possible_plot=false;
+                        bool possible_plot_catch=false;
+                        for(int i = 0; i < ship_crew.Count; i++)
+                        {
+                            if (ship_crew[i].getLoyalty()>=5)
+                            {
+                                possible_raise = true;
+                                poss_raise.Add(ship_crew[i]);
+                            }
+                            if (ship_crew[i].getLoyalty()==0)
+                            {
+                                possible_plot = true;
+                                poss_traitor.Add(ship_crew[i]);
+                            }
+                            if (ship_crew[i].getLoyalty() >= 8)
+                            {
+                                possible_plot_catch = true;
+                            }
+                        }
+                        if(possible_plot_catch && possible_plot)
+                        {
+                            int half_n_half=Random.Range(0, 2);
+                            if (half_n_half == 0)
+                            {
+                                int get_traitor = Random.Range(0, poss_traitor.Count);
+                                possible_events[0].change_trigger(get_traitor);
+                                current_event = possible_events[0];
+                                trigger_event(possible_events[0]);
+                            }
+                            else
+                            {
+                                int event_num;
+                                if (possible_raise)
+                                {
+                                    event_num = Random.Range(1, possible_events.Count);
+                                    if (event_num == 1)
+                                    {
+                                        int get_raiser = Random.Range(0, poss_traitor.Count);
+                                        possible_events[1].change_trigger(get_raiser);
+                                    }
+                                    current_event = possible_events[event_num];
+                                    trigger_event(possible_events[event_num]);
+                                }
+                                else
+                                {
+                                    event_num = Random.Range(2, possible_events.Count);
+                                    current_event = possible_events[event_num];
+                                    trigger_event(possible_events[event_num]);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            int event_num = Random.Range(2, possible_events.Count);
+                            current_event = possible_events[event_num];
+                            trigger_event(possible_events[event_num]);
+                        }
                     }
                     else{
                         ManagerScript mScript = manager.GetComponent<ManagerScript>();
@@ -126,14 +195,6 @@ public class Ship_Movement : MonoBehaviour
     }
     public void add_crew(Crew new_hire)
     {
-        /*
-        ship_crew.Add(new_hire);
-        if(String.Equals(new_hire.get_t1(), "Silver Tongue"))
-        {
-            townscript = current_port.GetComponent<Town>();
-            
-        }
-        */
         ship_crew.Add(new_hire);
         if(new_hire.get_t1().Equals("Wind Reader"))
         {
@@ -167,7 +228,31 @@ public class Ship_Movement : MonoBehaviour
         {
             has_coneccted ++;
         }
-        print(has_wind_reader + " , "+ has_watch_dog + " , "+ has_peacemaker+" , "+ num_lucky+" , "+ num_lucky+","+ has_doctor+","+ has_bosun+","+ num_silver_tongue+","+has_coneccted);
+        if(new_hire.get_t1().Equals("Sharp Eyes"))
+        {
+            possible_events.Add(events[4]);
+            possible_events.Add(events[4]);
+        }
+        if (new_hire.get_t2().Equals("Thief"))
+        {
+            possible_events.Add(events[0]);
+        }
+        if (new_hire.get_t2().Equals("Brawler"))
+        {
+            possible_events.Add(events[2]);
+        }
+        if (new_hire.get_t2().Equals("Sickly"))
+        {
+            possible_events.Add(events[4]);
+        }
+        if (new_hire.get_t2().Equals("Clumsy"))
+        {
+            possible_events.Add(events[6]);
+        }
+        if (new_hire.get_t2().Equals("Unlucky"))
+        {
+            possible_events.Add(events[1]);
+        }
     }
     public void fire_crew(int num)
     {
@@ -204,7 +289,46 @@ public class Ship_Movement : MonoBehaviour
         {
             has_coneccted--;
         }
-        print(has_wind_reader + " , " + has_watch_dog + " , " + has_peacemaker + " , " + num_lucky + " , " + num_lucky + "," + has_doctor + "," + has_bosun + "," + num_silver_tongue + "," + has_coneccted);
+        if (newly_fired.get_t1().Equals("Sharp Eyes"))
+        {
+           for(int i=0; i < possible_events.Count; i++)
+           {
+                if(possible_events[i].get_name().Equals("Floatsam Found"))
+                {
+                    possible_events.RemoveAt(i);
+                }
+           }
+            for (int i = 0; i < possible_events.Count; i++)
+            {
+                if (possible_events[i].get_name().Equals("Floatsam Found"))
+                {
+                    possible_events.RemoveAt(i);
+                }
+            }
+        }
+        print(possible_events.Count);
+        if (newly_fired.get_t2().Equals("Thief"))
+        {
+            possible_events.Remove(events[0]);
+        }
+        print(possible_events.Count);
+        if (newly_fired.get_t2().Equals("Brawler"))
+        {
+            possible_events.Remove(events[2]);
+        }
+        if (newly_fired.get_t2().Equals("Sickly"))
+        {
+            possible_events.Remove(events[4]);
+        }
+        if (newly_fired.get_t2().Equals("Clumsy"))
+        {
+            possible_events.Remove(events[6]);
+        }
+        if (newly_fired.get_t2().Equals("Unlucky"))
+        {
+            possible_events.Remove(events[1]);
+        }
+        ship_crew.RemoveAt(num);
 
     }
     public void trigger_event(Event e)
@@ -215,8 +339,70 @@ public class Ship_Movement : MonoBehaviour
         // decision1.text = events[num].get_o1();
         // decision2.text = events[num].get_o2();
         // current_event = events[num].get_name();
-        uiScript.EventUI(true);
-        uiScript.updateEvent(e.get_name(), e.get_flavor(), e.get_o1(), e.get_o2(),e.get_o1_descrip(), e.get_o2_descrip());
+        if (e.is_active())
+        {
+            if(e.get_name().Equals("A Pay Raise") || e.get_name().Equals("Plot Uncovered"))
+            {
+                uiScript.EventUI(true);
+                uiScript.updateEvent(e.get_name(), e.get_trigger()+e.get_flavor(), e.get_o1(), e.get_o2(), e.get_o1_descrip(), e.get_o2_descrip());
+            }
+            else
+            {
+                uiScript.EventUI(true);
+                uiScript.updateEvent(e.get_name(), e.get_flavor(), e.get_o1(), e.get_o2(), e.get_o1_descrip(), e.get_o2_descrip());
+            }
+        }
+        else
+        {
+            string result = "something should be here";
+            int num_result = -1;
+            if(e.get_name().Equals("Floatsam Found"))
+            {
+                if (num_lucky > 0)
+                {
+                    result = e.get_flavor()+"\n"+e.get_good_result();
+                }
+                else
+                {
+                    result = e.get_flavor() + "\n" + e.get_failed_result();
+                }
+            }
+            if (e.get_name().Equals("Sickness"))
+            {
+                if (has_doctor > 0)
+                {
+                    result = e.get_flavor() + "\n" + e.get_good_result();
+                    num_result = 0;
+                }
+                else
+                {
+                    result = e.get_flavor() + "\n" + e.get_failed_result();
+                    num_result = 1;
+                }
+            }
+            if (e.get_name().Equals("Rough Seas"))
+            {
+                if (has_bosun > 0)
+                {
+                    result = e.get_flavor() + "\n" + e.get_good_result();
+                    num_result = 0;
+                }
+                else
+                {
+                    result = e.get_flavor() + "\n" + e.get_failed_result();
+                    num_result = 1;
+                }
+            }
+            if (e.get_name().Equals("Accident"))
+            {
+                result = e.get_flavor() + "\n" + e.get_good_result();
+            }
+            uiScript.updateEvent(e.get_name(), e.get_flavor(), e.get_o1(), e.get_o2(), e.get_o1_descrip(), e.get_o2_descrip());
+            uiScript.eventResult(result);
+            uiScript.EventResultUI(true);
+            ManagerScript manage = manager.GetComponent<ManagerScript>();
+            manage.handle_event(current_event, num_result);
+        }
 
     }
     public void makedecision(int num)
@@ -267,6 +453,10 @@ public class Ship_Movement : MonoBehaviour
                 {
                     result = current_event.get_bad_result();
                     num_result = 2;
+                    for(int i = 0; i < ship_crew.Count; i++)
+                    {
+                        ship_crew[i].change_loyalty(-1);
+                    }
                 }
             }
             if (current_event.get_name().Equals("On Deck Brawl"))
@@ -277,6 +467,10 @@ public class Ship_Movement : MonoBehaviour
                     {
                         result = current_event.get_good_result();
                         num_result = 0;
+                        for (int i = 0; i < ship_crew.Count; i++)
+                        {
+                            ship_crew[i].change_loyalty(+2);
+                        }
                     }
                     else
                     {
@@ -290,7 +484,49 @@ public class Ship_Movement : MonoBehaviour
                     num_result = 2;
                 }
             }
+            if (current_event.get_name().Equals("A Pay Raise"))
+            {
+               
+                if (num == 0)
+                {
+                    ship_crew[current_event.get_trigger()].change_wage(1);
+                    ship_crew[current_event.get_trigger()].change_loyalty(2);
+                }
+                else
+                {
+                    ship_crew[current_event.get_trigger()].change_loyalty(-3);
+                }
+            }
+            if (current_event.get_name().Equals("Plot Uncovered"))
+            {
 
+                if (num == 0)
+                {
+                    for(int i = 0; i < ship_crew.Count; i++)
+                    {
+                        if (ship_crew[i].getLoyalty() <= 4)
+                        {
+                            ship_crew[i].change_loyalty(-1);
+                        }
+                    }
+                    ship_crew[current_event.get_trigger()].set_loyalty(3);
+                }
+                else
+                {
+                    ship_crew.RemoveAt(current_event.get_trigger());
+                    for (int i = 0; i < ship_crew.Count; i++)
+                    {
+                        if (ship_crew[i].getLoyalty() <= 4)
+                        {
+                            ship_crew[i].change_loyalty(3);
+                        }
+                        if(ship_crew[i].getLoyalty() >= 7)
+                        {
+                            ship_crew[i].change_loyalty(-2);
+                        }
+                    }
+                }
+            }
         }
         uiScript.EventUI(false);
         uiScript.eventResult(result);
@@ -306,18 +542,40 @@ public class Ship_Movement : MonoBehaviour
     {
         for(int i=0; i < ship_crew.Count; i++)
         {
-            ship_crew[i].change_loyalty(2);
+            if (ship_crew[i].get_t1().Equals("Drunk"))
+            {
+                ship_crew[i].change_loyalty(4);
+            }
+            else if (ship_crew[i].get_t1().Equals("Teetotaler"))
+            {
+                //nothing happens
+            }
+            else
+            {
+                ship_crew[i].change_loyalty(2);
+            }
+            
         }
     }
     public void extra_rations()
     {
         for (int i = 0; i < ship_crew.Count; i++)
         {
-            if (using_spice)
+            if (ship_crew[i].get_t2() != "Glutton")
             {
-                ship_crew[i].change_loyalty(4);
+                if (using_spice)
+                {
+                    ship_crew[i].change_loyalty(4);
+                }
+                ship_crew[i].change_loyalty(1);
             }
-            ship_crew[i].change_loyalty(1);
+            else
+            {
+                if (using_spice)
+                {
+                    ship_crew[i].change_loyalty(3);
+                }
+            }
 
         }
         if (using_spice)
@@ -337,14 +595,28 @@ public class Ship_Movement : MonoBehaviour
             }
             using_spice = false;
         }
+        for (int i = 0; i < ship_crew.Count; i++)
+        {
+            if (ship_crew[i].get_t2().Equals("Glutton"))
+            {
+                ship_crew[i].change_loyalty(-1);
+            }
+        }
     }
     public void no_rations()
     {
         for (int i = 0; i < ship_crew.Count; i++)
         {
-            ship_crew[i].change_loyalty(-1);
-            no_rations_num++;
+            if(ship_crew[i].get_t2() != "Glutton")
+            {
+                ship_crew[i].change_loyalty(-1);
+            }
+            else
+            {
+                ship_crew[i].change_loyalty(-2);
+            }
         }
+        no_rations_num++;
         if (no_rations_num > 2)
         {
             ship_crew.RemoveAt(Random.Range(0, ship_crew.Count));
@@ -375,5 +647,13 @@ public class Ship_Movement : MonoBehaviour
         {
             //you lose here
         }
+    }
+    public int get_lucky_num()
+    {
+        return num_lucky;
+    }
+    public Crew get_crew_at_spot(int spot)
+    {
+        return ship_crew[spot];
     }
 }

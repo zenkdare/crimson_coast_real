@@ -67,10 +67,26 @@ public class Crew : MonoBehaviour
     }
     public void change_loyalty(int num)
     {
-        loyalty += num;
+        
+        if(trait2== "Guarded" && num>0)
+        {
+            loyalty += num / 2; 
+        }
+        else
+        {
+            loyalty += num;
+        }
         if (loyalty < 0)
         {
             loyalty = 0;
         }
+    }
+    public void change_wage(int num)
+    {
+        pay += num;
+    }
+    public void set_loyalty(int num)
+    {
+        loyalty = num;
     }
 }

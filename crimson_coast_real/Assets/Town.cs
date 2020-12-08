@@ -190,7 +190,9 @@ public class Town : MonoBehaviour
         //Debug.Log("hire_crew Town:"+num);
         Ship_Movement ship_code = ship.GetComponent<Ship_Movement>();
         ship_code.add_crew(local_crew[num]);
+        //local_crew.RemoveAt(num);
         uiScript.addCrew(local_crew[num]);
+        uiScript.updateTavern(local_crew);
         //crew1.SetActive(false);
         //uiScript.destroyCrewTav(num);
         //uiScript.updateTavern(local_crew);
@@ -221,5 +223,10 @@ public class Town : MonoBehaviour
         {
             med_price += num;
         }
+    }
+    public void fired_crew(Crew addition)
+    {
+        local_crew.Add(addition);
+        uiScript.updateTavern(local_crew);
     }
 }

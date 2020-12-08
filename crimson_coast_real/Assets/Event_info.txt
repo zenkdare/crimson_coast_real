@@ -23,17 +23,36 @@ Let them be. Whatever happens, I can just dock their wages to make up the differ
 Break it up
 leave them be
 Luckily, a member or two of the crew backed me up, and we managed to break up the fight. Here's to hoping they don't try again later. 
-Could've gone better. Now three of us need to be patched up instead of two of us. At least those two learned a bit of respect. 
+Could've gone better. Now three of us need to be patched up instead of two of us.
 Damage was minimal and they weren't hurt to bad. Maybe I should start a fight night for the boys. 
 ;Floatsam Found
 While sailing on the open sea, you're crew spotted some floating cargo. 
 You pulled up some extra resources. 
 You pulled up some resources and it would seem you got lucky with your find. 
 ;Sickness
-A disease has begun to spread amongst your crew and medicine must be used to cure it. 
-A sickess is spreading but your crew has a physician aboard. 
+A disease has begun to spread amongst your crew 
+Medicine must be used to cure it. 
+No resources are spen thanks to a physician on board 
 ;Rough Seas
 Waves swell and batter your ship
+Supplies must be spent to keep you seaworthy
 Despite the swelling waves, a bosun aboard keeps you seaworthy
 ;Accident
- The clumsiness of some of your crew has caused some damage. 
+The clumsiness of some of your crew has caused some damage. 
+Resources must be spent to repair it
+;A Pay Raise
+ thinks it's high time he's gotten a pay raise for his good work and continued loyalty. 
+Boost his spirits and his pocket money
+Refuse, and let him be somewhat dissapointed
+Accept
+Refuse
+Your pockets might be empty, but now you have a very loyal follower. Hopefully you can keep him loyal.
+Rejected, he walks away disheartened. He expected to recieve the raise as a reward. Why bother working hard if it grants you nothing?
+;Plot Uncovered
+ has been discovered plotting against you. There are rules for disciplining traitors, but it might be safer to just get rid of the wretch. 
+Lashings are a good way to put the man back in his place, though other traitors might just be encouraged to try their luck.
+Bind him with iron and throw him overboard. It'll scare any traitor stiff, but it will also worry your most loyal.
+Twenty Lashings
+Walk The Plank
+Twenty lashings later, the traitor has been put in his place. Hopefully, it's the last time it'll need to happen. 
+The bubbles are the only thing left after the splash. Let it be a lesson to those who forget who the captain is. 
