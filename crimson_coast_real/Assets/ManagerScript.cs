@@ -692,4 +692,8 @@ public class ManagerScript : MonoBehaviour
     {
         spice_cargo_count--;
     }
+
+    public void QuitGame(){
+        Application.Quit();
+    }
 }

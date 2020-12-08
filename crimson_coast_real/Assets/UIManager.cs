@@ -16,6 +16,8 @@ public class UIManager : MonoBehaviour
 	private Text eventDesc2;
 	private Text eventResultText;
 	private Text weekInfoText;
+    private Text winText;
+    private Text loseText;
     private Text errorText;
     private float errorTime;
     private bool error = false;
@@ -35,6 +37,8 @@ public class UIManager : MonoBehaviour
 	public GameObject weekInfoUI;
     public GameObject cargoUI;
     public GameObject errorUI;
+    public GameObject winUI;
+    public GameObject loseUI;
 	public GameObject CrewUITav;
 	public GameObject CrewUIShip;
     public GameObject CrewUIList;
@@ -59,6 +63,8 @@ public class UIManager : MonoBehaviour
     	//tavList = tavernUI.transform.GetChild(0).gameObject;
     	//crewExitButton = shipCrewUI.transform.GetChild(1).gameObject;
     	//shipCrewList = shipCrewUI.transform.GetChild(0).gameObject;
+        winText = winUI.transform.Find("Text").GetComponent<Text>();
+        loseText = loseUI.transform.Find("Text").GetComponent<Text>();
         errorText = errorUI.transform.Find("Text").GetComponent<Text>();
     }
 
@@ -113,6 +119,24 @@ public class UIManager : MonoBehaviour
 
     public void CargoUI(bool active){
         cargoUI.SetActive(active);
+    }
+
+    public void WinUI(bool active){
+        winUI.SetActive(active);
+    }
+
+    public void LoseUI(bool active){
+        loseUI.SetActive(active);
+    }
+
+    public void winDisp(string winString){
+        winText.text = winString;
+        WinUI(true);
+    }
+
+    public void loseDisp(string loseString){
+        loseText.text = loseString;
+        LoseUI(true);
     }
 
     public void ErrorDisp(string errorString){
