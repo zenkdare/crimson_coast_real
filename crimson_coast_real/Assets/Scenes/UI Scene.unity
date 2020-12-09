@@ -106,15 +106,15 @@ NavMeshSettings:
   m_BuildSettings:
     serializedVersion: 2
     agentTypeID: 0
-    agentRadius: 2.5
-    agentHeight: 10
+    agentRadius: 9
+    agentHeight: 4
     agentSlope: 45
-    agentClimb: 3.75
+    agentClimb: 4
     ledgeDropHeight: 0
     maxJumpAcrossDistance: 0
-    minRegionArea: 5
-    manualCellSize: 0
-    cellSize: 0.8333333
+    minRegionArea: 1
+    manualCellSize: 1
+    cellSize: 1.2
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
@@ -8689,7 +8689,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 033ed87f6d84fbf4482215a1615551d0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7
+      value: 1.86
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 033ed87f6d84fbf4482215a1615551d0, type: 3}
       propertyPath: m_LocalRotation.x
@@ -26594,7 +26594,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 12
+  m_Height: 4
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
@@ -27364,7 +27364,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &1058905708
 Transform:
@@ -29288,7 +29288,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &1136886859
 Transform:
@@ -30756,7 +30756,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &1229715181
 Transform:
@@ -54173,7 +54173,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &2113229174
 Transform:
