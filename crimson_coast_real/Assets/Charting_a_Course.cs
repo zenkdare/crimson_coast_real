@@ -51,7 +51,6 @@ public class Charting_a_Course : MonoBehaviour
 
     void Create_point_and_line()
     {
-        print(Input.mousePosition);
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         RaycastHit hit = new RaycastHit();

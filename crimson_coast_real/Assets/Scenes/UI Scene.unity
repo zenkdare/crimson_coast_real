@@ -14995,7 +14995,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &565758136
 Transform:
   m_ObjectHideFlags: 0
@@ -27011,7 +27011,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1058905708}
   m_Layer: 0
-  m_Name: navspot (2)
+  m_Name: navspottimber
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28935,7 +28935,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1136886859}
   m_Layer: 0
-  m_Name: navspot
+  m_Name: navspotrum
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30403,7 +30403,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1229715181}
   m_Layer: 0
-  m_Name: navspot (1)
+  m_Name: navspotspice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

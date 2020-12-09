@@ -193,9 +193,8 @@ public class ManagerScript : MonoBehaviour
     }
     public void Confirm_course()
     {
-        Charting_a_Course chart_script = courseCharter.GetComponent<Charting_a_Course>();
-        int num = chart_script.Get_Distance_in_Weeks();
-        if (num > 0)
+        Ship_Movement shipscript = ship.GetComponent<Ship_Movement>();
+        if (shipscript.get_target_port()!=current_location)
         {
             CameraScript camscript = cam.GetComponent<CameraScript>();
             camscript.Look_at_Location(current_location);
@@ -217,9 +216,8 @@ public class ManagerScript : MonoBehaviour
     }
     public void Confirm_course_Report()
     {
-        Charting_a_Course chart_script = courseCharter.GetComponent<Charting_a_Course>();
-        int num = chart_script.Get_Distance_in_Weeks();
-        if (num > 0)
+        Ship_Movement shipscript = ship.GetComponent<Ship_Movement>();
+        if (shipscript.get_target_port() != current_location)
         {
             CameraScript camscript = cam.GetComponent<CameraScript>();
             camscript.Look_at_Location(current_location);
@@ -361,7 +359,7 @@ public class ManagerScript : MonoBehaviour
         }
         else if (item.Equals("rations"))
         {
-            rations_dif_int += 1;
+            rations_dif_int += 3;
             uiScript.updateMarket("Rations", "Amount", rations_dif_int);
             if (rations_dif_int > 0)
             {
@@ -461,7 +459,7 @@ public class ManagerScript : MonoBehaviour
         }
         if (item.Equals("rations") && rations_cargo_count > -rations_dif_int)
         {
-            rations_dif_int -= 1;
+            rations_dif_int -= 3;
             //rum_diff.text = rum_dif_int.ToString();
             uiScript.updateMarket("Rations", "Amount", rations_dif_int);
             if (rations_dif_int >= 0)
