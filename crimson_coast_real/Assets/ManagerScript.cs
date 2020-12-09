@@ -56,6 +56,8 @@ public class ManagerScript : MonoBehaviour
     public int required_crew_count;
     public int max_cargo;
     private string event_outcome;
+    public bool first_upgrade;
+    public bool second_upgrade;
     // Start is called before the first frame update
     void Start()
     {
@@ -109,6 +111,8 @@ public class ManagerScript : MonoBehaviour
         sr.Close();
         SetUpTown(start_town);
         //uiScript = canvas.GetComponent<UIManager>();
+        first_upgrade = false;
+        second_upgrade = false;
     }
 
     // Update is called once per frame
@@ -819,5 +823,26 @@ public class ManagerScript : MonoBehaviour
 
     public void QuitGame(){
         Application.Quit();
+    }
+    public void upgrade_ship()
+    {
+        if (!first_upgrade && gold>=250)
+        {
+            max_cargo = 15;
+            required_crew_count = 6;
+            gold -= 250;
+            first_upgrade = true;
+        }
+        if (first_upgrade && gold >= 500)
+        {
+            max_cargo = 20;
+            required_crew_count = 9;
+            gold -= 500;
+            second_upgrade = true;
+        }
+        if (second_upgrade)
+        {
+            uiScript.ErrorDisp("no furthur upgrade available");
+        }
     }
 }
