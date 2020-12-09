@@ -161,6 +161,9 @@ public class ManagerScript : MonoBehaviour
     public void Chart_a_Course_Report()
     {
         CameraScript camscript = cam.GetComponent<CameraScript>();
+        Camera_Orbit camorbit = cam.GetComponent<Camera_Orbit>();
+        camscript.enabled = true;
+        camorbit.enabled = false;
         camscript.Look_at_Location(map);
         //chart_course_button.SetActive(false);
         //set_sail_button.SetActive(false);
@@ -222,7 +225,9 @@ public class ManagerScript : MonoBehaviour
         if (shipscript.get_target_port() != current_location)
         {
             CameraScript camscript = cam.GetComponent<CameraScript>();
-            camscript.Look_at_Location(current_location);
+            Camera_Orbit camorbit = cam.GetComponent<Camera_Orbit>();
+            camscript.enabled = false;
+            camorbit.enabled = true;
             //chart_course_button.SetActive(true);
             //set_sail_button.SetActive(true);
             //enter_market_button.SetActive(true);
