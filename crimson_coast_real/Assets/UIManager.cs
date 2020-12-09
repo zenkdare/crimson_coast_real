@@ -8,6 +8,7 @@ public class UIManager : MonoBehaviour
 
 	public Text goldText;
 	public Text crewCountText;
+    public Text cargoCountText;
 	private Text eventTitle;
 	private Text eventText;
 	private Text eventOption1;
@@ -161,6 +162,10 @@ public class UIManager : MonoBehaviour
 
     public void updateCrewCount(int crew, int maxCrew){
     	crewCountText.text = ("Crew Count: " + crew + " / " + maxCrew);
+    }
+
+    public void updateCargoCount(int cargo, int maxCargo){
+        cargoCountText.text = ("Cargo Count: " + cargo + " / " + maxCargo);
     }
 
     public void updateMarket(string item, string index, int value){
