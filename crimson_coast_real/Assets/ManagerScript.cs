@@ -53,6 +53,7 @@ public class ManagerScript : MonoBehaviour
     //public GameObject enter_tavern_button;
     public GameObject canvas;
     public UIManager uiScript;
+    public AudioManager audioScript;
     public int required_crew_count;
     public int max_cargo;
     private string event_outcome;
@@ -139,6 +140,7 @@ public class ManagerScript : MonoBehaviour
         //enter_market_button.SetActive(true);
         //enter_tavern_button.SetActive(true);
         uiScript.TownUI(true);
+        audioScript.portSound(true);
 
     }
 
@@ -259,6 +261,7 @@ public class ManagerScript : MonoBehaviour
             //enter_tavern_button.SetActive(false);
             uiScript.TownUI(false);
             uiScript.DestroyCrewTav();
+            audioScript.oceanSound(true);
         }
         else
         {
