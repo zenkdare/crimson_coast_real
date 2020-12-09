@@ -86,10 +86,12 @@ public class UIManager : MonoBehaviour
 
     public void ChartUI(bool active){
     	confirmCourseUI.SetActive(active);
+        townInfoUI.SetActive(active);
     }
 
     public void ChartReportUI(bool active){
         confirmCourseReportUI.SetActive(active);
+        townInfoUI.SetActive(active);
     }
 
     public void MarketUI(bool active){

@@ -24,7 +24,7 @@ public class Crew : MonoBehaviour
         loyalty = loy;
         if (t2.Equals("Greedy"))
         {
-            c += 3;
+            pay += 3;
         }
     }
     void Start()

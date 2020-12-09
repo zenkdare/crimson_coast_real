@@ -193,31 +193,50 @@ public class ManagerScript : MonoBehaviour
     }
     public void Confirm_course()
     {
-        CameraScript camscript = cam.GetComponent<CameraScript>();
-        camscript.Look_at_Location(current_location);
-        //chart_course_button.SetActive(true);
-        //set_sail_button.SetActive(true);
-        //enter_market_button.SetActive(true);
-        //enter_tavern_button.SetActive(true);
-        //confirm_course_button.SetActive(false);
-        //reset_course_button.SetActive(false);
-        uiScript.ChartUI(false);
-        uiScript.TownUI(true);
-        courseCharter.GetComponent<Charting_a_Course>().enabled = false;
+        Charting_a_Course chart_script = courseCharter.GetComponent<Charting_a_Course>();
+        int num = chart_script.Get_Distance_in_Weeks();
+        if (num > 0)
+        {
+            CameraScript camscript = cam.GetComponent<CameraScript>();
+            camscript.Look_at_Location(current_location);
+            //chart_course_button.SetActive(true);
+            //set_sail_button.SetActive(true);
+            //enter_market_button.SetActive(true);
+            //enter_tavern_button.SetActive(true);
+            //confirm_course_button.SetActive(false);
+            //reset_course_button.SetActive(false);
+            uiScript.ChartUI(false);
+            uiScript.TownUI(true);
+            courseCharter.GetComponent<Charting_a_Course>().enabled = false;
+        }
+        else
+        {
+            uiScript.ErrorDisp("You're already there you fool!");
+        }
+        
     }
     public void Confirm_course_Report()
     {
-        CameraScript camscript = cam.GetComponent<CameraScript>();
-        camscript.Look_at_Location(current_location);
-        //chart_course_button.SetActive(true);
-        //set_sail_button.SetActive(true);
-        //enter_market_button.SetActive(true);
-        //enter_tavern_button.SetActive(true);
-        //confirm_course_button.SetActive(false);
-        //reset_course_button.SetActive(false);
-        uiScript.ChartReportUI(false);
-        uiScript.WeekInfoUI(true);
-        courseCharter.GetComponent<Charting_a_Course>().enabled = false;
+        Charting_a_Course chart_script = courseCharter.GetComponent<Charting_a_Course>();
+        int num = chart_script.Get_Distance_in_Weeks();
+        if (num > 0)
+        {
+            CameraScript camscript = cam.GetComponent<CameraScript>();
+            camscript.Look_at_Location(current_location);
+            //chart_course_button.SetActive(true);
+            //set_sail_button.SetActive(true);
+            //enter_market_button.SetActive(true);
+            //enter_tavern_button.SetActive(true);
+            //confirm_course_button.SetActive(false);
+            //reset_course_button.SetActive(false);
+            uiScript.ChartReportUI(false);
+            uiScript.WeekInfoUI(true);
+            courseCharter.GetComponent<Charting_a_Course>().enabled = false;
+        }
+        else
+        {
+            uiScript.ErrorDisp("You're already there you fool!");
+        }
     }
 
     public void Clear_course()
@@ -483,11 +502,12 @@ public class ManagerScript : MonoBehaviour
                 uiScript.updateMarket("Spice", "Cost", 0);
                 uiScript.updateMarket("Timber", "Cost", 0);
                 uiScript.updateMarket("Medicine", "Cost", 0);
-                uiScript.updateMarket("Rations", "Amount", 0);
+                uiScript.updateMarket("Rations", "Cost", 0);
                 rum_cargo_count += rum_dif_int;
                 spice_cargo_count += spice_dif_int;
                 timber_cargo_count += timber_dif_int;
                 med_cargo_count += med_dif_int;
+                rations_cargo_count += rations_dif_int;
                 //rum_cargo_amount_text.text = rum_cargo_count.ToString();
                 uiScript.updateMarket("Rum", "Cargo", rum_cargo_count);
                 uiScript.updateMarket("Spice", "Cargo", spice_cargo_count);
@@ -541,6 +561,7 @@ public class ManagerScript : MonoBehaviour
             spice_cargo_count += spice_dif_int;
             timber_cargo_count += timber_dif_int;
             med_cargo_count += med_dif_int;
+            rations_cargo_count += rations_dif_int;
             //rum_cargo_amount_text.text = rum_cargo_count.ToString();
             uiScript.updateMarket("Rum", "Cargo", rum_cargo_count);
             uiScript.updateMarket("Spice", "Cargo", spice_cargo_count);

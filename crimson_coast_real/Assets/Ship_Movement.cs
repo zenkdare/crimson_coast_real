@@ -674,4 +674,15 @@ public class Ship_Movement : MonoBehaviour
         }
         return num;
     }
+    public bool is_connected()
+    {
+        if (has_coneccted > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }

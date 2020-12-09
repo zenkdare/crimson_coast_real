@@ -13,10 +13,12 @@ public class Charting_a_Course : MonoBehaviour
     public float dis_in_a_week;
     public GameObject canvas;
     public UIManager uiScript;
+    private GameObject current_hit;
     // Start is called before the first frame update
     void Start()
     {
-        
+        current_hit = null;
+        uiScript.updateTownInfo("Journey length: " + "unknown" + "\nRum price: " + "unknown" + "\nSpice price: " + "unknown" + "\nTimber price: " + "unknown" + "\nMedicine price: " + "unknown" + "\nRations price: " + "unknown");
     }
 
     // Update is called once per frame
@@ -31,6 +33,19 @@ public class Charting_a_Course : MonoBehaviour
         if (!(b_agent.pathPending))
         {
             weekdis = (int)(RemainingDistance(b_agent.path.corners)/dis_in_a_week);
+            Ship_Movement shipscript = boat.GetComponent<Ship_Movement>();
+            if (current_hit != null)
+            {
+                Town townscript = current_hit.GetComponent<Town>();
+                if (shipscript.is_connected())
+                {
+                    uiScript.updateTownInfo("Journey length: " + weekdis + "\nRum price: " + townscript.get_buy_amount("rum") + "\nSpice price: " + townscript.get_buy_amount("spice") + "\nTimber price: " + townscript.get_buy_amount("timber") + "\nMedicine price: " + 0 + "\nRations price: " + townscript.get_buy_amount("med"));
+                }
+                else
+                {
+                    uiScript.updateTownInfo("Journey length: " +weekdis+ "\nRum price: " + "unknown" + "\nSpice price: " + "unknown" + "\nTimber price: " + "unknown" + "\nMedicine price: " + "unknown" + "\nRations price: " + "unknown");
+                }
+            } 
         }
     }
 
@@ -48,11 +63,9 @@ public class Charting_a_Course : MonoBehaviour
                 
                 if (hit.transform.tag == "town" || hit.transform.tag == "island")
                 {
-
-                    uiScript.updateTownInfo("Rum price: " + 0 + "\nSpice price: " + 0 + "\nTimber price: " + 0 + "\nMedicine price: " + 0 + "\nRations price: " + 0);
-                    
-                    b_agent.SetDestination(hit.transform.GetChild(0).transform.position);
                     Ship_Movement shipscript = boat.GetComponent<Ship_Movement>();
+                    current_hit = hit.transform.gameObject;
+                    b_agent.SetDestination(hit.transform.GetChild(1).transform.position);
                     shipscript.set_Port(hit.transform.gameObject);
                     Draw_Chart_path.path = b_agent.path.corners;
                     b_agent.isStopped=true;
@@ -69,7 +82,7 @@ public class Charting_a_Course : MonoBehaviour
         return distance;
     }
     //method to call for the ui to get the amount of weeks it will take to make a journey
-    public int Get_Distacne_in_Weeks()
+    public int Get_Distance_in_Weeks()
     {
         return weekdis;
     }
