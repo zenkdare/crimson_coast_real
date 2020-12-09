@@ -24,6 +24,7 @@ public class ManagerScript : MonoBehaviour
     //public Text crew_count_text;
     //public GameObject shop_screen;
     //public Text rum_diff;
+    public int rations_cost;
     public int rum_dif_int;
     public int spice_dif_int;
     public int timber_dif_int;
@@ -52,6 +53,9 @@ public class ManagerScript : MonoBehaviour
     //public GameObject enter_tavern_button;
     public GameObject canvas;
     public UIManager uiScript;
+    public int required_crew_count;
+    public int max_cargo;
+    private string event_outcome;
     // Start is called before the first frame update
     void Start()
     {
@@ -66,8 +70,11 @@ public class ManagerScript : MonoBehaviour
         timber_dif_int = 0;
         med_dif_int = 0;
         rations_dif_int = 0;
+        rations_dif_int = 0;
         change_gold(0);
         current_ration_state = 2;
+        Ship_Movement ship_script = ship.GetComponent<Ship_Movement>();
+        uiScript.updateCrewCount(ship_script.get_crew_count(), required_crew_count);
         //where you load the strings from a text file for crew generation
         StreamReader sr = new StreamReader("Assets/CrewNames.txt");
         string line;
@@ -122,6 +129,7 @@ public class ManagerScript : MonoBehaviour
         uiScript.updateMarket("Spice", "Cargo", spice_cargo_count);
         uiScript.updateMarket("Timber", "Cargo", timber_cargo_count);
         uiScript.updateMarket("Medicine", "Cargo", med_cargo_count);
+        uiScript.updateMarket("Rations", "Cargo", med_cargo_count);
         //chart_course_button.SetActive(true);
         //set_sail_button.SetActive(true);
         //enter_market_button.SetActive(true);
@@ -216,13 +224,14 @@ public class ManagerScript : MonoBehaviour
 
     public void Set_Sail()
     {
-        if (b_agent.hasPath)
+        Ship_Movement shipscript = ship.GetComponent<Ship_Movement>();
+        if (b_agent.hasPath && shipscript.get_crew_count()==required_crew_count)
         {
             CameraScript camscript = cam.GetComponent<CameraScript>();
             Camera_Orbit camorbit = cam.GetComponent<Camera_Orbit>();
             camscript.enabled = false;
             camorbit.enabled = true;
-            Ship_Movement shipscript = ship.GetComponent<Ship_Movement>();
+            
             shipscript.inport = false;
             //set_sail_button.SetActive(false);
             //enter_market_button.SetActive(false);
@@ -232,7 +241,7 @@ public class ManagerScript : MonoBehaviour
         }
         else
         {
-            uiScript.ErrorDisp("you must choose a destination before setting sail");
+            uiScript.ErrorDisp("you must choose a destination before setting sail and have the required number of crew for your ship size");
             print("you must choose a destination before setting sail");
         }
         
@@ -251,7 +260,6 @@ public class ManagerScript : MonoBehaviour
         Camera_Orbit camorbit = cam.GetComponent<Camera_Orbit>();
         camscript.enabled = true;
         camorbit.enabled = false;
-        change_gold(-2);
     }
     public void add_item(string item)
     {
@@ -328,14 +336,30 @@ public class ManagerScript : MonoBehaviour
             //rum_cost.text = temp_diff.ToString();
             uiScript.updateMarket("Medicine", "Cost", med_temp_diff);
         }
+        else if (item.Equals("rations"))
+        {
+            rations_dif_int += 1;
+            uiScript.updateMarket("Rations", "Amount", rations_dif_int);
+            if (rations_dif_int > 0)
+            {
+                temp_diff -= rations_cost;
+                rations_temp_diff -= rations_cost;
+            }
+            else if (rations_dif_int <= 0)
+            {
+                temp_diff -= rations_cost;
+                rations_temp_diff -= rations_cost;
+            }
+            uiScript.updateMarket("Rations", "Cost", rations_temp_diff);
+        }
         else
         {
             uiScript.ErrorDisp("can't buy more than stock allows");
             print("can't buy more than stock allows");
         }
 
-        uiScript.updateMarket("Footer", "Cost", 0);//total cost of all items yet to be purchased
-        uiScript.updateMarket("Footer", "Amount", 0);//total number of all items yet to be purchased
+        uiScript.updateMarket("Footer", "Cost", temp_diff);//total cost of all items yet to be purchased
+        uiScript.updateMarket("Footer", "Amount", rations_dif_int + med_dif_int + timber_dif_int + spice_dif_int + rum_dif_int);//total number of all items yet to be purchased
     }
     public void sub_item(string item)
     {
@@ -412,9 +436,26 @@ public class ManagerScript : MonoBehaviour
             //rum_cost.text = temp_diff.ToString();
             uiScript.updateMarket("Medicine", "Cost", med_temp_diff);
         }
-
-        uiScript.updateMarket("Footer", "Cost", 0);//total cost of all items yet to be purchased
-        uiScript.updateMarket("Footer", "Amount", 0);//total number of all items yet to be purchased
+        if (item.Equals("rations") && rations_cargo_count > -rations_dif_int)
+        {
+            rations_dif_int -= 1;
+            //rum_diff.text = rum_dif_int.ToString();
+            uiScript.updateMarket("Rations", "Amount", rations_dif_int);
+            if (rations_dif_int >= 0)
+            {
+                temp_diff += rations_cost;
+                rations_temp_diff += rations_cost;
+            }
+            else if (rations_dif_int < 0)
+            {
+                temp_diff += rations_cost;
+                rations_temp_diff += rations_cost;
+            }
+            //rum_cost.text = temp_diff.ToString();
+            uiScript.updateMarket("Rations", "Cost", rations_temp_diff);
+        }
+        uiScript.updateMarket("Footer", "Cost", temp_diff);//total cost of all items yet to be purchased
+        uiScript.updateMarket("Footer", "Amount", rations_dif_int+med_dif_int+timber_dif_int+spice_dif_int+rum_dif_int);//total number of all items yet to be purchased
     }
     public void confirm_purchase()
     {
@@ -432,11 +473,13 @@ public class ManagerScript : MonoBehaviour
                 uiScript.updateMarket("Spice", "Amount", 0);
                 uiScript.updateMarket("Timber", "Amount", 0);
                 uiScript.updateMarket("Medicine", "Amount", 0);
+                uiScript.updateMarket("Rations", "Amount", 0);
                 //rum_cost.text = ("0");
                 uiScript.updateMarket("Rum", "Cost", 0);
                 uiScript.updateMarket("Spice", "Cost", 0);
                 uiScript.updateMarket("Timber", "Cost", 0);
                 uiScript.updateMarket("Medicine", "Cost", 0);
+                uiScript.updateMarket("Rations", "Amount", 0);
                 rum_cargo_count += rum_dif_int;
                 spice_cargo_count += spice_dif_int;
                 timber_cargo_count += timber_dif_int;
@@ -446,22 +489,30 @@ public class ManagerScript : MonoBehaviour
                 uiScript.updateMarket("Spice", "Cargo", spice_cargo_count);
                 uiScript.updateMarket("Timber", "Cargo", timber_cargo_count);
                 uiScript.updateMarket("Medicine", "Cargo", med_cargo_count);
+                uiScript.updateMarket("Rations", "Cargo", rations_cargo_count);
                 rum_dif_int = 0;
                 spice_dif_int = 0;
                 timber_dif_int = 0;
                 med_dif_int = 0;
+                rations_dif_int = 0;
                 change_gold(temp_diff);
                 temp_diff = 0;
                 rum_temp_diff = 0;
                 spice_temp_diff = 0;
                 timber_temp_diff = 0;
                 med_temp_diff = 0;
+                rations_temp_diff = 0;
+                uiScript.updateMarket("Footer", "Cost", temp_diff);//total cost of all items yet to be purchased
+                uiScript.updateMarket("Footer", "Amount", 0);//total number of all items yet to be purchased
             }
             else
             {
-                uiScript.ErrorDisp("can't spend more than you have");
                 print("can't spend more than you have");    
             }
+        }
+        else if (rations_dif_int + med_dif_int + timber_dif_int + spice_dif_int + rum_dif_int > max_cargo)
+        {
+            uiScript.ErrorDisp("You can't exceed your max cargo space of "+max_cargo);
         }
         else
         {
@@ -475,11 +526,13 @@ public class ManagerScript : MonoBehaviour
             uiScript.updateMarket("Spice", "Amount", 0);
             uiScript.updateMarket("Timber", "Amount", 0);
             uiScript.updateMarket("Medicine", "Amount", 0);
+            uiScript.updateMarket("Rations", "Amount", 0);
             //rum_cost.text = ("0");
             uiScript.updateMarket("Rum", "Cost", 0);
             uiScript.updateMarket("Spice", "Cost", 0);
             uiScript.updateMarket("Timber", "Cost", 0);
             uiScript.updateMarket("Medicine", "Cost", 0);
+            uiScript.updateMarket("Rations", "Amount", 0);
             rum_cargo_count += rum_dif_int;
             spice_cargo_count += spice_dif_int;
             timber_cargo_count += timber_dif_int;
@@ -489,16 +542,21 @@ public class ManagerScript : MonoBehaviour
             uiScript.updateMarket("Spice", "Cargo", spice_cargo_count);
             uiScript.updateMarket("Timber", "Cargo", timber_cargo_count);
             uiScript.updateMarket("Medicine", "Cargo", med_cargo_count);
+            uiScript.updateMarket("Rations", "Cargo", rations_cargo_count);
             rum_dif_int = 0;
             spice_dif_int = 0;
             timber_dif_int = 0;
             med_dif_int = 0;
+            rations_dif_int = 0;
             change_gold(temp_diff);
             temp_diff = 0;
             rum_temp_diff = 0;
             spice_temp_diff = 0;
             timber_temp_diff = 0;
             med_temp_diff = 0;
+            rations_temp_diff = 0;
+            uiScript.updateMarket("Footer", "Cost", temp_diff);//total cost of all items yet to be purchased
+            uiScript.updateMarket("Footer", "Amount", 0);//total number of all items yet to be purchased
         }
     }
     public void exit_market()
@@ -535,15 +593,18 @@ public class ManagerScript : MonoBehaviour
         townscript.hire_crew(num);
         Ship_Movement ship_script = ship.GetComponent<Ship_Movement>();
         //crew_count_text.text = ("Crew Count: "+ship_script.get_crew_count().ToString());
-        uiScript.updateCrewCount(ship_script.get_crew_count(), 0);
+        uiScript.updateCrewCount(ship_script.get_crew_count(), required_crew_count);
     }
     public void fire_crew(int num)
     {//Removes a crewmate from crew listing
         //Debug.Log("fire_crew manager:"+num);
         Ship_Movement ship_script = ship.GetComponent<Ship_Movement>();
+        Crew r_fired = ship_script.get_crew_at_spot(num);
+        Town townscript = current_location.GetComponent<Town>();
+        townscript.fired_crew(r_fired);
         ship_script.fire_crew(num);
         //crew_count_text.text = ("Crew Count: "+ship_script.get_crew_count().ToString());
-        uiScript.updateCrewCount(ship_script.get_crew_count(), 0);
+        uiScript.updateCrewCount(ship_script.get_crew_count(), required_crew_count);
     }
     public void handle_event(Event e, int result)
     {
@@ -555,18 +616,22 @@ public class ManagerScript : MonoBehaviour
                 if (stolen_good == 0)
                 {
                     rum_cargo_count -= 3;
+                    event_outcome = "three cases of rum were stolen";
                 }
                 if (stolen_good == 1)
                 {
                     spice_cargo_count -= 3;
+                    event_outcome = "three cases of spice were stolen";
                 }
                 if (stolen_good == 2)
                 {
                     timber_cargo_count -= 3;
+                    event_outcome = "three crates of timber were stolen";
                 }
                 if (stolen_good == 2)
                 {
                     med_cargo_count -= 3;
+                    event_outcome = "three crates of medicine were stolen";
                 }
             }
             if (result == 2)
@@ -575,18 +640,22 @@ public class ManagerScript : MonoBehaviour
                 if (stolen_good == 0)
                 {
                     rum_cargo_count -= 1;
+                    event_outcome = "three cases of rum were stolen";
                 }
                 if (stolen_good == 1)
                 {
                     spice_cargo_count -= 1;
+                    event_outcome = "three cases of spice were stolen";
                 }
                 if (stolen_good == 2)
                 {
                     timber_cargo_count -= 1;
+                    event_outcome = "three crates of timber were stolen";
                 }
                 if (stolen_good == 2)
                 {
                     med_cargo_count -= 1;
+                    event_outcome = "three crates of rum were stolen";
                 }
             }
         }
@@ -595,28 +664,35 @@ public class ManagerScript : MonoBehaviour
             if (result == 1)
             {
                 timber_cargo_count -= 3;
-                //food count-9
+                rations_cargo_count -= 3;
+                event_outcome = "Three crates of timber and 6 rations were lost";
             }
             if (result == 2)
             {
-                //all loyalty-1
+                Ship_Movement ship_script = ship.GetComponent<Ship_Movement>();
+                ship_script.change_loyalty_all(-1);
+                event_outcome = "The loyalty of all crew was lowered by one";
             }
         }
         if (e.get_name().Equals("On Deck Brawl"))
         {
             if (result == 0)
             {
-                //+2 loyalty to all
+                Ship_Movement ship_script = ship.GetComponent<Ship_Movement>();
+                ship_script.change_loyalty_all(2);
+                event_outcome = "The loyalty of all crew was raised by two";
             }
             if (result == 1)
             {
                 med_cargo_count -= 3;
                 timber_cargo_count -= 3;
+                event_outcome = "three crates of medicine and three crates of timber were lost";
             }
             if (result == 2)
             {
                 med_cargo_count--;
                 timber_cargo_count--;
+                event_outcome = "one crate of medicine and one crate of timber were lost";
             }
         }
         if(e.get_name().Equals("Floatsam Found"))
@@ -627,18 +703,22 @@ public class ManagerScript : MonoBehaviour
             if (r == 0)
             {
                 rum_cargo_count += 1 + add;
+                event_outcome = (1+add)+" crates of rum were found as floatsam";
             }
             if (r == 1)
             {
                 spice_cargo_count += 1 + add;
+                event_outcome = (1 + add) + " crates of spice were found as floatsam";
             }
             if (r == 2)
             {
                 timber_cargo_count += 1 + add;
+                event_outcome = (1 + add) + " crates of timber were found as floatsam";
             }
             if (r == 3)
             {
                 med_cargo_count += 1 + add;
+                event_outcome = (1 + add) + " crates of medicine were found as floatsam";
             }
         }
         if(e.get_name().Equals("Sickness"))
@@ -646,6 +726,7 @@ public class ManagerScript : MonoBehaviour
             if (result == 1)
             {
                 med_cargo_count--;
+                event_outcome =  "one crate of medicine was lost to cure a sickness";
             }
         }
         if (e.get_name().Equals("Rough Seas"))
@@ -653,15 +734,17 @@ public class ManagerScript : MonoBehaviour
             if (result == 1)
             {
                 timber_cargo_count--;
+                event_outcome = "one crate of timber was lost to fix up your ship from rough seas";
             }
         }
         if (e.get_name().Equals("Accident"))
         {  
-            timber_cargo_count--;       
+            timber_cargo_count--;
+            event_outcome = "one crate of timber was lost to fix up your ship from an accident";
         }
     }
     //code for the stuff that comes after events
-    public void weekReport(){
+    public void weekReport() {
         Ship_Movement ship_script = ship.GetComponent<Ship_Movement>();
         if (current_ration_state == 0)
         {
@@ -678,7 +761,10 @@ public class ManagerScript : MonoBehaviour
             ship_script.extra_rations();
         }
         ship_script.handle_mutiny_spread();
-        string report = "generate a string\n this should have info about everything that happened in the week\n Like you spent 5 gold on crew\n you lost 7 rum to theft\n you used 20 rations on crew\n etc";
+        int gold_change = ship_script.get_wages();
+        change_gold(gold_change);
+        rations_cargo_count -= ship_script.get_crew_count();
+        string report = gold_change + " gold was spent to pay your crew\n" + ship_script.get_crew_count() + " rations were used to fed your crew\n"+event_outcome;
         uiScript.weekInfoDisp(report);
         uiScript.EventResultUI(false);
         uiScript.WeekInfoUI(true);

@@ -147,38 +147,19 @@ public class Town : MonoBehaviour
     }
     public void set_up_tavern(List<string> names, List<string> t1_lis, List<string> t2_lis, List<string> t1_d, List<string> t2_d)
     {
-        if (name == "Town3")
-        {
-            local_crew.Add(generate_crew(names, t1_lis, t2_lis, t1_d, t2_d));
-            local_crew.Add(generate_crew(names, t1_lis, t2_lis, t1_d, t2_d));
-            local_crew.Add(generate_crew(names, t1_lis, t2_lis, t1_d, t2_d));
-            local_crew.Add(generate_crew(names, t1_lis, t2_lis, t1_d, t2_d));
-            local_crew.Add(generate_crew(names, t1_lis, t2_lis, t1_d, t2_d));
-            local_crew.Add(generate_crew(names, t1_lis, t2_lis, t1_d, t2_d));
-            local_crew.Add(generate_crew(names, t1_lis, t2_lis, t1_d, t2_d));
-            local_crew.Add(generate_crew(names, t1_lis, t2_lis, t1_d, t2_d));
-            rum_amount = og_rum_amount;
-            spice_amount = og_spice_amount;
-            timber_amount = og_timber_amount;
-            med_amount = og_med_amount;
-        }
+        local_crew.Add(generate_crew(names, t1_lis, t2_lis, t1_d, t2_d));
+        local_crew.Add(generate_crew(names, t1_lis, t2_lis, t1_d, t2_d));
+        local_crew.Add(generate_crew(names, t1_lis, t2_lis, t1_d, t2_d));
+        local_crew.Add(generate_crew(names, t1_lis, t2_lis, t1_d, t2_d));
+        local_crew.Add(generate_crew(names, t1_lis, t2_lis, t1_d, t2_d));
+        local_crew.Add(generate_crew(names, t1_lis, t2_lis, t1_d, t2_d));
+        local_crew.Add(generate_crew(names, t1_lis, t2_lis, t1_d, t2_d));
+        local_crew.Add(generate_crew(names, t1_lis, t2_lis, t1_d, t2_d));
+        rum_amount = og_rum_amount;
+        spice_amount = og_spice_amount;
+        timber_amount = og_timber_amount;
+        med_amount = og_med_amount;
         temp_amount = rum_amount;
-        if (name == "Town1")
-        {
-            //local_crew.Add(new Crew("Fred", 2, "Drunk", "superstitious", 5));
-            local_crew.Add(generate_crew(names, t1_lis, t2_lis, t1_d, t2_d));
-            local_crew.Add(generate_crew(names, t1_lis, t2_lis, t1_d, t2_d));
-            local_crew.Add(generate_crew(names, t1_lis, t2_lis, t1_d, t2_d));
-            local_crew.Add(generate_crew(names, t1_lis, t2_lis, t1_d, t2_d));
-            local_crew.Add(generate_crew(names, t1_lis, t2_lis, t1_d, t2_d));
-            local_crew.Add(generate_crew(names, t1_lis, t2_lis, t1_d, t2_d));
-            local_crew.Add(generate_crew(names, t1_lis, t2_lis, t1_d, t2_d));
-            local_crew.Add(generate_crew(names, t1_lis, t2_lis, t1_d, t2_d));
-            rum_amount = og_rum_amount;
-            spice_amount = og_spice_amount;
-            timber_amount = og_timber_amount;
-            med_amount = og_med_amount;
-        }
         //n.text = local_crew[0].get_name();
         //t1.text = local_crew[0].get_t1();
         //t2.text = local_crew[0].get_t2();
@@ -190,8 +171,8 @@ public class Town : MonoBehaviour
         //Debug.Log("hire_crew Town:"+num);
         Ship_Movement ship_code = ship.GetComponent<Ship_Movement>();
         ship_code.add_crew(local_crew[num]);
-        //local_crew.RemoveAt(num);
         uiScript.addCrew(local_crew[num]);
+        local_crew.RemoveAt(num);
         uiScript.updateTavern(local_crew);
         //crew1.SetActive(false);
         //uiScript.destroyCrewTav(num);

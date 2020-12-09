@@ -230,28 +230,28 @@ public class Ship_Movement : MonoBehaviour
         }
         if(new_hire.get_t1().Equals("Sharp Eyes"))
         {
-            possible_events.Add(events[4]);
-            possible_events.Add(events[4]);
+            possible_events.Add(events[6]);
+            possible_events.Add(events[6]);
         }
         if (new_hire.get_t2().Equals("Thief"))
         {
-            possible_events.Add(events[0]);
+            possible_events.Add(events[2]);
         }
         if (new_hire.get_t2().Equals("Brawler"))
         {
-            possible_events.Add(events[2]);
+            possible_events.Add(events[4]);
         }
         if (new_hire.get_t2().Equals("Sickly"))
         {
-            possible_events.Add(events[4]);
+            possible_events.Add(events[6]);
         }
         if (new_hire.get_t2().Equals("Clumsy"))
         {
-            possible_events.Add(events[6]);
+            possible_events.Add(events[8]);
         }
         if (new_hire.get_t2().Equals("Unlucky"))
         {
-            possible_events.Add(events[1]);
+            possible_events.Add(events[3]);
         }
     }
     public void fire_crew(int num)
@@ -309,24 +309,24 @@ public class Ship_Movement : MonoBehaviour
         print(possible_events.Count);
         if (newly_fired.get_t2().Equals("Thief"))
         {
-            possible_events.Remove(events[0]);
+            possible_events.Remove(events[2]);
         }
         print(possible_events.Count);
         if (newly_fired.get_t2().Equals("Brawler"))
         {
-            possible_events.Remove(events[2]);
+            possible_events.Remove(events[4]);
         }
         if (newly_fired.get_t2().Equals("Sickly"))
         {
-            possible_events.Remove(events[4]);
+            possible_events.Remove(events[6]);
         }
         if (newly_fired.get_t2().Equals("Clumsy"))
         {
-            possible_events.Remove(events[6]);
+            possible_events.Remove(events[8]);
         }
         if (newly_fired.get_t2().Equals("Unlucky"))
         {
-            possible_events.Remove(events[1]);
+            possible_events.Remove(events[3]);
         }
         ship_crew.RemoveAt(num);
 
@@ -627,7 +627,7 @@ public class Ship_Movement : MonoBehaviour
     {
         using_spice = true;
     }
-    public void handle_mutiny_spread()
+    public int handle_mutiny_spread()
     {
         int mutany_count=0;
         for(int i = 0; i < ship_crew.Count; i++)
@@ -647,6 +647,7 @@ public class Ship_Movement : MonoBehaviour
         {
             //you lose here
         }
+        return mutany_count;
     }
     public int get_lucky_num()
     {
@@ -654,6 +655,23 @@ public class Ship_Movement : MonoBehaviour
     }
     public Crew get_crew_at_spot(int spot)
     {
-        return ship_crew[spot];
+        Crew temp = ship_crew[spot];
+        return temp;
+    }
+    public void change_loyalty_all(int num)
+    {
+        for (int i = 0; i < ship_crew.Count; i++)
+        {
+            ship_crew[i].change_loyalty(num);
+        }
+    }
+    public int get_wages()
+    {
+        int num=0;
+        for(int i = 0; i < ship_crew.Count; i++)
+        {
+            num += ship_crew[i].get_cost();
+        }
+        return num;
     }
 }
