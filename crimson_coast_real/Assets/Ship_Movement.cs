@@ -685,4 +685,8 @@ public class Ship_Movement : MonoBehaviour
             return false;
         }
     }
+    public GameObject get_target_port()
+    {
+        return targetPort;
+    }
 }
