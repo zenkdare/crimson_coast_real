@@ -315,7 +315,7 @@ public class UIManager : MonoBehaviour
     }
 
     public void updateUpgradeInfo(string info){
-        Text textbox = townUI.Find("UpgradeShip/description/Text").GetComponent<Text>();
+        Text textbox = townUI.transform.Find("UpgradeShip/description/Text").GetComponent<Text>();
         textbox.text = info;
     }
 
