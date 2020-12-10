@@ -947,7 +947,14 @@ public class ManagerScript : MonoBehaviour
     }
     public void spend_spice()
     {
-        spice_cargo_count--;
+        if (spice_cargo_count == 0)
+        {
+            event_outcome += "\nAttempted to give your crew spice when you had none";
+        }
+        else
+        {
+            spice_cargo_count--;
+        }
     }
     public void QuitGame(){
         Application.Quit();
