@@ -96,6 +96,7 @@ public class Ship_Movement : MonoBehaviour
                     //print(Vector3.Distance(gameObject.transform.position, lastpos));
                     if (Random.value <= event_rate)
                     {
+                        mScript.reset_event_outcome();
                         List<Crew> poss_traitor = new List<Crew>();
                         List<Crew> poss_raise = new List<Crew>();
                         bool possible_plot=false;
@@ -107,7 +108,7 @@ public class Ship_Movement : MonoBehaviour
                                 possible_plot = true;
                                 poss_traitor.Add(ship_crew[i]);
                             }
-                            if (ship_crew[i].getLoyalty() >= 2)
+                            if (ship_crew[i].getLoyalty() >= 1)
                             {
                                 possible_plot_catch = true;
                             }
@@ -152,6 +153,7 @@ public class Ship_Movement : MonoBehaviour
                         }
                     }
                     else{
+                        mScript.reset_event_outcome();
                         mScript.weekReport();
                     }
                     agent.isStopped = true;
@@ -502,6 +504,7 @@ public class Ship_Movement : MonoBehaviour
                 print(num);
                 if (num == 0)
                 {
+                    num_result = 0;
                     ship_crew[current_event.get_trigger()].change_wage(1);
                     ship_crew[current_event.get_trigger()].change_loyalty(2);
                     result = current_event.get_good_result();
@@ -509,6 +512,7 @@ public class Ship_Movement : MonoBehaviour
                 }
                 else
                 {
+                    num_result = 1;
                     ship_crew[current_event.get_trigger()].change_loyalty(-3);
                     result = current_event.get_bad_result();
                 }
@@ -526,7 +530,9 @@ public class Ship_Movement : MonoBehaviour
                             ship_crew[i].change_loyalty(-1);
                         }
                     }
+                    num_result = 0;
                     ship_crew[current_event.get_trigger()].set_loyalty(3);
+                    result = current_event.get_good_result();
                 }
                 else
                 {
@@ -543,6 +549,8 @@ public class Ship_Movement : MonoBehaviour
                             ship_crew[i].change_loyalty(-2);
                         }
                     }
+                    result = current_event.get_bad_result();
+                    num_result = 1;
                 }
                 uiScript.update_ship_crew();
             }
