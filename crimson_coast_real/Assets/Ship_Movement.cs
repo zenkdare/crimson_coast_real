@@ -159,6 +159,7 @@ public class Ship_Movement : MonoBehaviour
                         mScript.weekReport();
                     }
                     agent.isStopped = true;
+                    agent.velocity = Vector3.zero;
                     lastpos = gameObject.transform.position;
                 }
             }
@@ -623,9 +624,9 @@ public class Ship_Movement : MonoBehaviour
             //need to update the ui here
         }
     }
-    public void toggle_spice()
+    public void toggle_spice(bool boo)
     {
-        using_spice = true;
+        using_spice = boo;
     }
     public int handle_mutiny_spread()
     {

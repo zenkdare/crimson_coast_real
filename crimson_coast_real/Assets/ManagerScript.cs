@@ -793,7 +793,7 @@ public class ManagerScript : MonoBehaviour
         }
         ship_script.handle_mutiny_spread();
         int gold_change = ship_script.get_wages();
-        change_gold(gold_change);
+        change_gold(-gold_change);
         rations_cargo_count -= ship_script.get_crew_count();
         string report = gold_change + " gold was spent to pay your crew\n" + ship_script.get_crew_count() + " rations were used to fed your crew\n"+event_outcome;
         uiScript.weekInfoDisp(report);
