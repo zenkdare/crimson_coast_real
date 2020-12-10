@@ -1,3 +1,4 @@
+0
 A Theif in the Night
 Whispers swirl amognst the crew about a rat amongst them. You could attempt to have one of your men guard the supplies, but they might very well join in the thieving. Might be best to leave it be. After all, they're only skimming off the top.
 Set up a guard in the hold to ward off thieves. 
@@ -7,7 +8,8 @@ Leave it be.
 Not so much as a squeek tonight. Hound got the job done it seems. 
 Guard wasn't at his post this morning, probably helped the thief out. 
 As expected only a small amount is missing, but this could add up over time...
-;Brewing Storm
+;1
+Brewing Storm
 Smells like a storm tonight, but you can't be sure. A single man is all you need to properly warn the rest should one appear, that is, if he can read the signs. If not, then we're getting hit hard. The other option is no sleep for any of us but that rarely goes over well. 
 Set up a man to watch for the signs, and hope that he can read them when they come. 
 No sleep for the crew tonight, everyone's on watch duty. Hope I can reward them Later. 
@@ -16,7 +18,8 @@ Crew wide watch
 Your watchman is better than most and raised the alarm as soon as the wind picked up. We were gone before the rain even started.
 Next time, hire a better lookout. Poor fool didn't realize until the storm was upon us. 
 It may have been a sleepless night, but we managed to evade the storm. 
-;On Deck Brawl
+;2
+On Deck Brawl
 A fight has broken out on deck and those morons are likely to break the ship along with their noses. Trying to break them up might just make it worse unless someone can talk them down. It's either that or letting them beat it out their system.
 Try and put a stop to this nonsense before they start breaking things. 
 Let them be. Whatever happens, I can just dock their wages to make up the difference.
@@ -25,31 +28,38 @@ leave them be
 Luckily, a member or two of the crew backed me up, and we managed to break up the fight. Here's to hoping they don't try again later. 
 Could've gone better. Now three of us need to be patched up instead of two of us.
 Damage was minimal and they weren't hurt to bad. Maybe I should start a fight night for the boys. 
-;Floatsam Found
+;3
+Floatsam Found
 While sailing on the open sea, you're crew spotted some floating cargo. 
 You pulled up some extra resources. 
 You pulled up some resources and it would seem you got lucky with your find. 
-;Sickness
+;4
+Sickness
 A disease has begun to spread amongst your crew 
 Medicine must be used to cure it. 
-No resources are spen thanks to a physician on board 
-;Rough Seas
+No resources are spent thanks to a physician on board 
+;5
+Rough Seas
 Waves swell and batter your ship
 Supplies must be spent to keep you seaworthy
 Despite the swelling waves, a bosun aboard keeps you seaworthy
-;Accident
+;6
+Accident
 The clumsiness of some of your crew has caused some damage. 
 Resources must be spent to repair it
-;A Pay Raise
- thinks it's high time he's gotten a pay raise for his good work and continued loyalty. 
+
+;7
+A Pay Raise
+thinks it's high time he's gotten a pay raise for his good work and continued loyalty. 
 Boost his spirits and his pocket money
 Refuse, and let him be somewhat dissapointed
 Accept
 Refuse
 Your pockets might be empty, but now you have a very loyal follower. Hopefully you can keep him loyal.
 Rejected, he walks away disheartened. He expected to recieve the raise as a reward. Why bother working hard if it grants you nothing?
-;Plot Uncovered
- has been discovered plotting against you. There are rules for disciplining traitors, but it might be safer to just get rid of the wretch. 
+;8
+Plot Uncovered
+has been discovered plotting against you. There are rules for disciplining traitors, but it might be safer to just get rid of the wretch. 
 Lashings are a good way to put the man back in his place, though other traitors might just be encouraged to try their luck.
 Bind him with iron and throw him overboard. It'll scare any traitor stiff, but it will also worry your most loyal.
 Twenty Lashings

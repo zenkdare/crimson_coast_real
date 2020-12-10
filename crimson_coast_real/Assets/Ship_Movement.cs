@@ -200,6 +200,7 @@ public class Ship_Movement : MonoBehaviour
         ship_crew.Add(new_hire);
         if(new_hire.get_t1().Equals("Wind Reader"))
         {
+            print("Wind work");
             has_wind_reader++;
         }
         if (new_hire.get_t1().Equals("Watch Dog"))
@@ -239,7 +240,7 @@ public class Ship_Movement : MonoBehaviour
         {
             possible_events.Add(events[2]);
         }
-        if (new_hire.get_t2().Equals("Brawler"))
+        if (new_hire.get_t2().Equals("Violent"))
         {
             possible_events.Add(events[4]);
         }
@@ -295,26 +296,26 @@ public class Ship_Movement : MonoBehaviour
         {
            for(int i=0; i < possible_events.Count; i++)
            {
-                if(string.Compare(possible_events[i].get_name(), "Floatsam Found")==0)
+                if(possible_events[i].get_id()==3)
                 {
                     possible_events.RemoveAt(i);
                 }
            }
             for (int i = 0; i < possible_events.Count; i++)
             {
-                if (string.Compare(possible_events[i].get_name(), "Floatsam Found") == 0)
+                if (possible_events[i].get_id() == 3)
                 {
                     possible_events.RemoveAt(i);
                 }
             }
         }
-        //print(possible_events.Count);
+        print(possible_events.Count);
         if (newly_fired.get_t2().Equals("Thief"))
         {
             possible_events.Remove(events[2]);
         }
-        //print(possible_events.Count);
-        if (newly_fired.get_t2().Equals("Brawler"))
+        
+        if (newly_fired.get_t2().Equals("Violent"))
         {
             possible_events.Remove(events[4]);
         }
@@ -330,6 +331,7 @@ public class Ship_Movement : MonoBehaviour
         {
             possible_events.Remove(events[3]);
         }
+        print(possible_events.Count);
         ship_crew.RemoveAt(num);
 
     }
@@ -344,8 +346,8 @@ public class Ship_Movement : MonoBehaviour
         // current_event = events[num].get_name();
         if (e.is_active())
         {
-            print("active");
-            if(string.Compare(e.get_name(), "A Pay Raise")==0 || string.Compare(e.get_name(), "Plot Uncovered")==0)
+            //print("active");
+            if(e.get_id()==7 || e.get_id() == 8)
             {
                 uiScript.EventUI(true);
                 uiScript.updateEvent(e.get_name(), e.get_trigger()+e.get_flavor(), e.get_o1(), e.get_o2(), e.get_o1_descrip(), e.get_o2_descrip());
@@ -358,12 +360,12 @@ public class Ship_Movement : MonoBehaviour
         }
         else
         {
-            print("not active");
+            //print("not active");
             string result = "something should be here";
             int num_result = -1;
-            if (string.Compare(e.get_name(), "Floatsam Found") == 0)
+            if (e.get_id() == 3)
             {
-                print("made it float");
+                //print("made it float");
                 if (num_lucky > 0)
                 {
                     result = e.get_flavor()+"\n"+e.get_good_result();
@@ -373,9 +375,9 @@ public class Ship_Movement : MonoBehaviour
                     result = e.get_flavor() + "\n" + e.get_failed_result();
                 }
             }
-            if (string.Compare(e.get_name(), "Sickness") == 0)
+            if (e.get_id() == 4)
             {
-                print("made it sick");
+                //print("made it sick");
                 if (has_doctor > 0)
                 {
                     result = e.get_flavor() + "\n" + e.get_good_result();
@@ -387,9 +389,9 @@ public class Ship_Movement : MonoBehaviour
                     num_result = 1;
                 }
             }
-            if (string.Compare(e.get_name(), "Rough Seas") == 0)
+            if (e.get_id() == 5)
             {
-                print("made it rough");
+                //print("made it rough");
                 if (has_bosun > 0)
                 {
                     result = e.get_flavor() + "\n" + e.get_good_result();
@@ -401,9 +403,9 @@ public class Ship_Movement : MonoBehaviour
                     num_result = 1;
                 }
             }
-            if (string.Compare(e.get_name(), "Accident") == 0)
+            if (e.get_id() == 6)
             {
-                print("made it acc");
+                //print("made it acc");
                 result = e.get_flavor() + "\n" + e.get_good_result();
             }
             
@@ -423,7 +425,7 @@ public class Ship_Movement : MonoBehaviour
         if (current_event.is_active())
         {
             float odds = Random.value;
-            if(current_event.get_name().Equals("A Theif in the Night"))
+            if(current_event.get_id() == 0)
             {
                 if (num == 0)
                 {
@@ -444,7 +446,7 @@ public class Ship_Movement : MonoBehaviour
                     num_result = 2;
                 }   
             }
-            if (current_event.get_name().Equals("Brewing Storm"))
+            if (current_event.get_id() == 1)
             {
                 if (num == 0)
                 {
@@ -469,7 +471,7 @@ public class Ship_Movement : MonoBehaviour
                     }
                 }
             }
-            if (current_event.get_name().Equals("On Deck Brawl"))
+            if (current_event.get_id() == 2)
             {
                 if (num == 0)
                 {
@@ -494,7 +496,7 @@ public class Ship_Movement : MonoBehaviour
                     num_result = 2;
                 }
             }
-            if (current_event.get_name().Equals("A Pay Raise"))
+            if (current_event.get_id() == 7)
             {
                
                 if (num == 0)
@@ -507,7 +509,7 @@ public class Ship_Movement : MonoBehaviour
                     ship_crew[current_event.get_trigger()].change_loyalty(-3);
                 }
             }
-            if (current_event.get_name().Equals("Plot Uncovered"))
+            if (current_event.get_id() == 8)
             {
 
                 if (num == 0)

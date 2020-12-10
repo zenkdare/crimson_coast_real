@@ -684,7 +684,7 @@ public class ManagerScript : MonoBehaviour
     {
         Camera_Orbit camorbit = cam.GetComponent<Camera_Orbit>();
         camorbit.enabled = false;
-        if (string.Compare(e.get_name(), "A Theif in the Night")==0)
+        if (e.get_id()==0)
         {
             if (result == 1)
             {
@@ -735,7 +735,7 @@ public class ManagerScript : MonoBehaviour
                 }
             }
         }
-        if (string.Compare(e.get_name(), "Brewing Storm")==0)
+        if (e.get_id() == 1)
         {
             if (result == 1)
             {
@@ -750,7 +750,7 @@ public class ManagerScript : MonoBehaviour
                 event_outcome = "The loyalty of all crew was lowered by one";
             }
         }
-        if (string.Compare(e.get_name(), "On Deck Brawl")==0)
+        if (e.get_id() == 2)
         {
             if (result == 0)
             {
@@ -771,7 +771,7 @@ public class ManagerScript : MonoBehaviour
                 event_outcome = "one crate of medicine and one crate of timber were lost";
             }
         }
-        if(string.Compare(e.get_name(), "Floatsam Found")==0)
+        if(e.get_id() == 3)
         {
             int r = Random.Range(0, 4);
             Ship_Movement ship_script = ship.GetComponent<Ship_Movement>();
@@ -797,7 +797,7 @@ public class ManagerScript : MonoBehaviour
                 event_outcome = (1 + add) + " crates of medicine were found as floatsam";
             }
         }
-        if(string.Compare(e.get_name(), "Sickness")==0)
+        if(e.get_id() == 4)
         {
             if (result == 1)
             {
@@ -805,7 +805,7 @@ public class ManagerScript : MonoBehaviour
                 event_outcome =  "one crate of medicine was lost to cure a sickness";
             }
         }
-        if (string.Compare(e.get_name(), "Rough Seas")==0)
+        if (e.get_id() == 5)
         {
             if (result == 1)
             {
@@ -813,7 +813,7 @@ public class ManagerScript : MonoBehaviour
                 event_outcome = "one crate of timber was lost to fix up your ship from rough seas";
             }
         }
-        if (string.Compare(e.get_name(), "Accident")==0)
+        if (e.get_id() == 6)
         {  
             timber_cargo_count--;
             event_outcome = "one crate of timber was lost to fix up your ship from an accident";
@@ -849,6 +849,7 @@ public class ManagerScript : MonoBehaviour
         int gold_change = ship_script.get_wages();
         change_gold(-gold_change);
         rations_cargo_count -= ship_script.get_crew_count();
+        //print(event_outcome);
         string report = gold_change + " gold was spent to pay your crew\n" + ship_script.get_crew_count() + " rations were used to fed your crew\n"+event_outcome;
         uiScript.weekInfoDisp(report);
         uiScript.EventResultUI(false);

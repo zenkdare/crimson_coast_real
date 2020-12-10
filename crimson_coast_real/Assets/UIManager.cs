@@ -46,6 +46,7 @@ public class UIManager : MonoBehaviour
 	public GameObject CrewUIShip;
     public GameObject CrewUIList;
     public GameObject Manager;
+    public GameObject ship;
     public ManagerScript managerScript;
     private List<GameObject> townCrew = new List<GameObject>();
     private List<GameObject> shipCrew = new List<GameObject>();
@@ -272,6 +273,11 @@ public class UIManager : MonoBehaviour
         curCrew = shipCrew[index];
         shipCrew.Remove(curCrew);
         Destroy(curCrew);
+        Ship_Movement ship_script = ship.GetComponent<Ship_Movement>();
+        for(int i = 0; i < crewListCrew.Count; i++)
+        {
+            crewListCrew[i].GetComponent<crewUIScript>().setIndex(i);
+        }
  	}
 
     public void updateEvent(string title, string info, string option1, string option2, string option1Desc, string option2Desc){

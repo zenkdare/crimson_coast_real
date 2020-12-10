@@ -5,6 +5,7 @@ using UnityEngine;
 public class Event
 {
     private string id;
+    private string name;
     private string option1;
     private string option2;
     private string option1_descrip;
@@ -18,37 +19,40 @@ public class Event
     public Event(string info)
     {
         string[] parsed_info = info.Split('\n');
+        if (parsed_info.Length == 11)
+        {
+            id = parsed_info[0];
+            name = parsed_info[1];
+            flavor = parsed_info[2];
+            option1_descrip = parsed_info[3];
+            option2_descrip = parsed_info[4];
+            option1 = parsed_info[5];
+            option2 = parsed_info[6];
+            good_result = parsed_info[7];
+            failed_result = parsed_info[8];
+            bad_result = parsed_info[9];
+            trigger = -1;
+        }
         if (parsed_info.Length == 10)
         {
             id = parsed_info[0];
-            flavor = parsed_info[1];
-            option1_descrip = parsed_info[2];
-            option2_descrip = parsed_info[3];
-            option1 = parsed_info[4];
-            option2 = parsed_info[5];
-            good_result = parsed_info[6];
-            failed_result = parsed_info[7];
-            bad_result = parsed_info[8];
-            trigger = -1;
-        }
-        if (parsed_info.Length == 9)
-        {
-            id = parsed_info[0];
-            flavor = parsed_info[1];
-            option1_descrip = parsed_info[2];
-            option2_descrip = parsed_info[3];
-            option1 = parsed_info[4];
-            option2 = parsed_info[5];
-            good_result = parsed_info[6];
+            name = parsed_info[1];
+            flavor = parsed_info[2];
+            option1_descrip = parsed_info[3];
+            option2_descrip = parsed_info[4];
+            option1 = parsed_info[5];
+            option2 = parsed_info[6];
+            good_result = parsed_info[7];
             failed_result = "";
             bad_result = parsed_info[8];
             trigger = -1;
         }
-        if (parsed_info.Length <= 5)
+        if (parsed_info.Length <= 6)
         {
             id = parsed_info[0];
-            flavor = parsed_info[1];
-            good_result = parsed_info[2];
+            name = parsed_info[1];
+            flavor = parsed_info[2];
+            good_result = parsed_info[4];
             failed_result = parsed_info[3];
             option1_descrip = "";
             option2_descrip = "";
@@ -68,9 +72,13 @@ public class Event
     {
         
     }
+    public int get_id()
+    {
+        return int.Parse(id);
+    }
     public string get_name()
     {
-        return id;
+        return name;
     }
     public string get_o1()
     {
@@ -110,7 +118,7 @@ public class Event
     }
     public bool is_active()
     {
-        if(string.Compare(id, "A Theif in the Night")==0 || string.Compare(id, "Brewing Storm") == 0 || string.Compare(id, "On Deck Brawl") == 0 || string.Compare(id, "A Pay Raise") == 0 || string.Compare(id, "Plot Uncovered") == 0 )
+        if(int.Parse(id) == 0 || int.Parse(id) == 1 || int.Parse(id) == 2 || int.Parse(id) == 7 || int.Parse(id) == 8)
         {
             return true;
         }
@@ -121,7 +129,7 @@ public class Event
     }
     public bool is_passive()
     {
-        if (string.Compare(id, "Floatsam Found") == 0 || string.Compare(id, "Sickness")==0 || string.Compare(id, "Rough Seas")==0 || string.Compare(id, "Accident")==0)
+        if (int.Parse(id) == 3 || int.Parse(id) == 4 || int.Parse(id) == 5 || int.Parse(id) == 6)
         {
             return true;
         }

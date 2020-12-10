@@ -1044,7 +1044,6 @@ MonoBehaviour:
   med_price: 30
   med_amount: 3
   temp_amount: 0
-  local_crew: []
   ship: {fileID: 1031851749}
   canvas: {fileID: 1950525840}
   uiScript: {fileID: 1950525845}
@@ -7810,7 +7809,6 @@ MonoBehaviour:
   med_price: 0
   med_amount: 0
   temp_amount: 0
-  local_crew: []
   ship: {fileID: 1031851749}
   canvas: {fileID: 1950525840}
   uiScript: {fileID: 1950525845}
@@ -26615,10 +26613,6 @@ MonoBehaviour:
   manager: {fileID: 1343203706}
   inport: 0
   current_port: {fileID: 0}
-  ship_crew: []
-  events: []
-  possible_events: []
-  current_event: {fileID: 0}
   weekdis: 500
   lastpos: {x: 0, y: 0, z: 0}
   canvas: {fileID: 1950525840}
@@ -31553,7 +31547,6 @@ MonoBehaviour:
   med_price: 40
   med_amount: 2
   temp_amount: 0
-  local_crew: []
   ship: {fileID: 1031851749}
   canvas: {fileID: 1950525840}
   uiScript: {fileID: 1950525845}
@@ -47491,7 +47484,6 @@ MonoBehaviour:
   med_price: 0
   med_amount: 0
   temp_amount: 0
-  local_crew: []
   ship: {fileID: 1031851749}
   canvas: {fileID: 1950525840}
   uiScript: {fileID: 1950525845}
@@ -50077,6 +50069,7 @@ MonoBehaviour:
   CrewUIShip: {fileID: 593659318372892364, guid: 94b307419142fa841ae21357d31c83e3, type: 3}
   CrewUIList: {fileID: 6155454370787565719, guid: 376ffb7f4cad3cb49a9332eb0f799fdc, type: 3}
   Manager: {fileID: 1343203706}
+  ship: {fileID: 1031851749}
   managerScript: {fileID: 1343203708}
 --- !u!1 &1962234817
 GameObject:
