@@ -821,6 +821,30 @@ public class ManagerScript : MonoBehaviour
             timber_cargo_count--;
             event_outcome = "one crate of timber was lost to fix up your ship from an accident";
         }
+        if (e.get_id() == 7)
+        {
+            if (result == 0)
+            {
+                event_outcome = "One of your crew had their wage increase by 1 and their loyalty increase by 2";
+            }
+            if (result == 1)
+            {
+                timber_cargo_count--;
+                event_outcome = "One of your crew has lost 3 loyalty from being denied a raise";
+            }
+        }
+        if (e.get_id() == 8)
+        {
+            if (result == 0)
+            {
+                event_outcome = "all of your crew with less than 5 loyalty have lost 1 loyalty and the one who tried to mutiny is loyal again";
+            }
+            if (result == 1)
+            {
+                timber_cargo_count--;
+                event_outcome = "One of your crew has walked the plank, and the rest know now to fear you";
+            }
+        }
         //uiScript.updateCargoCount(((rations_cargo_count / 3) + med_cargo_count + timber_cargo_count + spice_cargo_count + rum_cargo_count), max_cargo);
         //uiScript.cargoUpdate();
     }
@@ -993,5 +1017,9 @@ public class ManagerScript : MonoBehaviour
         {
             uiScript.ErrorDisp("no furthur upgrade available");
         }
+    }
+    public void reset_event_outcome()
+    {
+        event_outcome = "";
     }
 }
