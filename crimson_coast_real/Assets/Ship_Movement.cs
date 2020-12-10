@@ -311,8 +311,9 @@ public class Ship_Movement : MonoBehaviour
         {
             possible_events.Remove(events[3]);
         }
-        print(possible_events.Count);
+        //print(possible_events.Count);
         ship_crew.RemoveAt(num);
+
 
     }
     public void trigger_event(Event e)
@@ -404,6 +405,7 @@ public class Ship_Movement : MonoBehaviour
         //local_event.SetActive(false);
         string result="hmmmm, not suppossed to happen";
         int num_result = -1;
+        ManagerScript manage = manager.GetComponent<ManagerScript>();
         if (current_event.is_active())
         {
             print("active check");
@@ -514,7 +516,8 @@ public class Ship_Movement : MonoBehaviour
                 }
                 else
                 {
-                    ship_crew.RemoveAt(current_event.get_trigger());
+                    manage.fire_crew(current_event.get_trigger());
+                    //ship_crew.RemoveAt(current_event.get_trigger());
                     for (int i = 0; i < ship_crew.Count; i++)
                     {
                         if (ship_crew[i].getLoyalty() <= 4)
@@ -533,7 +536,7 @@ public class Ship_Movement : MonoBehaviour
         uiScript.EventUI(false);
         uiScript.eventResult(result, current_event.get_name());
         uiScript.EventResultUI(true);
-        ManagerScript manage = manager.GetComponent<ManagerScript>();
+        
         manage.handle_event(current_event, num_result);
         //agent.isStopped = false;
     }

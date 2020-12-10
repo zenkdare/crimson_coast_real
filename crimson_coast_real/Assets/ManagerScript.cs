@@ -76,7 +76,7 @@ public class ManagerScript : MonoBehaviour
         rations_dif_int = 0;
         rations_dif_int = 0;
         change_gold(0);
-        current_ration_state = 2;
+        current_ration_state = 1;
         Ship_Movement ship_script = ship.GetComponent<Ship_Movement>();
         uiScript.updateCrewCount(ship_script.get_crew_count(), required_crew_count);
         uiScript.updateCargoCount(0, max_cargo);
@@ -822,8 +822,8 @@ public class ManagerScript : MonoBehaviour
             timber_cargo_count--;
             event_outcome = "one crate of timber was lost to fix up your ship from an accident";
         }
-        uiScript.updateCargoCount(((rations_cargo_count / 3) + med_cargo_count + timber_cargo_count + spice_cargo_count + rum_cargo_count), max_cargo);
-        uiScript.cargoUpdate();
+        //uiScript.updateCargoCount(((rations_cargo_count / 3) + med_cargo_count + timber_cargo_count + spice_cargo_count + rum_cargo_count), max_cargo);
+        //uiScript.cargoUpdate();
     }
     //code for the stuff that comes after events
     public void weekReport() {

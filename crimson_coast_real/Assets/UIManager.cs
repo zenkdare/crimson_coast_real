@@ -306,14 +306,14 @@ public class UIManager : MonoBehaviour
     }
 
     public void cargoUpdate(){
-        int stock = managerScript.get_cargo_rum() + managerScript.get_cargo_spice() + managerScript.get_cargo_timber() + managerScript.get_cargo_med() + managerScript.get_cargo_rations();
+        int stock = managerScript.get_cargo_rum() + managerScript.get_cargo_spice() + managerScript.get_cargo_timber() + managerScript.get_cargo_med() + (managerScript.get_cargo_rations()/3);
         int cargo = 0;
         //set cargo UI to how many of each item is owned
         updateCargo("Rum", "Stock", managerScript.get_cargo_rum());
         updateCargo("Spice", "Stock", managerScript.get_cargo_spice());
         updateCargo("Timber", "Stock", managerScript.get_cargo_timber());
         updateCargo("Medicine", "Stock", managerScript.get_cargo_med());
-        updateCargo("Rations", "Stock", managerScript.get_cargo_rations());
+        updateCargo("Rations", "Stock", (managerScript.get_cargo_rations()/3));
         //set cargo UI to how much space each item uses
         updateCargo("Rum", "Cargo", 0);
         updateCargo("Spice", "Cargo", 0);
