@@ -940,10 +940,10 @@ public class ManagerScript : MonoBehaviour
             print("can't give what aint there");
         }
     }
-    public void give_spice()
+    public void give_spice(bool boo)
     {
         Ship_Movement ship_script = ship.GetComponent<Ship_Movement>();
-        ship_script.toggle_spice(true);
+        ship_script.toggle_spice(boo);
     }
     public void spend_spice()
     {
