@@ -61,6 +61,8 @@ public class Ship_Movement : MonoBehaviour
         }
         possible_events.Add(events[8]);
         possible_events.Add(events[7]);
+        possible_events.Add(events[7]);
+        possible_events.Add(events[7]);
         possible_events.Add(events[1]);
         possible_events.Add(events[2]);
         possible_events.Add(events[3]);
@@ -105,7 +107,7 @@ public class Ship_Movement : MonoBehaviour
                                 possible_plot = true;
                                 poss_traitor.Add(ship_crew[i]);
                             }
-                            if (ship_crew[i].getLoyalty() >= 5)
+                            if (ship_crew[i].getLoyalty() >= 2)
                             {
                                 possible_plot_catch = true;
                             }
@@ -139,10 +141,11 @@ public class Ship_Movement : MonoBehaviour
                         {
                             int event_num;
                             event_num = Random.Range(1, possible_events.Count);
-                            if (event_num == 1)
+                            event_num = 1;
+                            if (event_num == 1 || event_num==2 || event_num==3)
                             {
                                 int get_raiser = Random.Range(0, ship_crew.Count);
-                                possible_events[1].change_trigger(get_raiser);
+                                possible_events[event_num].change_trigger(get_raiser);
                             }
                             current_event = possible_events[event_num];
                             trigger_event(possible_events[event_num]);

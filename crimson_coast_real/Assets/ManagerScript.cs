@@ -748,7 +748,7 @@ public class ManagerScript : MonoBehaviour
             {
                 timber_cargo_count -= 3;
                 rations_cargo_count -= 3;
-                event_outcome = "Three crates of timber and 6 rations were lost";
+                event_outcome = "Three crates of timber and 3 rations were lost";
             }
             if (result == 2)
             {
@@ -831,44 +831,29 @@ public class ManagerScript : MonoBehaviour
         Camera_Orbit camorbit = cam.GetComponent<Camera_Orbit>();
         camorbit.enabled = false;
         Ship_Movement ship_script = ship.GetComponent<Ship_Movement>();
-        if (current_ration_state == 2)
-        {
-            rations_cargo_count -= (ship_script.get_crew_count() * 2);
-            rations_used = (ship_script.get_crew_count() * 2);
-        }
-        if (current_ration_state == 1)
-        {
-            rations_cargo_count -= ship_script.get_crew_count();
-            rations_used = ship_script.get_crew_count();
-        }
-        if (current_ration_state == 0)
-        {
-            rations_used = 0;
-        }
-        if (rations_cargo_count < 0)
-        {
-            rations_cargo_count = 0;
-        }
-        event_outcome += "\n"+ship_script.handle_mutiny_spread()+" crew members have have lowered the loyalty of others in order to try and mutiny";
+        event_outcome += "\n"+ship_script.handle_mutiny_spread()+" crew members have lowered the loyalty of others in order to try and mutiny";
         int gold_change = ship_script.get_wages();
         change_gold(-gold_change);
         //print(event_outcome);
-        if (current_ration_state > rations_cargo_count)
+        if (current_ration_state > (rations_cargo_count/3))
         {
             current_ration_state--;
-            rations_cargo_count++;
-            uiScript.ErrorDisp("ration plan has been lowered due to lack of food");
+            uiScript.ErrorDisp("ration plan has been lowered for the future due to lack of food");
         }
-        if (current_ration_state > rations_cargo_count)
+        if (current_ration_state > (rations_cargo_count/3))
         {
             current_ration_state--;
-            rations_cargo_count++;
-            uiScript.ErrorDisp("ration plan has been lowered due to lack of food");
+            uiScript.ErrorDisp("ration plan has been lowered for the future due to lack of food");
         }
         bool tempspice = using_spice;
         if(using_spice)
         {
-            if (spice_cargo_count > 0)
+            if(current_ration_state==0)
+            {
+                tempspice = false;
+                event_outcome += "\nAttempted to give your crew spice but you had no food to pair it with";
+            }
+            else if (spice_cargo_count > 0)
             {
                 spice_cargo_count--;
                 event_outcome += "\nSpice was used and the loyalty of every crewmate was increased by 3";
@@ -882,14 +867,19 @@ public class ManagerScript : MonoBehaviour
         if (current_ration_state == 2)
         {
             event_outcome += ship_script.extra_rations(tempspice);
+            rations_cargo_count -= (ship_script.get_crew_count() * 2);
+            rations_used = (ship_script.get_crew_count() * 2);
         }
         if (current_ration_state == 1)
         {
             event_outcome += ship_script.normal_rations(tempspice);
+            rations_cargo_count -= ship_script.get_crew_count();
+            rations_used = ship_script.get_crew_count();
         }
         if (current_ration_state == 0)
         {
             event_outcome += ship_script.no_rations(tempspice);
+            rations_used = 0;
         }
         if (rations_cargo_count < 0)
         {
