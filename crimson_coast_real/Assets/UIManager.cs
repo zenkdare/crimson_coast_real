@@ -314,13 +314,13 @@ public class UIManager : MonoBehaviour
         updateCargo("Spice", "Stock", managerScript.get_cargo_spice());
         updateCargo("Timber", "Stock", managerScript.get_cargo_timber());
         updateCargo("Medicine", "Stock", managerScript.get_cargo_med());
-        updateCargo("Rations", "Stock", (managerScript.get_cargo_rations()/3));
+        updateCargo("Rations", "Stock", (managerScript.get_cargo_rations()));
         //set cargo UI to how much space each item uses
-        updateCargo("Rum", "Cargo", 0);
-        updateCargo("Spice", "Cargo", 0);
-        updateCargo("Timber", "Cargo", 0);
-        updateCargo("Medicine", "Cargo", 0);
-        updateCargo("Rations", "Cargo", 0);
+        updateCargo("Rum", "Cargo", managerScript.get_cargo_rum());
+        updateCargo("Spice", "Cargo", managerScript.get_cargo_spice());
+        updateCargo("Timber", "Cargo", managerScript.get_cargo_timber());
+        updateCargo("Medicine", "Cargo", managerScript.get_cargo_med());
+        updateCargo("Rations", "Cargo", managerScript.get_cargo_rations()/3);
         //set cargo UI totals
         updateCargo("Footer", "Stock", stock);
         updateCargo("Footer", "Cargo", cargo);
