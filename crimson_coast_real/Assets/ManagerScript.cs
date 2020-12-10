@@ -144,7 +144,6 @@ public class ManagerScript : MonoBehaviour
         //enter_tavern_button.SetActive(true);
         uiScript.TownUI(true);
         audioScript.portSound(true);
-
     }
 
     public void Chart_a_Course()
@@ -682,6 +681,7 @@ public class ManagerScript : MonoBehaviour
         ship_script.fire_crew(num);
         print(5);
         //crew_count_text.text = ("Crew Count: "+ship_script.get_crew_count().ToString());
+        uiScript.DestroyCrewShip(num);
         uiScript.updateCrewCount(ship_script.get_crew_count(), required_crew_count);
     }
     public void handle_event(Event e, int result)

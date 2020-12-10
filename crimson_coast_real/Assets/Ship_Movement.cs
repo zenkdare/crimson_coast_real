@@ -77,6 +77,7 @@ public class Ship_Movement : MonoBehaviour
         {
             if (!(agent.pathPending))
             {
+                ManagerScript mScript = manager.GetComponent<ManagerScript>();
                 //print(Vector3.Distance(gameObject.transform.position, lastpos));
                 if (agent.pathStatus == NavMeshPathStatus.PathComplete && agent.remainingDistance == 0)
                 {
@@ -85,7 +86,8 @@ public class Ship_Movement : MonoBehaviour
                     {
                         if (ship_crew[i].getLoyalty() <= 1)
                         {
-                            fire_crew(i);
+                            mScript.fire_crew(i);
+                            i--;
                         }
                     }
                 }
@@ -136,7 +138,6 @@ public class Ship_Movement : MonoBehaviour
                         }
                     }
                     else{
-                        ManagerScript mScript = manager.GetComponent<ManagerScript>();
                         mScript.weekReport();
                     }
                     agent.isStopped = true;
@@ -408,7 +409,6 @@ public class Ship_Movement : MonoBehaviour
         ManagerScript manage = manager.GetComponent<ManagerScript>();
         if (current_event.is_active())
         {
-            print("active check");
             float odds = Random.value;
             if(current_event.get_id() == 0)
             {

@@ -23,6 +23,5 @@ public class fireButtonScript : MonoBehaviour
     public void fireCrew(){
     	//Debug.Log("hireIndex:"+crewUI.getIndex());
     	mangScript.fire_crew(crewUI.getIndex());
-    	uiScript.DestroyCrewShip(crewUI.gameObject);
     }
 }

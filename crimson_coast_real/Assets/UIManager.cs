@@ -268,8 +268,9 @@ public class UIManager : MonoBehaviour
         textbox.text = crewmate.get_cost().ToString();
     }
 
- 	public void DestroyCrewShip(GameObject curCrew){
-        int index= crewListCrew.IndexOf(curCrew);
+ 	public void DestroyCrewShip(int index){
+        GameObject curCrew = crewListCrew[index];
+        index= crewListCrew.IndexOf(curCrew);
         crewListCrew.Remove(curCrew);
         Destroy(curCrew);
         curCrew = shipCrew[index];
