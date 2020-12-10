@@ -96,16 +96,10 @@ public class Ship_Movement : MonoBehaviour
                     {
                         List<Crew> poss_traitor = new List<Crew>();
                         List<Crew> poss_raise = new List<Crew>();
-                        bool possible_raise=false;
                         bool possible_plot=false;
                         bool possible_plot_catch=false;
                         for(int i = 0; i < ship_crew.Count; i++)
                         {
-                            if (ship_crew[i].getLoyalty()>=5)
-                            {
-                                possible_raise = true;
-                                poss_raise.Add(ship_crew[i]);
-                            }
                             if (ship_crew[i].getLoyalty()==0)
                             {
                                 possible_plot = true;
@@ -126,26 +120,12 @@ public class Ship_Movement : MonoBehaviour
                                 current_event = possible_events[0];
                                 trigger_event(possible_events[0]);
                             }
-                            else
-                            {
-                                int event_num;
-                                if (possible_raise)
-                                {
-                                    event_num = Random.Range(1, possible_events.Count);
-                                    if (event_num == 1)
-                                    {
-                                        int get_raiser = Random.Range(0, poss_traitor.Count);
-                                        possible_events[1].change_trigger(get_raiser);
-                                    }
-                                    current_event = possible_events[event_num];
-                                    trigger_event(possible_events[event_num]);
-                                }
-                            }
                         }
                         else
                         {
                             int event_num;
                             event_num = Random.Range(1, possible_events.Count);
+                            event_num = 1;
                             if (event_num == 1)
                             {
                                 int get_raiser = Random.Range(0, poss_traitor.Count);
@@ -337,6 +317,8 @@ public class Ship_Movement : MonoBehaviour
     }
     public void trigger_event(Event e)
     {
+        Camera_Orbit camorbit = cam.GetComponent<Camera_Orbit>();
+        camorbit.enabled = false;
         print(e.get_name());
         // local_event.SetActive(true);
         // event_name.text = events[num].get_name();
@@ -350,7 +332,7 @@ public class Ship_Movement : MonoBehaviour
             if(e.get_id()==7 || e.get_id() == 8)
             {
                 uiScript.EventUI(true);
-                uiScript.updateEvent(e.get_name(), e.get_trigger()+e.get_flavor(), e.get_o1(), e.get_o2(), e.get_o1_descrip(), e.get_o2_descrip());
+                uiScript.updateEvent(e.get_name(), e.get_trigger()+" "+e.get_flavor(), e.get_o1(), e.get_o2(), e.get_o1_descrip(), e.get_o2_descrip());
             }
             else
             {
@@ -411,7 +393,7 @@ public class Ship_Movement : MonoBehaviour
             
             uiScript.updateEvent(e.get_name(), e.get_flavor(), e.get_o1(), e.get_o2(), e.get_o1_descrip(), e.get_o2_descrip());
             uiScript.EventResultUI(true);
-            uiScript.eventResult(result);
+            uiScript.eventResult(result, e.get_name());
             ManagerScript manage = manager.GetComponent<ManagerScript>();
             manage.handle_event(current_event, num_result);
         }
@@ -424,6 +406,7 @@ public class Ship_Movement : MonoBehaviour
         int num_result = -1;
         if (current_event.is_active())
         {
+            print("active check");
             float odds = Random.value;
             if(current_event.get_id() == 0)
             {
@@ -469,6 +452,7 @@ public class Ship_Movement : MonoBehaviour
                     {
                         ship_crew[i].change_loyalty(-1);
                     }
+                    uiScript.update_ship_crew();
                 }
             }
             if (current_event.get_id() == 2)
@@ -483,6 +467,7 @@ public class Ship_Movement : MonoBehaviour
                         {
                             ship_crew[i].change_loyalty(+2);
                         }
+                        uiScript.update_ship_crew();
                     }
                     else
                     {
@@ -498,16 +483,20 @@ public class Ship_Movement : MonoBehaviour
             }
             if (current_event.get_id() == 7)
             {
-               
+                print(num);
                 if (num == 0)
                 {
                     ship_crew[current_event.get_trigger()].change_wage(1);
                     ship_crew[current_event.get_trigger()].change_loyalty(2);
+                    result = current_event.get_good_result();
+                   
                 }
                 else
                 {
                     ship_crew[current_event.get_trigger()].change_loyalty(-3);
+                    result = current_event.get_bad_result();
                 }
+                uiScript.update_ship_crew();
             }
             if (current_event.get_id() == 8)
             {
@@ -538,10 +527,11 @@ public class Ship_Movement : MonoBehaviour
                         }
                     }
                 }
+                uiScript.update_ship_crew();
             }
         }
         uiScript.EventUI(false);
-        uiScript.eventResult(result);
+        uiScript.eventResult(result, current_event.get_name());
         uiScript.EventResultUI(true);
         ManagerScript manage = manager.GetComponent<ManagerScript>();
         manage.handle_event(current_event, num_result);
@@ -572,6 +562,7 @@ public class Ship_Movement : MonoBehaviour
             }
             
         }
+        uiScript.update_ship_crew();
     }
     public void extra_rations()
     {
@@ -594,6 +585,7 @@ public class Ship_Movement : MonoBehaviour
             }
 
         }
+        uiScript.update_ship_crew();
         if (using_spice)
         {
             ManagerScript man = manager.GetComponent<ManagerScript>();
@@ -611,6 +603,7 @@ public class Ship_Movement : MonoBehaviour
             { 
                 ship_crew[i].change_loyalty(3);
             }
+            uiScript.update_ship_crew();
             ManagerScript man = manager.GetComponent<ManagerScript>();
             man.spend_spice();
             using_spice = false;
@@ -622,6 +615,7 @@ public class Ship_Movement : MonoBehaviour
                 ship_crew[i].change_loyalty(-1);
             }
         }
+        uiScript.update_ship_crew();
     }
     public void no_rations()
     {
@@ -642,6 +636,7 @@ public class Ship_Movement : MonoBehaviour
             //you should lose the game here
             //need to update the ui here
         }
+        uiScript.update_ship_crew();
     }
     public void toggle_spice(bool boo)
     {
@@ -663,6 +658,7 @@ public class Ship_Movement : MonoBehaviour
                 ship_crew[i].change_loyalty(-2);
             }
         }
+        uiScript.update_ship_crew();
         if (mutany_count >= ship_crew.Count / 2)
         {
             //you lose here
@@ -684,6 +680,7 @@ public class Ship_Movement : MonoBehaviour
         {
             ship_crew[i].change_loyalty(num);
         }
+        uiScript.update_ship_crew();
     }
     public int get_wages()
     {

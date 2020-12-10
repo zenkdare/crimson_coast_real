@@ -32,7 +32,7 @@ public class Charting_a_Course : MonoBehaviour
         Draw_Chart_path.path = b_agent.path.corners;
         if (!(b_agent.pathPending))
         {
-            weekdis = (int)(RemainingDistance(b_agent.path.corners)/dis_in_a_week);
+            weekdis = (int)(Mathf.Floor(RemainingDistance(b_agent.path.corners)/dis_in_a_week));
             Ship_Movement shipscript = boat.GetComponent<Ship_Movement>();
             if (current_hit != null)
             {

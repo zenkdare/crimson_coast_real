@@ -243,7 +243,7 @@ public class ManagerScript : MonoBehaviour
         }
         else
         {
-            uiScript.ErrorDisp("You're already there you fool!");
+            uiScript.ErrorDisp("You're either in town already, or need to let stocks replenish");
         }
     }
 

@@ -16,6 +16,7 @@ public class UIManager : MonoBehaviour
 	private Text eventDesc1;
 	private Text eventDesc2;
 	private Text eventResultText;
+    private Text eventResultTitle;
 	private Text weekInfoText;
     private Text townInfoText;
     private Text winText;
@@ -62,7 +63,8 @@ public class UIManager : MonoBehaviour
     	eventDesc1 = eventUI.transform.Find("Buttons/Button1/Description/Text").GetComponent<Text>();
     	eventDesc2 = eventUI.transform.Find("Buttons/Button2/Description/Text").GetComponent<Text>();
     	eventResultText = eventResultUI.transform.Find("Main").GetComponent<Text>();
-    	weekInfoText = weekInfoUI.transform.Find("Main").GetComponent<Text>();
+        eventResultTitle = eventResultUI.transform.Find("Title").GetComponent<Text>();
+        weekInfoText = weekInfoUI.transform.Find("Main").GetComponent<Text>();
         townInfoText = townInfoUI.transform.Find("Text").GetComponent<Text>();
     	//tavExitButton = tavernUI.transform.GetChild(1).gameObject;
     	//tavList = tavernUI.transform.GetChild(0).gameObject;
@@ -289,8 +291,9 @@ public class UIManager : MonoBehaviour
     	eventDesc2.text = option2Desc;
     }
 
-    public void eventResult(string info){
+    public void eventResult(string info, string t){
     	eventResultText.text = info;
+        eventResultTitle.text = t;
     }
 
     public void weekInfoDisp(string info){
@@ -330,5 +333,24 @@ public class UIManager : MonoBehaviour
         Text textbox = townUI.transform.Find("UpgradeShip/description/Text").GetComponent<Text>();
         textbox.text = info;
     }
-
+    public void update_ship_crew()
+    {
+        for (int i = 0; i < shipCrew.Count; i++)
+        {
+            Text textbox;
+            GameObject crewUI;
+            Ship_Movement ship_script = ship.GetComponent<Ship_Movement>();
+            Crew crewmate = ship_script.get_crew_at_spot(i);
+            crewUI = shipCrew[i];
+            textbox = crewUI.transform.Find("loyalty").GetComponent<Text>();
+            textbox.text = crewmate.getLoyalty().ToString();
+            textbox = crewUI.transform.Find("cost").GetComponent<Text>();
+            textbox.text = crewmate.get_cost().ToString();
+            crewUI = crewListCrew[i];
+            textbox = crewUI.transform.Find("loyalty").GetComponent<Text>();
+            textbox.text = crewmate.getLoyalty().ToString();
+            textbox = crewUI.transform.Find("cost").GetComponent<Text>();
+            textbox.text = crewmate.get_cost().ToString();
+        }
+    }
 }

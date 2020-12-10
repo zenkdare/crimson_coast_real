@@ -183,7 +183,43 @@ public class Town : MonoBehaviour
     {
         int name_num = Random.Range(0, names.Count);
         int t1_num = Random.Range(0, t1_lis.Count);
-        int t2_num = Random.Range(0, t2_lis.Count);
+        int t2_num;
+        if (t1_num == 1)
+        {
+            t2_num = 3;
+            while (t2_num == 3)
+            {
+                t2_num = Random.Range(0, t2_lis.Count);
+            }
+        }
+        else if (t1_num==2)
+        {
+            t2_num = 4;
+            while (t2_num == 4)
+            {
+                t2_num = Random.Range(0, t2_lis.Count);
+            }
+        }
+        else if (t1_num==3)
+        {
+            t2_num = 7;
+            while (t2_num == 7)
+            {
+                t2_num = Random.Range(0, t2_lis.Count);
+            }
+        }
+        else if (t1_num == 7)
+        {
+            t2_num = 0;
+            while (t2_num == 0)
+            {
+                t2_num = Random.Range(0, t2_lis.Count);
+            }
+        }
+        else
+        {
+            t2_num = Random.Range(0, t2_lis.Count);
+        }
         return new Crew(names[name_num], 2, t1_lis[t1_num], t2_lis[t2_num], t1_d[t1_num], t2_d[t2_num], 5);
     }
     public void change_good_price(int num, string good)
