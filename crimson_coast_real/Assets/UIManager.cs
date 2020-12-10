@@ -24,9 +24,7 @@ public class UIManager : MonoBehaviour
     private Text errorText;
     private float errorTime;
     private bool error = false;
-	public GameObject tavExitButton;
 	public GameObject tavList;
-	public GameObject crewExitButton;
 	public GameObject shipCrewList;
 	public GameObject townUI;
 	public GameObject confirmCourseUI;
@@ -179,8 +177,6 @@ public class UIManager : MonoBehaviour
     public void updateTavern(List<Crew> local_crew){//spawns in crewmate listings for tavern
     	//make a loop here for each crew member in the list
         DestroyCrewTav();
-    	crewExitButton.SetActive(false);
-    	tavExitButton.SetActive(true);
     	for (int i = 0; i < local_crew.Count; i++){
     		Crew crewmate = local_crew[i];
     		GameObject crewUI = GameObject.Instantiate(CrewUITav, tavList.transform) as GameObject;
@@ -206,8 +202,6 @@ public class UIManager : MonoBehaviour
     }
 
     public void DestroyCrewTav(){
-    	tavExitButton.SetActive(false);
-    	crewExitButton.SetActive(true);
  		GameObject curCrew;
 	    for(int i = 0; i < townCrew.Count; i++)
 	    {
