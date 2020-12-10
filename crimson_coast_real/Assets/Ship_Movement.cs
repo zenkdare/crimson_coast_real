@@ -292,24 +292,24 @@ public class Ship_Movement : MonoBehaviour
         print(possible_events.Count);
         if (newly_fired.get_t2().Equals("Thief"))
         {
-            possible_events.Remove(events[2]);
+            possible_events.Remove(events[0]);
         }
         
         if (newly_fired.get_t2().Equals("Violent"))
         {
-            possible_events.Remove(events[4]);
+            possible_events.Remove(events[2]);
         }
         if (newly_fired.get_t2().Equals("Sickly"))
         {
-            possible_events.Remove(events[6]);
+            possible_events.Remove(events[4]);
         }
         if (newly_fired.get_t2().Equals("Clumsy"))
         {
-            possible_events.Remove(events[8]);
+            possible_events.Remove(events[6]);
         }
         if (newly_fired.get_t2().Equals("Unlucky"))
         {
-            possible_events.Remove(events[3]);
+            possible_events.Remove(events[1]);
         }
         //print(possible_events.Count);
         ship_crew.RemoveAt(num);
