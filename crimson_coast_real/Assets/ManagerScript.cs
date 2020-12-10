@@ -492,7 +492,7 @@ public class ManagerScript : MonoBehaviour
     {
         if (temp_diff<0)
         {
-            if (-temp_diff <= gold )
+            if (-temp_diff <= gold || rations_dif_int + med_dif_int + timber_dif_int + spice_dif_int + rum_dif_int > max_cargo)
             {
                 Town townscript = current_location.GetComponent<Town>();
                 townscript.alter_shop_stock(-rum_dif_int, "rum");
