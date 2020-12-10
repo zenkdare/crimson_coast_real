@@ -492,60 +492,64 @@ public class ManagerScript : MonoBehaviour
     {
         if (temp_diff<0)
         {
-            if (-temp_diff <= gold || rations_dif_int + med_dif_int + timber_dif_int + spice_dif_int + rum_dif_int > max_cargo)
+            if (-temp_diff <= gold)
             {
-                Town townscript = current_location.GetComponent<Town>();
-                townscript.alter_shop_stock(-rum_dif_int, "rum");
-                townscript.alter_shop_stock(-spice_dif_int, "spice");
-                townscript.alter_shop_stock(-timber_dif_int, "timber");
-                townscript.alter_shop_stock(-med_dif_int, "med");
-                //rum_diff.text = ("0");
-                uiScript.updateMarket("Rum", "Amount", 0);
-                uiScript.updateMarket("Spice", "Amount", 0);
-                uiScript.updateMarket("Timber", "Amount", 0);
-                uiScript.updateMarket("Medicine", "Amount", 0);
-                uiScript.updateMarket("Rations", "Amount", 0);
-                //rum_cost.text = ("0");
-                uiScript.updateMarket("Rum", "Cost", 0);
-                uiScript.updateMarket("Spice", "Cost", 0);
-                uiScript.updateMarket("Timber", "Cost", 0);
-                uiScript.updateMarket("Medicine", "Cost", 0);
-                uiScript.updateMarket("Rations", "Cost", 0);
-                rum_cargo_count += rum_dif_int;
-                spice_cargo_count += spice_dif_int;
-                timber_cargo_count += timber_dif_int;
-                med_cargo_count += med_dif_int;
-                rations_cargo_count += rations_dif_int;
-                //rum_cargo_amount_text.text = rum_cargo_count.ToString();
-                uiScript.updateMarket("Rum", "Cargo", rum_cargo_count);
-                uiScript.updateMarket("Spice", "Cargo", spice_cargo_count);
-                uiScript.updateMarket("Timber", "Cargo", timber_cargo_count);
-                uiScript.updateMarket("Medicine", "Cargo", med_cargo_count);
-                uiScript.updateMarket("Rations", "Cargo", rations_cargo_count);
-                uiScript.updateCargoCount(((rations_cargo_count / 3) + med_cargo_count + timber_cargo_count + spice_cargo_count + rum_cargo_count), max_cargo);
-                rum_dif_int = 0;
-                spice_dif_int = 0;
-                timber_dif_int = 0;
-                med_dif_int = 0;
-                rations_dif_int = 0;
-                change_gold(temp_diff);
-                temp_diff = 0;
-                rum_temp_diff = 0;
-                spice_temp_diff = 0;
-                timber_temp_diff = 0;
-                med_temp_diff = 0;
-                rations_temp_diff = 0;
-                uiScript.updateMarket("Footer", "Cost", temp_diff);//total cost of all items yet to be purchased
-                uiScript.updateMarket("Footer", "Amount", 0);//total number of all items yet to be purchased
+                if ((rations_dif_int / 3) + med_dif_int + timber_dif_int + spice_dif_int + rum_dif_int+med_cargo_count+timber_cargo_count+spice_cargo_count+rum_cargo_count+(rations_cargo_count/3) <= max_cargo)
+                {
+                    Town townscript = current_location.GetComponent<Town>();
+                    townscript.alter_shop_stock(-rum_dif_int, "rum");
+                    townscript.alter_shop_stock(-spice_dif_int, "spice");
+                    townscript.alter_shop_stock(-timber_dif_int, "timber");
+                    townscript.alter_shop_stock(-med_dif_int, "med");
+                    //rum_diff.text = ("0");
+                    uiScript.updateMarket("Rum", "Amount", 0);
+                    uiScript.updateMarket("Spice", "Amount", 0);
+                    uiScript.updateMarket("Timber", "Amount", 0);
+                    uiScript.updateMarket("Medicine", "Amount", 0);
+                    uiScript.updateMarket("Rations", "Amount", 0);
+                    //rum_cost.text = ("0");
+                    uiScript.updateMarket("Rum", "Cost", 0);
+                    uiScript.updateMarket("Spice", "Cost", 0);
+                    uiScript.updateMarket("Timber", "Cost", 0);
+                    uiScript.updateMarket("Medicine", "Cost", 0);
+                    uiScript.updateMarket("Rations", "Cost", 0);
+                    rum_cargo_count += rum_dif_int;
+                    spice_cargo_count += spice_dif_int;
+                    timber_cargo_count += timber_dif_int;
+                    med_cargo_count += med_dif_int;
+                    rations_cargo_count += rations_dif_int;
+                    //rum_cargo_amount_text.text = rum_cargo_count.ToString();
+                    uiScript.updateMarket("Rum", "Cargo", rum_cargo_count);
+                    uiScript.updateMarket("Spice", "Cargo", spice_cargo_count);
+                    uiScript.updateMarket("Timber", "Cargo", timber_cargo_count);
+                    uiScript.updateMarket("Medicine", "Cargo", med_cargo_count);
+                    uiScript.updateMarket("Rations", "Cargo", rations_cargo_count);
+                    uiScript.updateCargoCount(((rations_cargo_count / 3) + med_cargo_count + timber_cargo_count + spice_cargo_count + rum_cargo_count), max_cargo);
+                    rum_dif_int = 0;
+                    spice_dif_int = 0;
+                    timber_dif_int = 0;
+                    med_dif_int = 0;
+                    rations_dif_int = 0;
+                    change_gold(temp_diff);
+                    temp_diff = 0;
+                    rum_temp_diff = 0;
+                    spice_temp_diff = 0;
+                    timber_temp_diff = 0;
+                    med_temp_diff = 0;
+                    rations_temp_diff = 0;
+                    uiScript.updateMarket("Footer", "Cost", temp_diff);//total cost of all items yet to be purchased
+                    uiScript.updateMarket("Footer", "Amount", 0);//total number of all items yet to be purchased
+                }
+                else
+                {
+                    uiScript.ErrorDisp("You can't exceed your max cargo space of " + max_cargo);
+                }
             }
             else
             {
-                print("can't spend more than ye have, and can't buy more than ye can hold");    
+                uiScript.ErrorDisp("can't spend more than ye have");
+                //print("can't spend more than ye have");    
             }
-        }
-        else if (rations_dif_int + med_dif_int + timber_dif_int + spice_dif_int + rum_dif_int > max_cargo)
-        {
-            uiScript.ErrorDisp("You can't exceed your max cargo space of "+max_cargo);
         }
         else
         {

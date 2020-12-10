@@ -128,7 +128,7 @@ public class Ship_Movement : MonoBehaviour
                             event_num = 1;
                             if (event_num == 1)
                             {
-                                int get_raiser = Random.Range(0, poss_traitor.Count);
+                                int get_raiser = Random.Range(0, ship_crew.Count);
                                 possible_events[1].change_trigger(get_raiser);
                             }
                             current_event = possible_events[event_num];
@@ -332,7 +332,7 @@ public class Ship_Movement : MonoBehaviour
             if(e.get_id()==7 || e.get_id() == 8)
             {
                 uiScript.EventUI(true);
-                uiScript.updateEvent(e.get_name(), e.get_trigger()+" "+e.get_flavor(), e.get_o1(), e.get_o2(), e.get_o1_descrip(), e.get_o2_descrip());
+                uiScript.updateEvent(e.get_name(), ship_crew[e.get_trigger()]+" "+e.get_flavor(), e.get_o1(), e.get_o2(), e.get_o1_descrip(), e.get_o2_descrip());
             }
             else
             {
