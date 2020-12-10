@@ -114,10 +114,10 @@ public class Town : MonoBehaviour
     {
         //temp_amount = rum_amount;
         //rum_stock_market.text = (temp_amount.ToString());
-        uiScript.updateMarket("Rum", "Stock", rum_amount);
-        uiScript.updateMarket("Spice", "Stock", spice_amount);
-        uiScript.updateMarket("Timber", "Stock", timber_amount);
-        uiScript.updateMarket("Medicine", "Stock", med_amount);
+        uiScript.updateMarket("Rum", "Stock", og_rum_amount);
+        uiScript.updateMarket("Spice", "Stock", og_spice_amount);
+        uiScript.updateMarket("Timber", "Stock", og_timber_amount);
+        uiScript.updateMarket("Medicine", "Stock", og_med_amount);
     }
     public void alter_shop_stock(int diff, string good)
     {
@@ -147,6 +147,7 @@ public class Town : MonoBehaviour
     }
     public void set_up_tavern(List<string> names, List<string> t1_lis, List<string> t2_lis, List<string> t1_d, List<string> t2_d)
     {
+        local_crew.Clear();
         local_crew.Add(generate_crew(names, t1_lis, t2_lis, t1_d, t2_d));
         local_crew.Add(generate_crew(names, t1_lis, t2_lis, t1_d, t2_d));
         local_crew.Add(generate_crew(names, t1_lis, t2_lis, t1_d, t2_d));

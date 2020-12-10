@@ -307,8 +307,8 @@ public class UIManager : MonoBehaviour
     }
 
     public void cargoUpdate(){
-        int stock = managerScript.get_cargo_rum() + managerScript.get_cargo_spice() + managerScript.get_cargo_timber() + managerScript.get_cargo_med() + (managerScript.get_cargo_rations()/3);
-        int cargo = 0;
+        int stock = managerScript.get_cargo_rum() + managerScript.get_cargo_spice() + managerScript.get_cargo_timber() + managerScript.get_cargo_med() + (managerScript.get_cargo_rations());
+        int cargo = managerScript.get_cargo_rum() + managerScript.get_cargo_spice() + managerScript.get_cargo_timber() + managerScript.get_cargo_med() + (managerScript.get_cargo_rations() / 3);
         //set cargo UI to how many of each item is owned
         updateCargo("Rum", "Stock", managerScript.get_cargo_rum());
         updateCargo("Spice", "Stock", managerScript.get_cargo_spice());

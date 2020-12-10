@@ -127,7 +127,6 @@ public class Ship_Movement : MonoBehaviour
                         {
                             int event_num;
                             event_num = Random.Range(1, possible_events.Count);
-                            event_num = 1;
                             if (event_num == 1)
                             {
                                 int get_raiser = Random.Range(0, ship_crew.Count);

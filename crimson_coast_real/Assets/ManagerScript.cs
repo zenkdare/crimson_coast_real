@@ -137,7 +137,7 @@ public class ManagerScript : MonoBehaviour
         uiScript.updateMarket("Spice", "Cargo", spice_cargo_count);
         uiScript.updateMarket("Timber", "Cargo", timber_cargo_count);
         uiScript.updateMarket("Medicine", "Cargo", med_cargo_count);
-        uiScript.updateMarket("Rations", "Cargo", med_cargo_count);
+        uiScript.updateMarket("Rations", "Cargo", rations_cargo_count);
         //chart_course_button.SetActive(true);
         //set_sail_button.SetActive(true);
         //enter_market_button.SetActive(true);
