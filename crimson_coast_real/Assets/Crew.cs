@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using UnityEngine;
 
-public class Crew : MonoBehaviour
+public class Crew
 {
     public string crew_name;
     public int pay;

@@ -207,7 +207,10 @@ public class Town : MonoBehaviour
     }
     public void fired_crew(Crew addition)
     {
-        local_crew.Add(addition);
-        uiScript.updateTavern(local_crew);
+        if (local_crew.Count < 9)
+        {
+            local_crew.Add(addition);
+            uiScript.updateTavern(local_crew);
+        }
     }
 }

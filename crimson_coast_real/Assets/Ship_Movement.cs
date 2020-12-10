@@ -7,6 +7,7 @@ using System.IO;
 
 public class Ship_Movement : MonoBehaviour
 {
+    public GameObject cam;
     public GameObject manager;
     public bool inport;
     private GameObject targetPort;
@@ -139,17 +140,17 @@ public class Ship_Movement : MonoBehaviour
                                     current_event = possible_events[event_num];
                                     trigger_event(possible_events[event_num]);
                                 }
-                                else
-                                {
-                                    event_num = Random.Range(2, possible_events.Count);
-                                    current_event = possible_events[event_num];
-                                    trigger_event(possible_events[event_num]);
-                                }
                             }
                         }
                         else
                         {
-                            int event_num = Random.Range(2, possible_events.Count);
+                            int event_num;
+                            event_num = Random.Range(1, possible_events.Count);
+                            if (event_num == 1)
+                            {
+                                int get_raiser = Random.Range(0, poss_traitor.Count);
+                                possible_events[1].change_trigger(get_raiser);
+                            }
                             current_event = possible_events[event_num];
                             trigger_event(possible_events[event_num]);
                         }
@@ -294,25 +295,25 @@ public class Ship_Movement : MonoBehaviour
         {
            for(int i=0; i < possible_events.Count; i++)
            {
-                if(possible_events[i].get_name().Equals("Floatsam Found"))
+                if(string.Compare(possible_events[i].get_name(), "Floatsam Found")==0)
                 {
                     possible_events.RemoveAt(i);
                 }
            }
             for (int i = 0; i < possible_events.Count; i++)
             {
-                if (possible_events[i].get_name().Equals("Floatsam Found"))
+                if (string.Compare(possible_events[i].get_name(), "Floatsam Found") == 0)
                 {
                     possible_events.RemoveAt(i);
                 }
             }
         }
-        print(possible_events.Count);
+        //print(possible_events.Count);
         if (newly_fired.get_t2().Equals("Thief"))
         {
             possible_events.Remove(events[2]);
         }
-        print(possible_events.Count);
+        //print(possible_events.Count);
         if (newly_fired.get_t2().Equals("Brawler"))
         {
             possible_events.Remove(events[4]);
@@ -334,6 +335,7 @@ public class Ship_Movement : MonoBehaviour
     }
     public void trigger_event(Event e)
     {
+        print(e.get_name());
         // local_event.SetActive(true);
         // event_name.text = events[num].get_name();
         // evnet_flavor.text = events[num].get_flavor();
@@ -342,7 +344,8 @@ public class Ship_Movement : MonoBehaviour
         // current_event = events[num].get_name();
         if (e.is_active())
         {
-            if(e.get_name().Equals("A Pay Raise") || e.get_name().Equals("Plot Uncovered"))
+            print("active");
+            if(string.Compare(e.get_name(), "A Pay Raise")==0 || string.Compare(e.get_name(), "Plot Uncovered")==0)
             {
                 uiScript.EventUI(true);
                 uiScript.updateEvent(e.get_name(), e.get_trigger()+e.get_flavor(), e.get_o1(), e.get_o2(), e.get_o1_descrip(), e.get_o2_descrip());
@@ -355,10 +358,12 @@ public class Ship_Movement : MonoBehaviour
         }
         else
         {
+            print("not active");
             string result = "something should be here";
             int num_result = -1;
-            if(e.get_name().Equals("Floatsam Found"))
+            if (string.Compare(e.get_name(), "Floatsam Found") == 0)
             {
+                print("made it float");
                 if (num_lucky > 0)
                 {
                     result = e.get_flavor()+"\n"+e.get_good_result();
@@ -368,8 +373,9 @@ public class Ship_Movement : MonoBehaviour
                     result = e.get_flavor() + "\n" + e.get_failed_result();
                 }
             }
-            if (e.get_name().Equals("Sickness"))
+            if (string.Compare(e.get_name(), "Sickness") == 0)
             {
+                print("made it sick");
                 if (has_doctor > 0)
                 {
                     result = e.get_flavor() + "\n" + e.get_good_result();
@@ -381,8 +387,9 @@ public class Ship_Movement : MonoBehaviour
                     num_result = 1;
                 }
             }
-            if (e.get_name().Equals("Rough Seas"))
+            if (string.Compare(e.get_name(), "Rough Seas") == 0)
             {
+                print("made it rough");
                 if (has_bosun > 0)
                 {
                     result = e.get_flavor() + "\n" + e.get_good_result();
@@ -394,13 +401,15 @@ public class Ship_Movement : MonoBehaviour
                     num_result = 1;
                 }
             }
-            if (e.get_name().Equals("Accident"))
+            if (string.Compare(e.get_name(), "Accident") == 0)
             {
+                print("made it acc");
                 result = e.get_flavor() + "\n" + e.get_good_result();
             }
+            
             uiScript.updateEvent(e.get_name(), e.get_flavor(), e.get_o1(), e.get_o2(), e.get_o1_descrip(), e.get_o2_descrip());
-            uiScript.eventResult(result);
             uiScript.EventResultUI(true);
+            uiScript.eventResult(result);
             ManagerScript manage = manager.GetComponent<ManagerScript>();
             manage.handle_event(current_event, num_result);
         }
@@ -537,6 +546,10 @@ public class Ship_Movement : MonoBehaviour
         //agent.isStopped = false;
     }
     public void continueJourney(){
+        ManagerScript manage = manager.GetComponent<ManagerScript>();
+        manage.in_week_report = false;
+        Camera_Orbit camorbit = cam.GetComponent<Camera_Orbit>();
+        camorbit.enabled = true;
         agent.isStopped = false;
     }
     public void give_rum()

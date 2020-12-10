@@ -2,7 +2,7 @@ Teetotaler
 Guarded
 Glutton
 Thief
-Brawler
+Violent
 Sickly
 Clumsy
 Unlucky

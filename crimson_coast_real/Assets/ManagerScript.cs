@@ -59,6 +59,7 @@ public class ManagerScript : MonoBehaviour
     private string event_outcome;
     public bool first_upgrade;
     public bool second_upgrade;
+    public bool in_week_report;
     // Start is called before the first frame update
     void Start()
     {
@@ -115,6 +116,7 @@ public class ManagerScript : MonoBehaviour
         //uiScript = canvas.GetComponent<UIManager>();
         first_upgrade = false;
         second_upgrade = false;
+        in_week_report = false;
     }
 
     // Update is called once per frame
@@ -254,7 +256,7 @@ public class ManagerScript : MonoBehaviour
     public void Set_Sail()
     {
         Ship_Movement shipscript = ship.GetComponent<Ship_Movement>();
-        if (b_agent.hasPath && shipscript.get_crew_count()==required_crew_count)
+        if (b_agent.hasPath && shipscript.get_crew_count()>=required_crew_count)
         {
             CameraScript camscript = cam.GetComponent<CameraScript>();
             Camera_Orbit camorbit = cam.GetComponent<Camera_Orbit>();
@@ -272,7 +274,6 @@ public class ManagerScript : MonoBehaviour
         else
         {
             uiScript.ErrorDisp("you must choose a destination before setting sail and have the required number of crew for your ship size");
-            print("you must choose a destination before setting sail");
         }
         
     }
@@ -656,25 +657,34 @@ public class ManagerScript : MonoBehaviour
     {
         //Debug.Log("hire_crew manager:"+num);
         Town townscript = current_location.GetComponent<Town>();
-        townscript.hire_crew(num);
         Ship_Movement ship_script = ship.GetComponent<Ship_Movement>();
+        townscript.hire_crew(num);
+        
         //crew_count_text.text = ("Crew Count: "+ship_script.get_crew_count().ToString());
         uiScript.updateCrewCount(ship_script.get_crew_count(), required_crew_count);
     }
     public void fire_crew(int num)
     {//Removes a crewmate from crew listing
         //Debug.Log("fire_crew manager:"+num);
+        print("num: " + num);
         Ship_Movement ship_script = ship.GetComponent<Ship_Movement>();
+        print(1);
         Crew r_fired = ship_script.get_crew_at_spot(num);
+        print(2);
         Town townscript = current_location.GetComponent<Town>();
+        print(3);
         townscript.fired_crew(r_fired);
+        print(4);
         ship_script.fire_crew(num);
+        print(5);
         //crew_count_text.text = ("Crew Count: "+ship_script.get_crew_count().ToString());
         uiScript.updateCrewCount(ship_script.get_crew_count(), required_crew_count);
     }
     public void handle_event(Event e, int result)
     {
-        if (e.get_name().Equals("A Theif in the Night"))
+        Camera_Orbit camorbit = cam.GetComponent<Camera_Orbit>();
+        camorbit.enabled = false;
+        if (string.Compare(e.get_name(), "A Theif in the Night")==0)
         {
             if (result == 1)
             {
@@ -725,7 +735,7 @@ public class ManagerScript : MonoBehaviour
                 }
             }
         }
-        if (e.get_name().Equals("Brewing Storm"))
+        if (string.Compare(e.get_name(), "Brewing Storm")==0)
         {
             if (result == 1)
             {
@@ -740,7 +750,7 @@ public class ManagerScript : MonoBehaviour
                 event_outcome = "The loyalty of all crew was lowered by one";
             }
         }
-        if (e.get_name().Equals("On Deck Brawl"))
+        if (string.Compare(e.get_name(), "On Deck Brawl")==0)
         {
             if (result == 0)
             {
@@ -761,7 +771,7 @@ public class ManagerScript : MonoBehaviour
                 event_outcome = "one crate of medicine and one crate of timber were lost";
             }
         }
-        if(e.get_name().Equals("Floatsam Found"))
+        if(string.Compare(e.get_name(), "Floatsam Found")==0)
         {
             int r = Random.Range(0, 4);
             Ship_Movement ship_script = ship.GetComponent<Ship_Movement>();
@@ -787,7 +797,7 @@ public class ManagerScript : MonoBehaviour
                 event_outcome = (1 + add) + " crates of medicine were found as floatsam";
             }
         }
-        if(e.get_name().Equals("Sickness"))
+        if(string.Compare(e.get_name(), "Sickness")==0)
         {
             if (result == 1)
             {
@@ -795,7 +805,7 @@ public class ManagerScript : MonoBehaviour
                 event_outcome =  "one crate of medicine was lost to cure a sickness";
             }
         }
-        if (e.get_name().Equals("Rough Seas"))
+        if (string.Compare(e.get_name(), "Rough Seas")==0)
         {
             if (result == 1)
             {
@@ -803,7 +813,7 @@ public class ManagerScript : MonoBehaviour
                 event_outcome = "one crate of timber was lost to fix up your ship from rough seas";
             }
         }
-        if (e.get_name().Equals("Accident"))
+        if (string.Compare(e.get_name(), "Accident")==0)
         {  
             timber_cargo_count--;
             event_outcome = "one crate of timber was lost to fix up your ship from an accident";
@@ -813,8 +823,11 @@ public class ManagerScript : MonoBehaviour
     }
     //code for the stuff that comes after events
     public void weekReport() {
+        in_week_report = true;
+        Camera_Orbit camorbit = cam.GetComponent<Camera_Orbit>();
+        camorbit.enabled = false;
         Ship_Movement ship_script = ship.GetComponent<Ship_Movement>();
-        if (current_ration_state == 0)
+        if (current_ration_state == 2)
         {
             rations_cargo_count -= (ship_script.get_crew_count() * 2);
             ship_script.extra_rations();
@@ -824,7 +837,7 @@ public class ManagerScript : MonoBehaviour
             rations_cargo_count -= ship_script.get_crew_count();
             ship_script.normal_rations();
         }
-        if (current_ration_state == 2)
+        if (current_ration_state == 0)
         {
             ship_script.no_rations();
         }
@@ -842,12 +855,29 @@ public class ManagerScript : MonoBehaviour
         uiScript.WeekInfoUI(true);
         uiScript.updateCargoCount(((rations_cargo_count / 3) + med_cargo_count + timber_cargo_count + spice_cargo_count + rum_cargo_count), max_cargo);
         uiScript.cargoUpdate();
+        if (current_ration_state > rations_cargo_count)
+        {
+            current_ration_state--;
+            uiScript.ErrorDisp("ration plan has been lowered due to lack of food");
+        }
+        if (current_ration_state > rations_cargo_count)
+        {
+            current_ration_state--;
+            uiScript.ErrorDisp("ration plan has been lowered due to lack of food");
+        }
     }
 
     public void choose_ration_type(int num)
     {
-        //generous should be 0, normal is 1, none is 2
-        current_ration_state = num;
+        //generous should be 2, normal is 1, none is 0
+        if (num > rations_cargo_count)
+        {
+            uiScript.ErrorDisp("you can't more food than you have");
+        }
+        else
+        {
+            current_ration_state = num;
+        }
     }
 
     //methods for getting the cargo and stuff

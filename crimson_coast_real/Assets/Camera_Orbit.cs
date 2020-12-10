@@ -7,9 +7,10 @@ using UnityEngine.UIElements;
 public class Camera_Orbit : MonoBehaviour
 {
     public float zoomspeed;
-    public float lookSpeed=0.5f;
+    public float lookSpeed;
     public float turnSpeed = 4.0f;
     public GameObject ship;
+    public GameObject manager;
     private Vector3 offset;
     bool inPosition;
     Vector3 relPos;
@@ -31,13 +32,27 @@ public class Camera_Orbit : MonoBehaviour
     {
         if (!inPosition)
         {
-            transform.position = Vector3.MoveTowards(transform.position, ship.transform.GetChild(0).transform.position, zoomspeed *Time.deltaTime);
+            b_agent.isStopped = true;
+            if (Vector3.Distance(transform.position, ship.transform.GetChild(0).transform.position)>5.0)
+            {
+                transform.position = Vector3.Lerp(transform.position, ship.transform.GetChild(0).transform.position, zoomspeed * Time.deltaTime);
+            }
+            if(Vector3.Distance(transform.position, ship.transform.GetChild(0).transform.position) <= 5.0)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, ship.transform.GetChild(0).transform.position, lookSpeed * Time.deltaTime);
+            }
+            
             if (transform.position==ship.transform.GetChild(0).transform.position)
             {
                 inPosition = true;
                 Ship_Movement shipscript = ship.GetComponent<Ship_Movement>();
                 shipscript.enabled = true;
-                b_agent.isStopped = false;
+                ManagerScript manage = manager.GetComponent<ManagerScript>();
+                if (!manage.in_week_report)
+                {
+                    b_agent.isStopped = false;
+                }
+               
             }
         }
         if (inPosition)

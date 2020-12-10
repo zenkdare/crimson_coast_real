@@ -23928,10 +23928,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e925057206edf4e46bf2deb15dac336d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zoomspeed: 150
-  lookSpeed: 0.05
+  zoomspeed: 1
+  lookSpeed: 25
   turnSpeed: 1
   ship: {fileID: 1031851749}
+  manager: {fileID: 1343203706}
   b_agent: {fileID: 1031851751}
 --- !u!1 &971426414
 GameObject:
@@ -26610,6 +26611,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4c335035f23e6c448feaf6991a34f59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cam: {fileID: 963194225}
   manager: {fileID: 1343203706}
   inport: 0
   current_port: {fileID: 0}
@@ -26621,7 +26623,7 @@ MonoBehaviour:
   lastpos: {x: 0, y: 0, z: 0}
   canvas: {fileID: 1950525840}
   uiScript: {fileID: 1950525845}
-  event_rate: 0.3
+  event_rate: 1
   watchdog_success_chance: 0.4
   reader_success_chance: 0.4
   peace_success_chance: 0.4
@@ -33647,6 +33649,7 @@ MonoBehaviour:
   max_cargo: 10
   first_upgrade: 0
   second_upgrade: 0
+  in_week_report: 0
 --- !u!1 &1350204411
 GameObject:
   m_ObjectHideFlags: 0

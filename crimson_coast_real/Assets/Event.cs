@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Event : MonoBehaviour
+public class Event
 {
     private string id;
     private string option1;
@@ -110,7 +110,7 @@ public class Event : MonoBehaviour
     }
     public bool is_active()
     {
-        if(id.Equals("A Theif in the Night") || id.Equals("Brewing Storm") || id.Equals("On Deck Brawl") || id.Equals("A Pay Raise") || id.Equals("Plot Uncovered"))
+        if(string.Compare(id, "A Theif in the Night")==0 || string.Compare(id, "Brewing Storm") == 0 || string.Compare(id, "On Deck Brawl") == 0 || string.Compare(id, "A Pay Raise") == 0 || string.Compare(id, "Plot Uncovered") == 0 )
         {
             return true;
         }
@@ -121,7 +121,7 @@ public class Event : MonoBehaviour
     }
     public bool is_passive()
     {
-        if (id.Equals("Floatsam Found") || id.Equals("Sickness") || id.Equals("Rough Seas") || id.Equals("Accident"))
+        if (string.Compare(id, "Floatsam Found") == 0 || string.Compare(id, "Sickness")==0 || string.Compare(id, "Rough Seas")==0 || string.Compare(id, "Accident")==0)
         {
             return true;
         }
