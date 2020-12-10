@@ -581,6 +581,8 @@ public class Ship_Movement : MonoBehaviour
         }
         if (using_spice)
         {
+            ManagerScript man = manager.GetComponent<ManagerScript>();
+            man.spend_spice();
             using_spice = false;
         }
         no_rations_num = 0;
@@ -594,6 +596,8 @@ public class Ship_Movement : MonoBehaviour
             { 
                 ship_crew[i].change_loyalty(3);
             }
+            ManagerScript man = manager.GetComponent<ManagerScript>();
+            man.spend_spice();
             using_spice = false;
         }
         for (int i = 0; i < ship_crew.Count; i++)
@@ -620,7 +624,7 @@ public class Ship_Movement : MonoBehaviour
         no_rations_num++;
         if (no_rations_num > 2)
         {
-            ship_crew.RemoveAt(Random.Range(0, ship_crew.Count));
+            //you should lose the game here
             //need to update the ui here
         }
     }

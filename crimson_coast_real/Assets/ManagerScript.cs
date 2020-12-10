@@ -78,6 +78,7 @@ public class ManagerScript : MonoBehaviour
         current_ration_state = 2;
         Ship_Movement ship_script = ship.GetComponent<Ship_Movement>();
         uiScript.updateCrewCount(ship_script.get_crew_count(), required_crew_count);
+        uiScript.updateCargoCount(0, max_cargo);
         //where you load the strings from a text file for crew generation
         StreamReader sr = new StreamReader("Assets/CrewNames.txt");
         string line;
@@ -388,7 +389,7 @@ public class ManagerScript : MonoBehaviour
         }
 
         uiScript.updateMarket("Footer", "Cost", temp_diff);//total cost of all items yet to be purchased
-        uiScript.updateMarket("Footer", "Amount", rations_dif_int + med_dif_int + timber_dif_int + spice_dif_int + rum_dif_int);//total number of all items yet to be purchased
+        uiScript.updateMarket("Footer", "Amount", (rations_dif_int/3) + med_dif_int + timber_dif_int + spice_dif_int + rum_dif_int);//total number of all items yet to be purchased
     }
     public void sub_item(string item)
     {
@@ -484,13 +485,13 @@ public class ManagerScript : MonoBehaviour
             uiScript.updateMarket("Rations", "Cost", rations_temp_diff);
         }
         uiScript.updateMarket("Footer", "Cost", temp_diff);//total cost of all items yet to be purchased
-        uiScript.updateMarket("Footer", "Amount", rations_dif_int+med_dif_int+timber_dif_int+spice_dif_int+rum_dif_int);//total number of all items yet to be purchased
+        uiScript.updateMarket("Footer", "Amount", (rations_dif_int/3)+med_dif_int+timber_dif_int+spice_dif_int+rum_dif_int);//total number of all items yet to be purchased
     }
     public void confirm_purchase()
     {
         if (temp_diff<0)
         {
-            if (-temp_diff <= gold)
+            if (-temp_diff <= gold )
             {
                 Town townscript = current_location.GetComponent<Town>();
                 townscript.alter_shop_stock(-rum_dif_int, "rum");
@@ -520,6 +521,7 @@ public class ManagerScript : MonoBehaviour
                 uiScript.updateMarket("Timber", "Cargo", timber_cargo_count);
                 uiScript.updateMarket("Medicine", "Cargo", med_cargo_count);
                 uiScript.updateMarket("Rations", "Cargo", rations_cargo_count);
+                uiScript.updateCargoCount(((rations_cargo_count / 3) + med_cargo_count + timber_cargo_count + spice_cargo_count + rum_cargo_count), max_cargo);
                 rum_dif_int = 0;
                 spice_dif_int = 0;
                 timber_dif_int = 0;
@@ -537,7 +539,7 @@ public class ManagerScript : MonoBehaviour
             }
             else
             {
-                print("can't spend more than you have");    
+                print("can't spend more than ye have, and can't buy more than ye can hold");    
             }
         }
         else if (rations_dif_int + med_dif_int + timber_dif_int + spice_dif_int + rum_dif_int > max_cargo)
@@ -551,13 +553,13 @@ public class ManagerScript : MonoBehaviour
             townscript.alter_shop_stock(-spice_dif_int, "spice");
             townscript.alter_shop_stock(-timber_dif_int, "timber");
             townscript.alter_shop_stock(-med_dif_int, "med");
-            //rum_diff.text = ("0");
+
             uiScript.updateMarket("Rum", "Amount", 0);
             uiScript.updateMarket("Spice", "Amount", 0);
             uiScript.updateMarket("Timber", "Amount", 0);
             uiScript.updateMarket("Medicine", "Amount", 0);
             uiScript.updateMarket("Rations", "Amount", 0);
-            //rum_cost.text = ("0");
+            
             uiScript.updateMarket("Rum", "Cost", 0);
             uiScript.updateMarket("Spice", "Cost", 0);
             uiScript.updateMarket("Timber", "Cost", 0);
@@ -568,12 +570,14 @@ public class ManagerScript : MonoBehaviour
             timber_cargo_count += timber_dif_int;
             med_cargo_count += med_dif_int;
             rations_cargo_count += rations_dif_int;
-            //rum_cargo_amount_text.text = rum_cargo_count.ToString();
+            
             uiScript.updateMarket("Rum", "Cargo", rum_cargo_count);
             uiScript.updateMarket("Spice", "Cargo", spice_cargo_count);
             uiScript.updateMarket("Timber", "Cargo", timber_cargo_count);
             uiScript.updateMarket("Medicine", "Cargo", med_cargo_count);
             uiScript.updateMarket("Rations", "Cargo", rations_cargo_count);
+            uiScript.updateCargoCount(((rations_cargo_count / 3) + med_cargo_count + timber_cargo_count + spice_cargo_count + rum_cargo_count), max_cargo);
+            uiScript.cargoUpdate();
             rum_dif_int = 0;
             spice_dif_int = 0;
             timber_dif_int = 0;
@@ -597,6 +601,37 @@ public class ManagerScript : MonoBehaviour
         //enter_market_button.SetActive(true);
         //enter_tavern_button.SetActive(true);
         //shop_screen.SetActive(false);
+        uiScript.updateMarket("Rum", "Amount", 0);
+        uiScript.updateMarket("Spice", "Amount", 0);
+        uiScript.updateMarket("Timber", "Amount", 0);
+        uiScript.updateMarket("Medicine", "Amount", 0);
+        uiScript.updateMarket("Rations", "Amount", 0);
+
+        uiScript.updateMarket("Rum", "Cost", 0);
+        uiScript.updateMarket("Spice", "Cost", 0);
+        uiScript.updateMarket("Timber", "Cost", 0);
+        uiScript.updateMarket("Medicine", "Cost", 0);
+        uiScript.updateMarket("Rations", "Amount", 0);
+        uiScript.updateMarket("Rum", "Cargo", rum_cargo_count);
+        uiScript.updateMarket("Spice", "Cargo", spice_cargo_count);
+        uiScript.updateMarket("Timber", "Cargo", timber_cargo_count);
+        uiScript.updateMarket("Medicine", "Cargo", med_cargo_count);
+        uiScript.updateMarket("Rations", "Cargo", rations_cargo_count);
+        uiScript.updateCargoCount(((rations_cargo_count / 3) + med_cargo_count + timber_cargo_count + spice_cargo_count + rum_cargo_count), max_cargo);
+        uiScript.cargoUpdate();
+        rum_dif_int = 0;
+        spice_dif_int = 0;
+        timber_dif_int = 0;
+        med_dif_int = 0;
+        rations_dif_int = 0;
+        temp_diff = 0;
+        rum_temp_diff = 0;
+        spice_temp_diff = 0;
+        timber_temp_diff = 0;
+        med_temp_diff = 0;
+        rations_temp_diff = 0;
+        uiScript.updateMarket("Footer", "Cost", temp_diff);//total cost of all items yet to be purchased
+        uiScript.updateMarket("Footer", "Amount", 0);//total number of all items yet to be purchased
         uiScript.MarketUI(false);
         uiScript.TownUI(true);
     }
@@ -773,6 +808,8 @@ public class ManagerScript : MonoBehaviour
             timber_cargo_count--;
             event_outcome = "one crate of timber was lost to fix up your ship from an accident";
         }
+        uiScript.updateCargoCount(((rations_cargo_count / 3) + med_cargo_count + timber_cargo_count + spice_cargo_count + rum_cargo_count), max_cargo);
+        uiScript.cargoUpdate();
     }
     //code for the stuff that comes after events
     public void weekReport() {
@@ -789,7 +826,11 @@ public class ManagerScript : MonoBehaviour
         }
         if (current_ration_state == 2)
         {
-            ship_script.extra_rations();
+            ship_script.no_rations();
+        }
+        if (rations_cargo_count < 0)
+        {
+            rations_cargo_count = 0;
         }
         ship_script.handle_mutiny_spread();
         int gold_change = ship_script.get_wages();
@@ -799,6 +840,8 @@ public class ManagerScript : MonoBehaviour
         uiScript.weekInfoDisp(report);
         uiScript.EventResultUI(false);
         uiScript.WeekInfoUI(true);
+        uiScript.updateCargoCount(((rations_cargo_count / 3) + med_cargo_count + timber_cargo_count + spice_cargo_count + rum_cargo_count), max_cargo);
+        uiScript.cargoUpdate();
     }
 
     public void choose_ration_type(int num)
@@ -845,9 +888,13 @@ public class ManagerScript : MonoBehaviour
     }
     public void give_spice()
     {
+        Ship_Movement ship_script = ship.GetComponent<Ship_Movement>();
+        ship_script.toggle_spice(true);
+    }
+    public void spend_spice()
+    {
         spice_cargo_count--;
     }
-
     public void QuitGame(){
         Application.Quit();
     }

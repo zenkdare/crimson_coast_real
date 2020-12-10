@@ -50050,7 +50050,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   goldText: {fileID: 1983356966}
   crewCountText: {fileID: 88358381}
-  cargoCountText: {fileID: 0}
+  cargoCountText: {fileID: 819640114}
   tavExitButton: {fileID: 830254299}
   tavList: {fileID: 1907343739}
   crewExitButton: {fileID: 344559151}

@@ -39,11 +39,11 @@ public class Charting_a_Course : MonoBehaviour
                 Town townscript = current_hit.GetComponent<Town>();
                 if (shipscript.is_connected())
                 {
-                    uiScript.updateTownInfo("Journey length: " + weekdis + "\nRum price: " + townscript.get_buy_amount("rum") + "\nSpice price: " + townscript.get_buy_amount("spice") + "\nTimber price: " + townscript.get_buy_amount("timber") + "\nMedicine price: " + 0 + "\nRations price: " + townscript.get_buy_amount("med"));
+                    uiScript.updateTownInfo("Journey length: " + weekdis + " weeks\nRum price: " + townscript.get_buy_amount("rum") + "\nSpice price: " + townscript.get_buy_amount("spice") + "\nTimber price: " + townscript.get_buy_amount("timber") + "\nMedicine price: " + 0 + "\nRations price: " + townscript.get_buy_amount("med"));
                 }
                 else
                 {
-                    uiScript.updateTownInfo("Journey length: " +weekdis+ "\nRum price: " + "unknown" + "\nSpice price: " + "unknown" + "\nTimber price: " + "unknown" + "\nMedicine price: " + "unknown" + "\nRations price: " + "unknown");
+                    uiScript.updateTownInfo("Journey length: " +weekdis+ " weeks\nRum price: " + "unknown" + "\nSpice price: " + "unknown" + "\nTimber price: " + "unknown" + "\nMedicine price: " + "unknown" + "\nRations price: " + "unknown");
                 }
             } 
         }
