@@ -195,6 +195,8 @@ public class UIManager : MonoBehaviour
 			textbox.text = crewmate.get_t2();
 			textbox = textbox.transform.Find("description/Text").GetComponent<Text>();
 			textbox.text = crewmate.get_t2Desc();
+            textbox = crewUI.transform.Find("loyalty").GetComponent<Text>();
+            textbox.text = crewmate.getLoyalty().ToString();
 			textbox = crewUI.transform.Find("cost").GetComponent<Text>();
 			textbox.text = crewmate.get_cost().ToString();
 		}
@@ -235,6 +237,8 @@ public class UIManager : MonoBehaviour
 		textbox.text = crewmate.get_t2();
 		textbox = textbox.transform.Find("description/Text").GetComponent<Text>();
 		textbox.text = crewmate.get_t2Desc();
+        textbox = crewUI.transform.Find("loyalty").GetComponent<Text>();
+        textbox.text = crewmate.getLoyalty().ToString();
 		textbox = crewUI.transform.Find("cost").GetComponent<Text>();
 		textbox.text = crewmate.get_cost().ToString();
 
@@ -255,6 +259,8 @@ public class UIManager : MonoBehaviour
         textbox.text = crewmate.get_t2();
         textbox = textbox.transform.Find("description/Text").GetComponent<Text>();
         textbox.text = crewmate.get_t2Desc();
+        textbox = crewUI.transform.Find("loyalty").GetComponent<Text>();
+        textbox.text = crewmate.getLoyalty().ToString();
         textbox = crewUI.transform.Find("cost").GetComponent<Text>();
         textbox.text = crewmate.get_cost().ToString();
     }
