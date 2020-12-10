@@ -60,6 +60,7 @@ public class ManagerScript : MonoBehaviour
     public bool first_upgrade;
     public bool second_upgrade;
     public bool in_week_report;
+    private bool using_spice;
     // Start is called before the first frame update
     void Start()
     {
@@ -69,6 +70,7 @@ public class ManagerScript : MonoBehaviour
         trait1d = new List<string>();
         trait2d = new List<string>();
         current_location = start_town;
+        using_spice = false;
         rum_dif_int = 0;
         spice_dif_int = 0;
         timber_dif_int = 0;
@@ -750,8 +752,6 @@ public class ManagerScript : MonoBehaviour
             }
             if (result == 2)
             {
-                Ship_Movement ship_script = ship.GetComponent<Ship_Movement>();
-                ship_script.change_loyalty_all(-1);
                 event_outcome = "The loyalty of all crew was lowered by one";
             }
         }
@@ -759,8 +759,6 @@ public class ManagerScript : MonoBehaviour
         {
             if (result == 0)
             {
-                Ship_Movement ship_script = ship.GetComponent<Ship_Movement>();
-                ship_script.change_loyalty_all(2);
                 event_outcome = "The loyalty of all crew was raised by two";
             }
             if (result == 1)
@@ -851,7 +849,7 @@ public class ManagerScript : MonoBehaviour
         {
             rations_cargo_count = 0;
         }
-        ship_script.handle_mutiny_spread();
+        event_outcome += "\n"+ship_script.handle_mutiny_spread()+" crew members have have lowered the loyalty of others in order to try and mutiny";
         int gold_change = ship_script.get_wages();
         change_gold(-gold_change);
         //print(event_outcome);
@@ -867,17 +865,31 @@ public class ManagerScript : MonoBehaviour
             rations_cargo_count++;
             uiScript.ErrorDisp("ration plan has been lowered due to lack of food");
         }
+        bool tempspice = using_spice;
+        if(using_spice)
+        {
+            if (spice_cargo_count > 0)
+            {
+                spice_cargo_count--;
+                event_outcome += "\nSpice was used and the loyalty of every crewmate was increased by 3";
+            }
+            else
+            {
+                tempspice = false;
+                event_outcome += "\nAttempted to give your crew spice when you had none";
+            }
+        }
         if (current_ration_state == 2)
         {
-            ship_script.extra_rations();
+            event_outcome += ship_script.extra_rations(tempspice);
         }
         if (current_ration_state == 1)
         {
-            ship_script.normal_rations();
+            event_outcome += ship_script.normal_rations(tempspice);
         }
         if (current_ration_state == 0)
         {
-            ship_script.no_rations();
+            event_outcome += ship_script.no_rations(tempspice);
         }
         if (rations_cargo_count < 0)
         {
@@ -942,21 +954,7 @@ public class ManagerScript : MonoBehaviour
     }
     public void give_spice(bool boo)
     {
-        Ship_Movement ship_script = ship.GetComponent<Ship_Movement>();
-        ship_script.toggle_spice(boo);
-    }
-    public bool spend_spice()
-    {
-        if (spice_cargo_count == 0)
-        {
-            event_outcome += "\nAttempted to give your crew spice when you had none";
-            return false;
-        }
-        else
-        {
-            spice_cargo_count--;
-            return true;
-        }
+        using_spice = boo;
     }
     public void QuitGame(){
         Application.Quit();
