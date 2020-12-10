@@ -156,6 +156,7 @@ public class Town : MonoBehaviour
         local_crew.Add(generate_crew(names, t1_lis, t2_lis, t1_d, t2_d));
         local_crew.Add(generate_crew(names, t1_lis, t2_lis, t1_d, t2_d));
         local_crew.Add(generate_crew(names, t1_lis, t2_lis, t1_d, t2_d));
+        local_crew.Add(generate_crew(names, t1_lis, t2_lis, t1_d, t2_d));
         rum_amount = og_rum_amount;
         spice_amount = og_spice_amount;
         timber_amount = og_timber_amount;

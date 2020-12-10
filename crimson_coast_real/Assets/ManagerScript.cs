@@ -945,15 +945,17 @@ public class ManagerScript : MonoBehaviour
         Ship_Movement ship_script = ship.GetComponent<Ship_Movement>();
         ship_script.toggle_spice(boo);
     }
-    public void spend_spice()
+    public bool spend_spice()
     {
         if (spice_cargo_count == 0)
         {
             event_outcome += "\nAttempted to give your crew spice when you had none";
+            return false;
         }
         else
         {
             spice_cargo_count--;
+            return true;
         }
     }
     public void QuitGame(){
@@ -967,9 +969,12 @@ public class ManagerScript : MonoBehaviour
             {
                 max_cargo = 15;
                 required_crew_count = 6;
-                gold -= 250;
                 first_upgrade = true;
                 uiScript.updateUpgradeInfo("Cost: 500\nHold Storage: +5\nMinimum Crew: 9");
+                change_gold(-250);
+                Ship_Movement ship_script = ship.GetComponent<Ship_Movement>();
+                uiScript.updateCrewCount(ship_script.get_crew_count(), required_crew_count);
+                uiScript.updateCargoCount(0, max_cargo);
             }
             else
             {
@@ -986,6 +991,10 @@ public class ManagerScript : MonoBehaviour
                 gold -= 500;
                 second_upgrade = true;
                 uiScript.updateUpgradeInfo("No more upgrades available");
+                change_gold(-500);
+                Ship_Movement ship_script = ship.GetComponent<Ship_Movement>();
+                uiScript.updateCrewCount(ship_script.get_crew_count(), required_crew_count);
+                uiScript.updateCargoCount(0, max_cargo);
             }
             else
             {
