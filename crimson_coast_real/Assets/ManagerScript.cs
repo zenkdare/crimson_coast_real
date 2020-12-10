@@ -852,24 +852,25 @@ public class ManagerScript : MonoBehaviour
         ship_script.handle_mutiny_spread();
         int gold_change = ship_script.get_wages();
         change_gold(-gold_change);
-        rations_cargo_count -= ship_script.get_crew_count();
         //print(event_outcome);
         string report = gold_change + " gold was spent to pay your crew\n" + ship_script.get_crew_count() + " rations were used to fed your crew\n"+event_outcome;
         uiScript.weekInfoDisp(report);
         uiScript.EventResultUI(false);
         uiScript.WeekInfoUI(true);
+        if (current_ration_state > rations_cargo_count)
+        {
+            current_ration_state--;
+            rations_cargo_count++;
+            uiScript.ErrorDisp("ration plan has been lowered due to lack of food");
+        }
+        if (current_ration_state > rations_cargo_count)
+        {
+            current_ration_state--;
+            rations_cargo_count++;
+            uiScript.ErrorDisp("ration plan has been lowered due to lack of food");
+        }
         uiScript.updateCargoCount(((rations_cargo_count / 3) + med_cargo_count + timber_cargo_count + spice_cargo_count + rum_cargo_count), max_cargo);
         uiScript.cargoUpdate();
-        if (current_ration_state > rations_cargo_count)
-        {
-            current_ration_state--;
-            uiScript.ErrorDisp("ration plan has been lowered due to lack of food");
-        }
-        if (current_ration_state > rations_cargo_count)
-        {
-            current_ration_state--;
-            uiScript.ErrorDisp("ration plan has been lowered due to lack of food");
-        }
     }
 
     public void choose_ration_type(int num)
