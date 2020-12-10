@@ -615,7 +615,7 @@ public class ManagerScript : MonoBehaviour
         uiScript.updateMarket("Spice", "Cost", 0);
         uiScript.updateMarket("Timber", "Cost", 0);
         uiScript.updateMarket("Medicine", "Cost", 0);
-        uiScript.updateMarket("Rations", "Amount", 0);
+        uiScript.updateMarket("Rations", "Cost", 0);
         uiScript.updateMarket("Rum", "Cargo", rum_cargo_count);
         uiScript.updateMarket("Spice", "Cargo", spice_cargo_count);
         uiScript.updateMarket("Timber", "Cargo", timber_cargo_count);
