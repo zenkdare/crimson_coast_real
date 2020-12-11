@@ -672,11 +672,13 @@ public class Ship_Movement : MonoBehaviour
             {
                 mutany_count++;
                 int num = i;
-                while (ship_crew[num].getLoyalty() == 0)
+                int count = 0;
+                while (ship_crew[num].getLoyalty() == 0 && count<50)
                 {
                     num = Random.Range(0, ship_crew.Count);
+                    count++;
                 }
-                ship_crew[i].change_loyalty(-2);
+                ship_crew[num].change_loyalty(-2);
             }
         }
         uiScript.update_ship_crew();
