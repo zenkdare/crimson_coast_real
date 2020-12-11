@@ -37,7 +37,7 @@ public class Charting_a_Course : MonoBehaviour
             if (current_hit != null)
             {
                 Town townscript = current_hit.GetComponent<Town>();               
-                uiScript.updateTownInfo("Journey length: " + weekdis + " weeks\nRum price: " + townscript.get_buy_amount("rum") + "\nSpice price: " + townscript.get_buy_amount("spice") + "\nTimber price: " + townscript.get_buy_amount("timber") + "\nMedicine price: " + 0 + "\nRations price: " + townscript.get_buy_amount("med"));
+                uiScript.updateTownInfo("Journey length: " + weekdis + " weeks\nRum price: " + townscript.get_buy_amount("rum") + "\nSpice price: " + townscript.get_buy_amount("spice") + "\nTimber price: " + townscript.get_buy_amount("timber") + "\nMedicine price: " + townscript.get_buy_amount("med") + "\nRations price: " +1);
                 
             } 
         }
