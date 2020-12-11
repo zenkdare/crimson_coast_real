@@ -4448,7 +4448,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   width: 5
-  chart_color: {r: 0.9056604, g: 0.7829767, b: 0, a: 1}
+  chart_color: {r: 1, g: 0.86580086, b: 0, a: 1}
 --- !u!120 &215265605
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -4457,9 +4457,9 @@ LineRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 215265601}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 0
   m_MotionVectors: 0
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
