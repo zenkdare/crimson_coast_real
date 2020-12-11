@@ -26367,7 +26367,7 @@ MonoBehaviour:
   lastpos: {x: 0, y: 0, z: 0}
   canvas: {fileID: 1950525840}
   uiScript: {fileID: 1950525845}
-  event_rate: 1
+  event_rate: 0.4
   watchdog_success_chance: 0.4
   reader_success_chance: 0.4
   peace_success_chance: 0.4
