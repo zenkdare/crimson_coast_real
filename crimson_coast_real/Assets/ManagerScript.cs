@@ -279,6 +279,10 @@ public class ManagerScript : MonoBehaviour
         {
             uiScript.ErrorDisp("you must choose a destination before setting sail and have the required number of crew for your ship size");
         }
+        if(med_cargo_count + timber_cargo_count + spice_cargo_count + rum_cargo_count == 0 && gold<=0)
+        {
+            uiScript.loseDisp("You have gone bankrupt and have no way to make money, off to prison for your debts");
+        }
         
     }
 
@@ -602,6 +606,14 @@ public class ManagerScript : MonoBehaviour
             uiScript.updateMarket("Footer", "Cost", temp_diff);//total cost of all items yet to be purchased
             uiScript.updateMarket("Footer", "Amount", 0);//total number of all items yet to be purchased
         }
+        if (gold >= 1500)
+        {
+            uiScript.winDisp("Congragulations, you can now return and live out your days in relative luxary");
+        }
+        if (med_cargo_count + timber_cargo_count + spice_cargo_count + rum_cargo_count == 0 && gold <= 0)
+        {
+            uiScript.loseDisp("You have gone bankrupt and have no way to make money, off to prison for your debts");
+        }
     }
     public void exit_market()
     {
@@ -743,6 +755,22 @@ public class ManagerScript : MonoBehaviour
                     event_outcome = "three crates of rum were stolen";
                 }
             }
+            if(med_cargo_count<0)
+            {
+                med_cargo_count = 0;
+            }
+            if (timber_cargo_count < 0)
+            {
+                timber_cargo_count = 0;
+            }
+            if (spice_cargo_count < 0)
+            {
+                spice_cargo_count = 0;
+            }
+            if (rum_cargo_count < 0)
+            {
+                rum_cargo_count = 0;
+            }
         }
         if (e.get_id() == 1)
         {
@@ -751,6 +779,10 @@ public class ManagerScript : MonoBehaviour
                 timber_cargo_count -= 3;
                 rations_cargo_count -= 3;
                 event_outcome = "Three crates of timber and 3 rations were lost";
+                if (timber_cargo_count<0)
+                {
+                    uiScript.loseDisp("The storm tore your ship apart and with no resources to repair it, you and your crew remain adrift at sea");
+                }
             }
             if (result == 2)
             {
@@ -768,12 +800,20 @@ public class ManagerScript : MonoBehaviour
                 med_cargo_count -= 3;
                 timber_cargo_count -= 3;
                 event_outcome = "three crates of medicine and three crates of timber were lost";
+                if (timber_cargo_count < 0 || med_cargo_count<0)
+                {
+                    uiScript.loseDisp("Too many are out of action from the lack of supplies, and the your ship slowly sets adrift, with your crew unable to stop");
+                }
             }
             if (result == 2)
             {
                 med_cargo_count--;
                 timber_cargo_count--;
                 event_outcome = "one crate of medicine and one crate of timber were lost";
+                if (timber_cargo_count < 0 || med_cargo_count < 0)
+                {
+                    uiScript.loseDisp("Too many are out of action from the lack of supplies, and the your ship slowly sets adrift, with your crew unable to stop");
+                }
             }
         }
         if(e.get_id() == 3)
@@ -808,6 +848,10 @@ public class ManagerScript : MonoBehaviour
             {
                 med_cargo_count--;
                 event_outcome =  "one crate of medicine was lost to cure a sickness";
+                if ( med_cargo_count < 0)
+                {
+                    uiScript.loseDisp("Without medicine to help stop the spread, the disease ravages you all");
+                }
             }
         }
         if (e.get_id() == 5)
@@ -816,12 +860,20 @@ public class ManagerScript : MonoBehaviour
             {
                 timber_cargo_count--;
                 event_outcome = "one crate of timber was lost to fix up your ship from rough seas";
+                if (timber_cargo_count < 0)
+                {
+                    uiScript.loseDisp("Unable to repair your ship, the damaged vessal slowly drifts to open ocean, never to be seen again");
+                }
             }
         }
         if (e.get_id() == 6)
         {  
             timber_cargo_count--;
             event_outcome = "one crate of timber was lost to fix up your ship from an accident";
+            if (timber_cargo_count < 0)
+            {
+                uiScript.loseDisp("Unable to repair your ship, the damaged vessal slowly drifts to open ocean, never to be seen again");
+            }
         }
         if (e.get_id() == 7)
         {

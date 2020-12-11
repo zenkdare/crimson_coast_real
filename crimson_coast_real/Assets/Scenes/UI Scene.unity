@@ -1035,14 +1035,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc680e1798c2656458fe64a6e2addca4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rum_price: 20
-  rum_amount: 6
+  rum_price: 15
+  rum_amount: 10
   spice_price: 8
-  spice_amount: 12
-  timber_price: 20
-  timber_amount: 5
-  med_price: 30
-  med_amount: 3
+  spice_amount: 20
+  timber_price: 8
+  timber_amount: 15
+  med_price: 24
+  med_amount: 5
   temp_amount: 0
   ship: {fileID: 1031851749}
   canvas: {fileID: 1950525840}
@@ -7551,14 +7551,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc680e1798c2656458fe64a6e2addca4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rum_price: 20
-  rum_amount: 2
-  spice_price: 0
-  spice_amount: 0
-  timber_price: 0
-  timber_amount: 0
-  med_price: 0
-  med_amount: 0
+  rum_price: 15
+  rum_amount: 5
+  spice_price: 38
+  spice_amount: 2
+  timber_price: 5
+  timber_amount: 20
+  med_price: 16
+  med_amount: 10
   temp_amount: 0
   ship: {fileID: 1031851749}
   canvas: {fileID: 1950525840}
@@ -31288,14 +31288,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc680e1798c2656458fe64a6e2addca4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rum_price: 10
-  rum_amount: 10
+  rum_price: 5
+  rum_amount: 20
   spice_price: 23
-  spice_amount: 4
-  timber_price: 13
+  spice_amount: 10
+  timber_price: 10
   timber_amount: 5
-  med_price: 40
-  med_amount: 2
+  med_price: 30
+  med_amount: 5
   temp_amount: 0
   ship: {fileID: 1031851749}
   canvas: {fileID: 1950525840}
@@ -47202,14 +47202,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc680e1798c2656458fe64a6e2addca4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rum_price: 0
-  rum_amount: 0
-  spice_price: 0
-  spice_amount: 0
-  timber_price: 0
-  timber_amount: 0
-  med_price: 0
-  med_amount: 0
+  rum_price: 30
+  rum_amount: 3
+  spice_price: 30
+  spice_amount: 3
+  timber_price: 6
+  timber_amount: 10
+  med_price: 10
+  med_amount: 15
   temp_amount: 0
   ship: {fileID: 1031851749}
   canvas: {fileID: 1950525840}

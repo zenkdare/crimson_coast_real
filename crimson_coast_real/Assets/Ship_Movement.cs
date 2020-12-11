@@ -657,8 +657,7 @@ public class Ship_Movement : MonoBehaviour
         no_rations_num++;
         if (no_rations_num > 2)
         {
-            //you should lose the game here
-            //need to update the ui here
+            uiScript.loseDisp("You due to no food, your crew starves, and your ghost ship floats aimlessly into the open ocean");
         }
         uiScript.update_ship_crew();
         return temp;
@@ -672,11 +671,9 @@ public class Ship_Movement : MonoBehaviour
             {
                 mutany_count++;
                 int num = i;
-                int count = 0;
-                while (ship_crew[num].getLoyalty() == 0 && count<50)
+                while (ship_crew[num].getLoyalty() == 0)
                 {
                     num = Random.Range(0, ship_crew.Count);
-                    count++;
                 }
                 ship_crew[num].change_loyalty(-2);
             }
@@ -685,6 +682,7 @@ public class Ship_Movement : MonoBehaviour
         if (mutany_count >= ship_crew.Count / 2)
         {
             //you lose here
+            uiScript.loseDisp("Your crew have mutinied against you! The tie you with cannonballs and throw you overboard.");
         }
         return mutany_count;
     }
