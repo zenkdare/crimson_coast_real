@@ -33393,6 +33393,7 @@ MonoBehaviour:
   first_upgrade: 0
   second_upgrade: 0
   in_week_report: 0
+  mainMenuScene: TitleScreenScene
 --- !u!1 &1350204411
 GameObject:
   m_ObjectHideFlags: 0
@@ -33521,13 +33522,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 1343203708}
+        m_TargetAssemblyTypeName: ManagerScript, Assembly-CSharp
+        m_MethodName: GoToMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -38167,7 +38168,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: You Win!
+  m_Text: You Lose!
 --- !u!222 &1527947966
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -49041,7 +49042,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 99558919a2f197e4ead28c3ea2c66a6c, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.7
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -49137,7 +49138,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 2f64b4f4acc00924ab715faee77759e5, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.7
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -49327,7 +49328,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 068ddcf1ebb151444b99efccfe09289f, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 97d3ea1e111033b49a1be0aea3ff781b, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System.IO;
 
 public class ManagerScript : MonoBehaviour
@@ -61,6 +62,7 @@ public class ManagerScript : MonoBehaviour
     public bool second_upgrade;
     public bool in_week_report;
     private bool using_spice;
+    public string mainMenuScene;
     // Start is called before the first frame update
     void Start()
     {
@@ -1023,5 +1025,9 @@ public class ManagerScript : MonoBehaviour
     public void reset_event_outcome()
     {
         event_outcome = "";
+    }
+
+    public void GoToMenu(){
+        SceneManager.LoadScene(mainMenuScene, LoadSceneMode.Single);
     }
 }
