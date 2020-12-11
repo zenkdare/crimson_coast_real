@@ -1031,26 +1031,12 @@ public class ManagerScript : MonoBehaviour
     }
     public void upgrade_ship()
     {
-        if (!first_upgrade)
+       
+        if (second_upgrade)
         {
-            if (gold >= 250)
-            {
-                max_cargo = 15;
-                required_crew_count = 6;
-                first_upgrade = true;
-                uiScript.updateUpgradeInfo("Cost: 500\nHold Storage: +5\nMinimum Crew: 9");
-                change_gold(-250);
-                Ship_Movement ship_script = ship.GetComponent<Ship_Movement>();
-                uiScript.updateCrewCount(ship_script.get_crew_count(), required_crew_count);
-                uiScript.updateCargoCount(0, max_cargo);
-            }
-            else
-            {
-                uiScript.ErrorDisp("You don't have enough gold for an upgrade");
-            }
-            
+            uiScript.ErrorDisp("no furthur upgrade available");
         }
-        if (first_upgrade)
+        else if (first_upgrade)
         {
             if (gold >= 500)
             {
@@ -1069,10 +1055,26 @@ public class ManagerScript : MonoBehaviour
                 uiScript.ErrorDisp("You don't have enough gold for an upgrade");
             }
         }
-        if (second_upgrade)
+        else
         {
-            uiScript.ErrorDisp("no furthur upgrade available");
+            if (gold >= 250)
+            {
+                max_cargo = 15;
+                required_crew_count = 6;
+                first_upgrade = true;
+                uiScript.updateUpgradeInfo("Cost: 500\nHold Storage: +5\nMinimum Crew: 9");
+                change_gold(-250);
+                Ship_Movement ship_script = ship.GetComponent<Ship_Movement>();
+                uiScript.updateCrewCount(ship_script.get_crew_count(), required_crew_count);
+                uiScript.updateCargoCount(0, max_cargo);
+            }
+            else
+            {
+                uiScript.ErrorDisp("You don't have enough gold for an upgrade");
+            }
+
         }
+
     }
     public void reset_event_outcome()
     {
