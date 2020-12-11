@@ -116,7 +116,7 @@ public class Ship_Movement : MonoBehaviour
                         if(possible_plot_catch && possible_plot)
                         {
                             int half_n_half=Random.Range(0, 2);
-                            if (half_n_half == 0 || half_n_half==1)
+                            if (half_n_half == 0)
                             {
                                 int get_traitor = Random.Range(0, poss_traitor.Count);
                                 int temp = 0;
@@ -137,12 +137,23 @@ public class Ship_Movement : MonoBehaviour
                                 current_event = possible_events[0];
                                 trigger_event(possible_events[0]);
                             }
+                            else
+                            {
+                                int event_num;
+                                event_num = Random.Range(1, possible_events.Count);
+                                if (event_num == 1 || event_num == 2 || event_num == 3)
+                                {
+                                    int get_raiser = Random.Range(0, ship_crew.Count);
+                                    possible_events[event_num].change_trigger(get_raiser);
+                                }
+                                current_event = possible_events[event_num];
+                                trigger_event(possible_events[event_num]);
+                            }
                         }
                         else
                         {
                             int event_num;
                             event_num = Random.Range(1, possible_events.Count);
-                            event_num = 1;
                             if (event_num == 1 || event_num==2 || event_num==3)
                             {
                                 int get_raiser = Random.Range(0, ship_crew.Count);
