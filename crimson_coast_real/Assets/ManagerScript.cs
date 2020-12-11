@@ -84,7 +84,7 @@ public class ManagerScript : MonoBehaviour
         Ship_Movement ship_script = ship.GetComponent<Ship_Movement>();
         uiScript.updateCrewCount(ship_script.get_crew_count(), required_crew_count);
         uiScript.updateCargoCount(0, max_cargo);
-        uiScript.updateUpgradeInfo("Cost: 250\nHold Storage: +5\nMinimum Crew: 6");
+        uiScript.updateUpgradeInfo("Cost: 250\nHold Storage: +10\nMinimum Crew: 6");
         //where you load the strings from a text file for crew generation
         StreamReader sr = new StreamReader("Assets/CrewNames.txt");
         string line;
@@ -1040,9 +1040,9 @@ public class ManagerScript : MonoBehaviour
         {
             if (gold >= 500)
             {
-                max_cargo = 20;
+                max_cargo = 40;
                 required_crew_count = 9;
-                gold -= 500;
+                //gold -= 500;
                 second_upgrade = true;
                 uiScript.updateUpgradeInfo("No more upgrades available");
                 change_gold(-500);
@@ -1059,10 +1059,10 @@ public class ManagerScript : MonoBehaviour
         {
             if (gold >= 250)
             {
-                max_cargo = 15;
+                max_cargo = 25;
                 required_crew_count = 6;
                 first_upgrade = true;
-                uiScript.updateUpgradeInfo("Cost: 500\nHold Storage: +5\nMinimum Crew: 9");
+                uiScript.updateUpgradeInfo("Cost: 500\nHold Storage: +15\nMinimum Crew: 9");
                 change_gold(-250);
                 Ship_Movement ship_script = ship.GetComponent<Ship_Movement>();
                 uiScript.updateCrewCount(ship_script.get_crew_count(), required_crew_count);

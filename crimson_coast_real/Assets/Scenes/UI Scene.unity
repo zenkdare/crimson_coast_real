@@ -33446,7 +33446,7 @@ MonoBehaviour:
   uiScript: {fileID: 1950525845}
   audioScript: {fileID: 1931460310}
   required_crew_count: 3
-  max_cargo: 10
+  max_cargo: 15
   first_upgrade: 0
   second_upgrade: 0
   in_week_report: 0

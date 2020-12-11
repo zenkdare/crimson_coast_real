@@ -81,6 +81,7 @@ public class Ship_Movement : MonoBehaviour
                 //print(Vector3.Distance(gameObject.transform.position, lastpos));
                 if (agent.pathStatus == NavMeshPathStatus.PathComplete && agent.remainingDistance == 0)
                 {
+                    no_rations_num = 0;
                     dock();
                     for(int i = 0; i < ship_crew.Count; i++)
                     {
