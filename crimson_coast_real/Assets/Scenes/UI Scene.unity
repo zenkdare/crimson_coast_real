@@ -33428,7 +33428,7 @@ MonoBehaviour:
   current_location: {fileID: 0}
   ship: {fileID: 1031851749}
   b_agent: {fileID: 1031851751}
-  gold: 100
+  gold: 200
   rations_cost: 1
   rum_dif_int: 0
   spice_dif_int: 0
