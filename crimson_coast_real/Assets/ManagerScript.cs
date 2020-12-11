@@ -829,7 +829,6 @@ public class ManagerScript : MonoBehaviour
             }
             if (result == 1)
             {
-                timber_cargo_count--;
                 event_outcome = "One of your crew has lost 3 loyalty from being denied a raise";
             }
         }
@@ -841,7 +840,6 @@ public class ManagerScript : MonoBehaviour
             }
             if (result == 1)
             {
-                timber_cargo_count--;
                 event_outcome = "One of your crew has walked the plank, and the rest know now to fear you";
             }
         }
@@ -855,7 +853,11 @@ public class ManagerScript : MonoBehaviour
         Camera_Orbit camorbit = cam.GetComponent<Camera_Orbit>();
         camorbit.enabled = false;
         Ship_Movement ship_script = ship.GetComponent<Ship_Movement>();
-        event_outcome += "\n"+ship_script.handle_mutiny_spread()+" crew members have lowered the loyalty of others in order to try and mutiny";
+        int spread = ship_script.handle_mutiny_spread();
+        if (spread > 0)
+        {
+            event_outcome += "\n" + spread + " crew members have lowered the loyalty of others in order to try and mutiny";
+        }
         int gold_change = ship_script.get_wages();
         change_gold(-gold_change);
         //print(event_outcome);
